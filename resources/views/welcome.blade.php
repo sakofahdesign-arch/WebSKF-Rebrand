@@ -1,0 +1,10 @@
+@extends('layouts.layout')
+@section('title', 'หน้าแรก')
+@section('content')
+    @include('components.welcomes.main-carousel')
+    @include('components.welcomes.promotion-carousel')
+    @include('components.welcomes.service-intel')
+    @include('components.welcomes.news')
+    @include('components.welcomes.journals-public')
+    @include('components.welcomes.partners-agencies')
+@endsection
