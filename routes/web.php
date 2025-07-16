@@ -68,12 +68,6 @@ Route::middleware(['check.session'])->group(function () {
     Route::post('/uploadPerformance', [PerformanceController::class, 'postPerformance'])->name('performance.upload');
 
 // News
-    // Route::get('/news', [NewsController::class, 'index'])->name('news.index');
-    // Route::get('/add_news', [NewsController::class, 'add'])->name('news.add');
-    // Route::post('/upload_news', [NewsController::class, 'upload_news'])->name('news.upload');
-    // Route::get('/edit_news/{news_number}', [NewsController::class, 'edit_news'])->name('news.edit');
-    // Route::put('/update_news/{news_number}', [NewsController::class, 'update_news'])->name('news.update');
-    // Route::get('/delete_news/{news_number}', [NewsController::class, 'delete_news'])->name('news.delete');
     Route::resource('news', NewsController::class)->names('news');
 
 // Login history
@@ -81,11 +75,4 @@ Route::middleware(['check.session'])->group(function () {
 // Asset
     Route::resource('manage-assets', AssetController::class)->names('asset');
     Route::resource('announcements', PublishController::class)->names('announcements');
-
-    // Route::get('/announcements', [PublishController::class, 'index'])->name('announcements.index');
-    // Route::get('/announcementsadd', [PublishController::class, 'create'])->name('announcements.create');
-    // Route::post('/announcementsupload', [PublishController::class, 'store'])->name('announcements.upload');
-    // Route::get('/edit_announcements/{id}', [PublishController::class, 'edit'])->name('announcements.edit');
-    // Route::post('/update_announcements/{id}', [PublishController::class, 'update'])->name('announcements.update');
-    // Route::get('/delete_publish/{id}', [PublishController::class, 'delete'])->name('announcements.destroy');
 });
