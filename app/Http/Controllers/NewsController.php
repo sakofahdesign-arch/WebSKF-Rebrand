@@ -7,10 +7,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 
-// Import Log facade for error logging
-
-// Import File facade for deleting old images
-
 class NewsController extends Controller
 {
     public function index()
