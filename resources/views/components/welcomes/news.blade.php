@@ -44,7 +44,7 @@
                         @foreach ($information as $item)
                             <div
                                 class="bg-white rounded-lg shadow-md overflow-hidden group transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                                <a href="/news/{{ $item->news_number }}" class="block">
+                                <a href="{{route('article', $item->news_number )}}" class="block">
                                     <img src="{{ url('uploads/covers/' . $item->picture_name) }}"
                                         class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
                                         alt="{{ $item->title }}">
@@ -67,7 +67,7 @@
                         @foreach ($welfare as $item)
                             <div
                                 class="bg-white rounded-lg shadow-md overflow-hidden group transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                                <a href="/news/{{ $item->news_number }}" class="block">
+                                <a href="{{route('article', $item->news_number )}}" class="block">
                                     <img src="{{ url('uploads/covers/' . $item->picture_name) }}"
                                         class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
                                         alt="{{ $item->title }}">
@@ -90,7 +90,7 @@
                         @foreach ($foundation as $item)
                             <div
                                 class="bg-white rounded-lg shadow-md overflow-hidden group transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                                <a href="/news/{{ $item->news_number }}" class="block">
+                                <a href="{{route('article', $item->news_number )}}" class="block">
                                     <img src="{{ url('uploads/covers/' . $item->picture_name) }}"
                                         class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
                                         alt="{{ $item->title }}">
@@ -113,7 +113,7 @@
                         @foreach ($credit as $item)
                             <div
                                 class="bg-white rounded-lg shadow-md overflow-hidden group transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                                <a href="/news/{{ $item->news_number }}" class="block">
+                                <a href="{{route('article', $item->news_number )}}" class="block">
                                     <img src="{{ url('uploads/covers/' . $item->picture_name) }}"
                                         class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
                                         alt="{{ $item->title }}">

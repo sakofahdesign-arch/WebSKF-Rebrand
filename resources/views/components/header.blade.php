@@ -1,13 +1,13 @@
 <header class="bg-green-600 shadow-lg p-3 relative z-50">
     <div class="container mx-auto flex items-center justify-between h-10">
-        <a href="/" class="flex-shrink-0">
+        <a href="{{route('index')}}" class="flex-shrink-0">
             <img src="{{ asset('images/sakofah-logo.png') }}" alt="Co-op Logo" class="h-9 w-auto">
         </a>
         <nav class="hidden md:block">
             <ul class="flex items-center space-x-5 lg:space-x-6">
                
                 <li>
-                    <a href="/" class="nav-link text-white text-base font-medium hover:text-green-100 transition duration-300">หน้าหลัก</a>
+                    <a href="{{route('index')}}" class="nav-link text-white text-base font-medium hover:text-green-100 transition duration-300">หน้าหลัก</a>
                 </li>
 
         
@@ -352,12 +352,12 @@
                     <div>
                         <h3 class="text-lg font-bold text-gray-800 mb-4">เกี่ยวกับเรา</h3>
                         <ul class="space-y-2 text-sm">
-                            <li><a href="/history" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">ประวัติความเป็นมา</a></li>
-                            <li><a href="/vision" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">วิสัยทัศน์ พันธกิจ วัตถุประสงค์</a></li>
-                            <li><a href="/manager" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">คณะกรรมการและผู้บริหาร</a></li>
-                            <li><a href="/office" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">สำนักงาน</a></li>
-                            <li><a href="/mobile" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">รถโมบายเคลื่อนที่</a></li>
-                            <li><a href="/structure" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">โครงสร้างสหกรณ์</a></li>
+                            <li><a href="{{ route('history') }}" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">ประวัติความเป็นมา</a></li>
+                            <li><a href="{{ route('vision') }}" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">วิสัยทัศน์ พันธกิจ วัตถุประสงค์</a></li>
+                            <li><a href="{{ route('manager') }}" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">คณะกรรมการและผู้บริหาร</a></li>
+                            <li><a href="{{ route('office') }}" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">สำนักงาน</a></li>
+                            <li><a href="{{ route('mobile') }}" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">รถโมบายเคลื่อนที่</a></li>
+                            <li><a href="{{ route('structure') }}" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">โครงสร้างสหกรณ์</a></li>
                         </ul>
                     </div>
                 `,
@@ -365,9 +365,9 @@
                     <div>
                         <h3 class="text-lg font-bold text-gray-800 mb-4">บริการสหกรณ์</h3>
                         <ul class="space-y-2 text-sm">
-                            <li><a href="/register" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">สมัครสมาชิก</a></li>
-                            <li><a href="/deposit" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">บริการเงินฝาก</a></li>
-                            <li><a href="/credit_service" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">บริการสินเชื่อ</a></li>
+                            <li><a href="{{ route('register') }}" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">สมัครสมาชิก</a></li>
+                            <li><a href="{{ route('deposit') }}" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">บริการเงินฝาก</a></li>
+                            <li><a href="{{ route('credit_service') }}" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">บริการสินเชื่อ</a></li>
                         </ul>
                     </div>
                 `,
@@ -375,11 +375,11 @@
                     <div>
                         <h3 class="text-lg font-bold text-gray-800 mb-4">ประเภทสวัสดิการ</h3>
                         <ul class="space-y-2 text-sm columns-2 gap-x-8">
-                            <li><a href="/marry" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">สวัสดิการแต่งงาน</a></li>
-                            <li><a href="/maternity" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">สวัสดิการคลอดบุตร</a></li>
-                            <li><a href="/oldage" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">สวัสดิการเงินสมทบยามชรา</a></li>
-                            <li><a href="/medical" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">สวัสดิการช่วยเหลือค่ารักษาพยาบาล</a></li>
-                            <li><a href="/dead" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">สวัสดิการเสียชีวิต</a></li>
+                            <li><a href="{{ route('marry') }}" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">สวัสดิการแต่งงาน</a></li>
+                            <li><a href="{{ route('maternity') }}" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">สวัสดิการคลอดบุตร</a></li>
+                            <li><a href="{{ route('oldage') }}" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">สวัสดิการเงินสมทบยามชรา</a></li>
+                            <li><a href="{{ route('medical') }}" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">สวัสดิการช่วยเหลือค่ารักษาพยาบาล</a></li>
+                            <li><a href="{{ route('dead') }}" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">สวัสดิการเสียชีวิต</a></li>
                         </ul>
                     </div>
                 `,
@@ -387,8 +387,8 @@
                     <div>
                         <h3 class="text-lg font-bold text-gray-800 mb-4">ติดตามข่าวสาร</h3>
                         <ul class="space-y-2 text-sm">
-                            <li><a href="/activity" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">ข่าวสาร/กิจกรรมความเคลื่อนไหว</a></li>
-                            <li><a href="/calender" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">ปฏิทินสหกรณ์</a></li>
+                            <li><a href="{{ route('activity') }}" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">ข่าวสาร/กิจกรรมความเคลื่อนไหว</a></li>
+                            <li><a href="{{ route('calender') }}" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">ปฏิทินสหกรณ์</a></li>
                         </ul>
                     </div>
                 `,
@@ -396,9 +396,9 @@
                     <div>
                         <h3 class="text-lg font-bold text-gray-800 mb-4">ประเภทสินทรัพย์</h3>
                         <ul class="space-y-2 text-sm">
-                            <li><a href="/homeList" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">บ้านพร้อมที่ดิน/ทาวน์โฮม</a></li>
-                            <li><a href="/vacantList" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">ที่ดินเปล่า</a></li>
-                            <li><a href="/condoList" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">คอนโด</a></li>
+                            <li><a href="{{ route('homeList') }}" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">บ้านพร้อมที่ดิน/ทาวน์โฮม</a></li>
+                            <li><a href="{{ route('vacantList') }}" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">ที่ดินเปล่า</a></li>
+                            <li><a href="{{ route('condoList') }}" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">คอนโด</a></li>
                         </ul>
                     </div>
                 `,
@@ -406,8 +406,8 @@
                     <div>
                         <h3 class="text-lg font-bold text-gray-800 mb-4">เอกสารสำคัญ</h3>
                          <ul class="space-y-2 text-sm">
-                            <li><a href="/document" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">เอกสารสำหรับสมาชิก</a></li>
-                            <li><a href="/businessreport" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">รายงานกิจการ</a></li>
+                            <li><a href="{{ route('document') }}" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">เอกสารสำหรับสมาชิก</a></li>
+                            <li><a href="{{ route('businessreport') }}" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">รายงานกิจการ</a></li>
                         </ul>
                     </div>
                 `,
@@ -416,8 +416,8 @@
                         <h3 class="text-lg font-bold text-gray-800 mb-4">ช่องทางการติดต่อ</h3>
                         <ul class="space-y-2 text-sm">
                             <li><a href="#" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">แบบประเมินการให้บริการ</a></li>
-                            <li><a href="/withus" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">ร่วมงานกับเรา</a></li>
-                            <li><a href="/office" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">สำนักงานสาขา</a></li>
+                            <li><a href="{{ route('withus') }}" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">ร่วมงานกับเรา</a></li>
+                            <li><a href="{{ route('office') }}" class="block text-gray-700 hover:text-blue-600 p-1 rounded-md transition duration-300">สำนักงานสาขา</a></li>
                         </ul>
                     </div>
                 `,

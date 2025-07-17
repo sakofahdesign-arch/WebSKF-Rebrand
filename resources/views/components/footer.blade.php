@@ -15,10 +15,10 @@
         <div>
             <h3 class="text-xl font-bold mb-4 text-green-200">บริการ</h3>
             <ul class="space-y-2 text-sm">
-                <li><a href="/register" class="text-green-100 hover:text-white transition duration-300">สมัครสมาชิก</a></li>
-                <li><a href="/deposit" class="text-green-100 hover:text-white transition duration-300">บริการเงินฝาก</a></li>
-                <li><a href="/credit_service" class="text-green-100 hover:text-white transition duration-300">บริการสินเชื่อ</a></li>
-                <li><a href="/document" class="text-green-100 hover:text-white transition duration-300">ดาวน์โหลดเอกสาร</a></li>
+                <li><a href="{{ route('register') }}" class="text-green-100 hover:text-white transition duration-300">สมัครสมาชิก</a></li>
+                <li><a href="{{ route('deposit') }}" class="text-green-100 hover:text-white transition duration-300">บริการเงินฝาก</a></li>
+                <li><a href="{{ route('credit_service') }}" class="text-green-100 hover:text-white transition duration-300">บริการสินเชื่อ</a></li>
+                <li><a href="{{ route('document') }}" class="text-green-100 hover:text-white transition duration-300">ดาวน์โหลดเอกสาร</a></li>
             </ul>
         </div>
         <div>
@@ -44,7 +44,7 @@
             <p class="text-sm text-green-100 mb-4">
                 เข้าสู่ระบบเพื่อจัดการข้อมูลหลังบ้านของสหกรณ์
             </p>
-            <a href="/login" class="inline-flex items-center justify-center bg-green-600 text-white hover:bg-green-700 font-bold py-2 px-4 rounded-lg text-sm shadow-md transition duration-300 w-full md:w-auto">
+            <a href="{{route('login')}}" class="inline-flex items-center justify-center bg-green-600 text-white hover:bg-green-700 font-bold py-2 px-4 rounded-lg text-sm shadow-md transition duration-300 w-full md:w-auto">
                 <i class="fas fa-sign-in-alt mr-2"></i>
                 เข้าสู่ระบบ
             </a>

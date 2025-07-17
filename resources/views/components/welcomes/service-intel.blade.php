@@ -11,7 +11,7 @@
         <div class="grid lg:grid-cols-5 gap-8 items-start">
             
             <div class="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <a href="/register" class="group block bg-white p-6 rounded-2xl shadow-lg border border-transparent hover:border-green-500 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <a href="{{ route('register') }}" class="group block bg-white p-6 rounded-2xl shadow-lg border border-transparent hover:border-green-500 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                     <div class="w-14 h-14 flex items-center justify-center bg-green-100 rounded-2xl mb-4">
                         <svg class="w-8 h-8 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7.5v3.075c0 .939-.39 1.825-.986 2.45l-4.04 4.04a2.13 2.13 0 01-3 0l-4.04-4.04a3.003 3.003 0 01-.986-2.45V7.5a3 3 0 013-3h10.5a3 3 0 013 3z" /><path stroke-linecap="round" stroke-linejoin="round" d="M9 7.5h6" /></svg>
                     </div>
@@ -19,7 +19,7 @@
                     <p class="text-gray-500 text-sm">เริ่มต้นความมั่นคงทางการเงินกับเรา</p>
                 </a>
                 
-                <a href="/deposit" class="group block bg-white p-6 rounded-2xl shadow-lg border border-transparent hover:border-blue-500 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <a href="{{ route('deposit') }}" class="group block bg-white p-6 rounded-2xl shadow-lg border border-transparent hover:border-blue-500 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                     <div class="w-14 h-14 flex items-center justify-center bg-blue-100 rounded-2xl mb-4">
                          <svg class="w-8 h-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12m18 0v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6m18 0V9M3 12V9m18 3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                     </div>
@@ -27,7 +27,7 @@
                     <p class="text-gray-500 text-sm">หลากหลายรูปแบบการออมที่ตอบโจทย์</p>
                 </a>
 
-                <a href="/credit_service" class="group block bg-white p-6 rounded-2xl shadow-lg border border-transparent hover:border-yellow-500 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <a href="{{ route('credit_service') }}" class="group block bg-white p-6 rounded-2xl shadow-lg border border-transparent hover:border-yellow-500 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                     <div class="w-14 h-14 flex items-center justify-center bg-yellow-100 rounded-2xl mb-4">
                         <svg class="w-8 h-8 text-yellow-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-3.75-2.25M21 18l-3.75-2.25m0 0l-3.75 2.25M15 15.75l-3.75 2.25" /></svg>
                     </div>
@@ -35,7 +35,7 @@
                     <p class="text-gray-500 text-sm">เสริมสภาพคล่องด้วยเงื่อนไขที่เป็นธรรม</p>
                 </a>
 
-                <a href="/document" class="group block bg-white p-6 rounded-2xl shadow-lg border border-transparent hover:border-gray-500 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <a href="{{ route('document') }}" class="group block bg-white p-6 rounded-2xl shadow-lg border border-transparent hover:border-gray-500 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                     <div class="w-14 h-14 flex items-center justify-center bg-gray-100 rounded-2xl mb-4">
                         <svg class="w-8 h-8 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m.75 12l3 3m0 0l3-3m-3 3v-6m-1.5-9H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9Z" /></svg>
                     </div>

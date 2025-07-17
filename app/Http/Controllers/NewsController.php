@@ -15,9 +15,7 @@ class NewsController extends Controller
 {
     public function index()
     {
-        $data = DB::table('news')->join('news_type', 'news.news_typeid', '=', 'news_type.news_typeid')
-            ->select('title', 'news_typename', 'dateupload', 'news_number', 'news_number')->orderByDesc('dateupload')
-            ->paginate(15);
+        $data = DB::table('news')->join('news_type', 'news.news_typeid', '=', 'news_type.news_typeid')->select('title', 'news_typename', 'dateupload', 'news_number', 'news_number')->orderByDesc('dateupload')->paginate(15);
         return view('office.news.index', compact('data'));
     }
 
