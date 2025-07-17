@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
+
 // Import Log facade for error logging
 
 // Import File facade for deleting old images
@@ -176,50 +177,52 @@ class NewsController extends Controller
         return redirect()->route('news.index')->with('success', 'อัปเดตข่าวสารสำเร็จ');
     }
 
-    /**
-     * Remove the specified news item and all associated files from storage.
-     */
     public function destroy($news_number)
     {
         DB::beginTransaction();
 
         try {
+            // 1. ค้นหาข่าวหลัก
             $news_to_delete = DB::table('news')->where('news_number', $news_number)->first();
 
             if (! $news_to_delete) {
                 return redirect()->route('news.index')->with('error', 'ไม่พบข่าวที่ต้องการลบ');
             }
 
-            // ลบภาพหน้าปก
-            if (! empty($news_to_delete->path) && ! empty($news_to_delete->picture_name)) {
-                $cover_image_path = public_path($news_to_delete->path . '/' . $news_to_delete->picture_name);
+            // 2. ลบไฟล์ภาพหน้าปกจาก uploads/covers
+            if (! empty($news_to_delete->picture_name)) {
+                $cover_image_path = public_path('uploads/covers/' . $news_to_delete->picture_name);
                 if (File::exists($cover_image_path)) {
                     File::delete($cover_image_path);
                 }
             }
 
-            // ลบภาพประกอบ
+            // 3. ค้นหาและลบภาพประกอบจาก uploads/galleries
             $gallery_images = DB::table('picture')->where('news_number', $news_number)->get();
+
             foreach ($gallery_images as $image) {
-                if (! empty($image->path) && ! empty($image->picture_name)) {
-                    $gallery_image_path = public_path($image->path . '/' . $image->picture_name);
+                if (! empty($image->picture_name)) {
+                    $gallery_image_path = public_path('uploads/galleries/' . $image->picture_name);
                     if (File::exists($gallery_image_path)) {
                         File::delete($gallery_image_path);
                     }
                 }
             }
 
+            // 4. ลบข้อมูลในฐานข้อมูล
             DB::table('picture')->where('news_number', $news_number)->delete();
             DB::table('news')->where('news_number', $news_number)->delete();
 
             DB::commit();
 
-            return redirect()->route('news.index')->with('success', 'ลบข่าวสารสำเร็จ');
+            return redirect()->route('news.index')->with('success', 'ลบข่าวสารพร้อมรูปภาพเรียบร้อยแล้ว');
 
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::error('ลบข่าวผิดพลาด: ' . $e->getMessage());
+            Log::error('เกิดข้อผิดพลาดในการลบข่าว: ' . $e->getMessage());
+
             return redirect()->route('news.index')->with('error', 'เกิดข้อผิดพลาดในการลบข่าวสาร');
         }
     }
+
 }
