@@ -251,12 +251,12 @@ class HomeController extends Controller
         return view('main.news.activity', compact('news'));
     }
 
-    public function news($id)
+    public function article($id)
     {
         $image_news = DB::table('picture')->where('news_number', $id)->get();
         $news       = DB::table('news')->where('news_number', $id)->first();
         $side_news  = DB::table('news')->orderByDesc('dateupload')->where('news_number', '!=', $id)->limit(10)->get();
-        return view('main.news.show', compact('image_news', 'news', 'side_news'));
+        return view('main.news.article', compact('image_news', 'news', 'side_news'));
     }
 
     public function calender()

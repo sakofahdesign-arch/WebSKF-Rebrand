@@ -1,6 +1,6 @@
 @extends('layouts.admin-layout')
 
-@section('title', 'dmin รายการข่าวสาร')
+@section('title', 'Admin รายการข่าวสาร')
 
 @push('styles')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

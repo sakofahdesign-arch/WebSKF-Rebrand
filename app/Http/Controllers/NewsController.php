@@ -59,7 +59,8 @@ class NewsController extends Controller
             $galleryPath = 'uploads/galleries';
 
             foreach ($request->file('uploadedFiles') as $index => $file) {
-                $hashedFileName = $news_number . '_' . date('Ymd') . '_gallery_' . ($index + 1) . '.' . $file->getClientOriginalExtension();
+                $order          = sprintf('%02d', $index + 1);
+                $hashedFileName = $news_number . '_' . date('Ymd') . $order . '.' . $file->getClientOriginalExtension();
                 $file->move(public_path($galleryPath), $hashedFileName);
 
                 DB::table('picture')->insert([
@@ -92,8 +93,8 @@ class NewsController extends Controller
             'news_type'       => 'required',
             'date'            => 'required|date',
             'description'     => 'required|string',
-            'coverImage'      => 'nullable|image|mimes:jpeg,png,jpg,gif', 
-            'uploadedFiles.*' => 'nullable|image|mimes:jpeg,png,jpg,gif', 
+            'coverImage'      => 'nullable|image|mimes:jpeg,png,jpg,gif',
+            'uploadedFiles.*' => 'nullable|image|mimes:jpeg,png,jpg,gif',
         ]);
 
         $existing_news = DB::table('news')->where('news_number', $news_number)->first();
@@ -127,10 +128,9 @@ class NewsController extends Controller
             DB::table('picture')->where('news_number', $news_number)->delete();
             $galleryPath = 'uploads/galleries';
             foreach ($request->file('uploadedFiles') as $index => $file) {
-                $hashedFileName = $news_number . '_' . date('Ymd') . '_gallery_' . ($index + 1) . '.' . $file->getClientOriginalExtension();
+                $order          = sprintf('%02d', $index + 1);
+                $hashedFileName = $news_number . '_' . date('Ymd') . $order . '.' . $file->getClientOriginalExtension();
                 $file->move(public_path($galleryPath), $hashedFileName);
-
-                // บันทึกข้อมูลลงในตาราง 'picture'
                 DB::table('picture')->insert([
                     'news_number'  => $news_number,
                     'picture_name' => $hashedFileName,

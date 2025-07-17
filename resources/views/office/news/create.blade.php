@@ -1,8 +1,6 @@
 @extends('layouts.admin-layout')
 
 @section('title', 'เพิ่มข่าวสาร')
-
-{{-- Push required styles for Summernote and SweetAlert2 --}}
 @push('styles')
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

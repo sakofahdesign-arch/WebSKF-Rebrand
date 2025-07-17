@@ -28,7 +28,7 @@ Route::get('/oldage', [HomeController::class, 'oldage']);
 Route::get('/medical', [HomeController::class, 'medical']);
 Route::get('/dead', [HomeController::class, 'dead']);
 Route::get('/activity', [HomeController::class, 'activity']);
-Route::get('/news/{id}', [HomeController::class, 'news'])->name('news.show');
+Route::get('/article/{id}', [HomeController::class, 'article']);
 Route::get('/calender', [HomeController::class, 'calender']);
 Route::get('/homeList', [HomeController::class, 'homeList']);
 Route::get('/vacantList', [HomeController::class, 'vacantList']);
