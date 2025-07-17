@@ -185,13 +185,13 @@ class NewsController extends Controller
 
             DB::commit();
 
-            return redirect()->route('news.index')->with('success', 'ลบข่าวสารพร้อมรูปภาพเรียบร้อยแล้ว');
+            return redirect()->back()->with('success', 'ลบข่าวสารพร้อมรูปภาพเรียบร้อยแล้ว');
 
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('เกิดข้อผิดพลาดในการลบข่าว: ' . $e->getMessage());
 
-            return redirect()->route('news.index')->with('error', 'เกิดข้อผิดพลาดในการลบข่าวสาร');
+            return redirect()->back()->with('error', 'เกิดข้อผิดพลาดในการลบข่าวสาร');
         }
     }
 
