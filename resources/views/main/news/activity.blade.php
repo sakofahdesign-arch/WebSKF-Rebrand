@@ -25,7 +25,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @foreach ($news as $item)
                     <div class="group bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 ease-in-out hover:shadow-xl hover:-translate-y-2 border border-gray-200/80">
-                        <a href="{{ route('news.show', $item->news_number) }}" class="h-full flex flex-col">
+                        <a href="{{ route('article', $item->news_number) }}" class="h-full flex flex-col">
                             <div class="overflow-hidden">
                                 <img src="{{ asset('uploads/covers/' . $item->picture_name) }}"
                                      alt="{{ $item->title ?? 'News Image' }}"
