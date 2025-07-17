@@ -5,6 +5,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
+// Import Log facade for error logging
 
 // Import File facade for deleting old images
 
@@ -35,44 +37,31 @@ class NewsController extends Controller
             'uploadedFiles.*' => 'nullable|image|mimes:jpeg,png,jpg,gif', // Gallery images are optional
         ]);
 
-        // ป้องกันการชนกันของ news_number
         do {
             $news_number = mt_rand(10000, 99999);
         } while (DB::table('news')->where('news_number', $news_number)->exists());
 
-        // --- 1. จัดการภาพหน้าปก (Cover Image) ---
-        $coverImage = $request->file('coverImage');
-        // กำหนด Path สำหรับภาพหน้าปกโดยเฉพาะ
-        $coverPath = 'uploads/covers';
-        // สร้างชื่อไฟล์ใหม่ที่ไม่ซ้ำกัน
+        $coverImage       = $request->file('coverImage');
+        $coverPath        = 'uploads/covers';
         $hashedCoverImage = $news_number . '_' . date('Ymd') . '.' . $coverImage->getClientOriginalExtension();
-        // ย้ายไฟล์ไปยังโฟลเดอร์ public/uploads/covers/ (Laravel จะสร้างโฟลเดอร์ให้ถ้ายังไม่มี)
         $coverImage->move(public_path($coverPath), $hashedCoverImage);
-
-        // --- 2. บันทึกข้อมูลข่าวหลักลงในตาราง 'news' ---
         DB::table('news')->insert([
             'news_number'  => $news_number,
             'title'        => $request->title,
             'news_typeid'  => $request->news_type,
             'dateupload'   => $request->date,
             'description'  => $request->description,
-            'path'         => $coverPath, // บันทึก Path ของภาพหน้าปก
+            'path'         => $coverPath,
             'picture_name' => $hashedCoverImage,
         ]);
 
-        // --- 3. จัดการรูปภาพประกอบ (Gallery Images) ---
         if ($request->hasFile('uploadedFiles')) {
-            // กำหนด Path สำหรับรูปภาพประกอบโดยเฉพาะ
             $galleryPath = 'uploads/galleries';
 
             foreach ($request->file('uploadedFiles') as $index => $file) {
-                // สร้างชื่อไฟล์ใหม่ที่ไม่ซ้ำกันสำหรับแต่ละรูป
                 $hashedFileName = $news_number . '_' . date('Ymd') . '_gallery_' . ($index + 1) . '.' . $file->getClientOriginalExtension();
-
-                // ย้ายไฟล์ไปยังโฟลเดอร์ public/uploads/galleries/
                 $file->move(public_path($galleryPath), $hashedFileName);
 
-                // บันทึกข้อมูลลงในตาราง 'picture'
                 DB::table('picture')->insert([
                     'news_number'  => $news_number,
                     // 'path'         => $galleryPath,  **หมายเหตุ:** แนะนำให้มีคอลัมน์ path ในตาราง picture
@@ -192,54 +181,45 @@ class NewsController extends Controller
      */
     public function destroy($news_number)
     {
-        // เริ่มต้น Transaction เพื่อให้แน่ใจว่าทุกขั้นตอนสำเร็จทั้งหมด
         DB::beginTransaction();
 
         try {
-            // 1. ค้นหาข้อมูลข่าวที่ต้องการลบ
             $news_to_delete = DB::table('news')->where('news_number', $news_number)->first();
 
-            // ถ้าไม่พบข่าว ให้หยุดการทำงานและแจ้งเตือน
             if (! $news_to_delete) {
                 return redirect()->route('news.index')->with('error', 'ไม่พบข่าวที่ต้องการลบ');
             }
 
-            // 2. ลบไฟล์ "ภาพหน้าปก" ออกจากเซิร์ฟเวอร์
-            $cover_image_path = public_path($news_to_delete->path . '/' . $news_to_delete->picture_name);
-            if (File::exists($cover_image_path)) {
-                File::delete($cover_image_path);
+            // ลบภาพหน้าปก
+            if (! empty($news_to_delete->path) && ! empty($news_to_delete->picture_name)) {
+                $cover_image_path = public_path($news_to_delete->path . '/' . $news_to_delete->picture_name);
+                if (File::exists($cover_image_path)) {
+                    File::delete($cover_image_path);
+                }
             }
 
-            // 3. ค้นหาและลบ "รูปภาพประกอบ" ทั้งหมด
+            // ลบภาพประกอบ
             $gallery_images = DB::table('picture')->where('news_number', $news_number)->get();
-
-            if ($gallery_images->isNotEmpty()) {
-                foreach ($gallery_images as $image) {
+            foreach ($gallery_images as $image) {
+                if (! empty($image->path) && ! empty($image->picture_name)) {
                     $gallery_image_path = public_path($image->path . '/' . $image->picture_name);
                     if (File::exists($gallery_image_path)) {
                         File::delete($gallery_image_path);
                     }
                 }
-                // 3.1 ลบข้อมูลรูปภาพประกอบออกจากฐานข้อมูล
-                DB::table('picture')->where('news_number', $news_number)->delete();
             }
 
-            // 4. ลบข้อมูลข่าวหลักออกจากฐานข้อมูล
+            DB::table('picture')->where('news_number', $news_number)->delete();
             DB::table('news')->where('news_number', $news_number)->delete();
 
-            // 5. ยืนยันการทำรายการทั้งหมดใน Transaction
             DB::commit();
 
-            // ส่งข้อความแจ้งเตือนว่าสำเร็จ
             return redirect()->route('news.index')->with('success', 'ลบข่าวสารสำเร็จ');
 
         } catch (\Exception $e) {
-            // หากมีข้อผิดพลาดเกิดขึ้น ให้ยกเลิกการทำรายการทั้งหมด
             DB::rollBack();
-
-            // ส่งข้อความแจ้งเตือนข้อผิดพลาด
-            // สำหรับ Production ควร log error ไว้แทนการแสดงผลโดยตรง
-            return redirect()->route('news.index')->with('error', 'เกิดข้อผิดพลาดในการลบข่าวสาร: ' . $e->getMessage());
+            Log::error('ลบข่าวผิดพลาด: ' . $e->getMessage());
+            return redirect()->route('news.index')->with('error', 'เกิดข้อผิดพลาดในการลบข่าวสาร');
         }
     }
 }
