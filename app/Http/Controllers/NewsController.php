@@ -52,7 +52,6 @@ class NewsController extends Controller
             'news_typeid'  => $request->news_type,
             'dateupload'   => $request->date,
             'description'  => $request->description,
-            'path'         => $coverPath,
             'picture_name' => $hashedCoverImage,
         ]);
 
@@ -65,7 +64,6 @@ class NewsController extends Controller
 
                 DB::table('picture')->insert([
                     'news_number'  => $news_number,
-                    // 'path'         => $galleryPath,  **หมายเหตุ:** แนะนำให้มีคอลัมน์ path ในตาราง picture
                     'picture_name' => $hashedFileName,
                 ]);
             }
@@ -76,40 +74,28 @@ class NewsController extends Controller
 
     public function edit($news_number)
     {
-        // 1. ดึงข้อมูลข่าวที่ต้องการแก้ไขจากฐานข้อมูล
         $news = DB::table('news')->where('news_number', $news_number)->first();
-
-        // ถ้าไม่พบข่าว ให้ Redirect กลับไปพร้อมข้อความแจ้งเตือน
         if (! $news) {
             return redirect()->route('news.index')->with('error', 'ไม่พบข่าวที่ต้องการแก้ไข');
         }
-
-        // 2. ดึงข้อมูลรูปภาพประกอบจากตาราง picture
         $pictures = DB::table('picture')->where('news_number', $news_number)->get();
-
-        // 3. ส่งข้อมูลไปยัง View
         return view('office.news.edit', [
             'news'     => $news,
             'pictures' => $pictures,
         ]);
     }
 
-    /**
-     * Update the specified news item in storage.
-     */
     public function update(Request $request, $news_number)
     {
-        // 1. ตรวจสอบความถูกต้องของข้อมูล
         $request->validate([
             'title'           => 'required|string|max:255',
             'news_type'       => 'required',
             'date'            => 'required|date',
             'description'     => 'required|string',
-            'coverImage'      => 'nullable|image|mimes:jpeg,png,jpg,gif', // ภาพหน้าปกใหม่ (ไม่บังคับ)
-            'uploadedFiles.*' => 'nullable|image|mimes:jpeg,png,jpg,gif', // รูปประกอบใหม่ (ไม่บังคับ)
+            'coverImage'      => 'nullable|image|mimes:jpeg,png,jpg,gif', 
+            'uploadedFiles.*' => 'nullable|image|mimes:jpeg,png,jpg,gif', 
         ]);
 
-        // 2. ค้นหาข้อมูลข่าวเดิม
         $existing_news = DB::table('news')->where('news_number', $news_number)->first();
         if (! $existing_news) {
             return redirect()->back()->with('error', 'ไม่พบข่าวที่ต้องการอัปเดต');
@@ -117,9 +103,7 @@ class NewsController extends Controller
 
         $coverImagePath = $existing_news->path . '/' . $existing_news->picture_name;
 
-        // 3. จัดการอัปโหลด "ภาพหน้าปก" ใหม่ (ถ้ามี)
         if ($request->hasFile('coverImage')) {
-            // ลบไฟล์ภาพหน้าปกเก่า (ถ้ามี)
             if (File::exists(public_path($coverImagePath))) {
                 File::delete(public_path($coverImagePath));
             }
@@ -129,43 +113,31 @@ class NewsController extends Controller
             $hashedCoverImage = $news_number . '_' . date('YmdHis') . '.' . $coverFile->getClientOriginalExtension();
             $coverFile->move(public_path($coverPath), $hashedCoverImage);
 
-            // อัปเดต Path และชื่อไฟล์ใหม่
             DB::table('news')->where('news_number', $news_number)->update([
-                'path'         => $coverPath,
                 'picture_name' => $hashedCoverImage,
             ]);
         }
-
-        // 4. จัดการอัปโหลด "รูปภาพประกอบ" ใหม่ (ถ้ามี)
-        // โดยจะลบของเก่าทั้งหมดก่อน แล้วจึงเพิ่มของใหม่เข้าไป
         if ($request->hasFile('uploadedFiles')) {
-            // 4.1 ค้นหาและลบรูปภาพประกอบเก่าทั้งหมด
             $oldPictures = DB::table('picture')->where('news_number', $news_number)->get();
             foreach ($oldPictures as $pic) {
-                // ลบไฟล์ออกจาก server
                 if (File::exists(public_path('uploads/galleries/' . $pic->picture_name))) {
                     File::delete(public_path('uploads/galleries/' . $pic->picture_name));
                 }
             }
-            // ลบข้อมูลออกจากฐานข้อมูล
             DB::table('picture')->where('news_number', $news_number)->delete();
-
-            // 4.2 อัปโหลดและบันทึกรูปภาพประกอบชุดใหม่
             $galleryPath = 'uploads/galleries';
             foreach ($request->file('uploadedFiles') as $index => $file) {
-                $hashedFileName = $news_number . '_' . date('YmdHis') . '_gallery_' . ($index + 1) . '.' . $file->getClientOriginalExtension();
+                $hashedFileName = $news_number . '_' . date('Ymd') . '_gallery_' . ($index + 1) . '.' . $file->getClientOriginalExtension();
                 $file->move(public_path($galleryPath), $hashedFileName);
 
                 // บันทึกข้อมูลลงในตาราง 'picture'
                 DB::table('picture')->insert([
                     'news_number'  => $news_number,
-                    'path'         => $galleryPath,
                     'picture_name' => $hashedFileName,
                 ]);
             }
         }
 
-        // 5. อัปเดตข้อมูลอื่นๆ ของข่าว
         DB::table('news')->where('news_number', $news_number)->update([
             'title'       => $request->title,
             'news_typeid' => $request->news_type,
