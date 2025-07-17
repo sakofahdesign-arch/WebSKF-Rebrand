@@ -96,7 +96,7 @@ class NewsController extends Controller
             return redirect()->back()->with('error', 'ไม่พบข่าวที่ต้องการอัปเดต');
         }
 
-        $coverImagePath = $existing_news->path . '/' . $existing_news->picture_name;
+        $coverImagePath = 'uploads/covers/' . $existing_news->picture_name;
 
         if ($request->hasFile('coverImage')) {
             if (File::exists(public_path($coverImagePath))) {
@@ -105,7 +105,7 @@ class NewsController extends Controller
 
             $coverFile        = $request->file('coverImage');
             $coverPath        = 'uploads/covers';
-            $hashedCoverImage = $news_number . '_' . date('YmdHis') . '.' . $coverFile->getClientOriginalExtension();
+            $hashedCoverImage = $news_number . '_' . date('Ymd') . '.' . $coverFile->getClientOriginalExtension();
             $coverFile->move(public_path($coverPath), $hashedCoverImage);
 
             DB::table('news')->where('news_number', $news_number)->update([
