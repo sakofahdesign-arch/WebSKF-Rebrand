@@ -75,7 +75,7 @@
                             <div class="bg-white p-6 md:p-8 rounded-2xl shadow-xl border border-gray-200/80">
                                 @if($item['content_type'] === 'conditions')
                                     <div class="grid md:grid-cols-2 gap-8 items-center">
-                                        <img src="{{ asset($item['image']) }}" alt="สมุดบัญชีสหกรณ์" class="rounded-lg shadow-md w-full max-w-xs mx-auto">
+                                        <img src="{{ asset($item['image']) }}" alt="สมุดบัญชีสหกรณ์" class="rounded-lg shadow-md w-full max-w-xs mx-auto" loading="lazy">
                                         <ul class="space-y-4 text-lg text-gray-700">
                                             @foreach($item['conditions'] as $condition)
                                                 <li class="flex items-start">

@@ -47,7 +47,7 @@
                                 <a href="{{route('article', $item->news_number )}}" class="block">
                                     <img src="{{ url('uploads/covers/' . $item->picture_name) }}"
                                         class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
-                                        alt="{{ $item->title }}">
+                                        alt="{{ $item->title }}" loading="lazy">
                                     <div class="p-4">
                                         <p
                                             class="h-16 text-gray-800 font-semibold leading-tight text-ellipsis overflow-hidden">
@@ -70,7 +70,7 @@
                                 <a href="{{route('article', $item->news_number )}}" class="block">
                                     <img src="{{ url('uploads/covers/' . $item->picture_name) }}"
                                         class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
-                                        alt="{{ $item->title }}">
+                                        alt="{{ $item->title }}" loading="lazy">
                                     <div class="p-4">
                                         <p
                                             class="h-16 text-gray-800 font-semibold leading-tight text-ellipsis overflow-hidden">
@@ -93,7 +93,7 @@
                                 <a href="{{route('article', $item->news_number )}}" class="block">
                                     <img src="{{ url('uploads/covers/' . $item->picture_name) }}"
                                         class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
-                                        alt="{{ $item->title }}">
+                                        alt="{{ $item->title }}" loading="lazy">
                                     <div class="p-4">
                                         <p
                                             class="h-16 text-gray-800 font-semibold leading-tight text-ellipsis overflow-hidden">
@@ -116,7 +116,7 @@
                                 <a href="{{route('article', $item->news_number )}}" class="block">
                                     <img src="{{ url('uploads/covers/' . $item->picture_name) }}"
                                         class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
-                                        alt="{{ $item->title }}">
+                                        alt="{{ $item->title }}" loading="lazy">
                                     <div class="p-4">
                                         <p
                                             class="h-16 text-gray-800 font-semibold leading-tight text-ellipsis overflow-hidden">

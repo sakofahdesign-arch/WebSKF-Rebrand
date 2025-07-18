@@ -112,7 +112,7 @@
                                 <img src="{{ asset('images/branch/' . $branch['id'] . '.jpg') }}" 
                                      alt="รูปภาพสาขา {{ $branch['name'] }}" 
                                      class="w-full h-full object-cover min-h-[300px] md:min-h-[450px]"
-                                     onerror="this.onerror=null;this.src='https://placehold.co/800x600/e2e8f0/475569?text=Image+Not+Found';">
+                                     onerror="this.onerror=null;this.src='https://placehold.co/800x600/e2e8f0/475569?text=Image+Not+Found';" loading="lazy">
                             </div>
 
                             <div class="p-8 flex flex-col justify-center">

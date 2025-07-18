@@ -61,7 +61,7 @@
 
                     <div class="md:col-span-2">
                         <label class="block text-sm font-medium text-gray-700">ภาพหน้าปกปัจจุบัน</label>
-                        <img src="{{ asset('uploads/covers/' . $news->picture_name) }}" alt="Cover Image" class="mt-2 rounded-lg shadow-md max-h-48">
+                        <img src="{{ asset('uploads/covers/' . $news->picture_name) }}" alt="Cover Image" class="mt-2 rounded-lg shadow-md max-h-48" loading="lazy">
                     </div>
 
                     <div class="md:col-span-2">
@@ -76,7 +76,7 @@
                             <div class="mt-2 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                                 @foreach ($pictures as $pic)
                                     <div class="relative">
-                                        <img src="{{ asset('uploads/galleries/' . $pic->picture_name) }}" alt="Gallery image" class="rounded-lg shadow-md w-full h-24 object-cover">                                     
+                                        <img src="{{ asset('uploads/galleries/' . $pic->picture_name) }}" alt="Gallery image" class="rounded-lg shadow-md w-full h-24 object-cover" loading="lazy">                                     
                                     </div>
                                 @endforeach
                             </div>

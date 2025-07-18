@@ -34,8 +34,8 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 transition-all duration-700 ease-out" style="transition-delay: 200ms" :class="loaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'">
-            <img src="{{ asset('images/branch/mo1.jpg') }}" alt="Mobile Unit 1" class="rounded-2xl shadow-xl w-full h-64 object-cover">
-            <img src="{{ asset('images/branch/mo2.jpg') }}" alt="Mobile Unit 2" class="rounded-2xl shadow-xl w-full h-64 object-cover">
+            <img src="{{ asset('images/branch/mo1.jpg') }}" alt="Mobile Unit 1" class="rounded-2xl shadow-xl w-full h-64 object-cover" loading="lazy">
+            <img src="{{ asset('images/branch/mo2.jpg') }}" alt="Mobile Unit 2" class="rounded-2xl shadow-xl w-full h-64 object-cover" loading="lazy">
         </div>
 
         <div x-data="{ activeTab: 'mobile1' }">

@@ -20,7 +20,7 @@
                 </p>
                 @if ($news->picture_name)
                     <div class="mb-8 rounded-lg overflow-hidden shadow-md">
-                        <img src="{{ asset('uploads/covers/' . $news->picture_name) }}" alt="{{ $news->title ?? 'รูปภาพข่าวสารหลัก' }}" class="w-full h-auto object-cover" />
+                        <img src="{{ asset('uploads/covers/' . $news->picture_name) }}" alt="{{ $news->title ?? 'รูปภาพข่าวสารหลัก' }}" class="w-full h-auto object-cover" loading="lazy"/>
                     </div>
                 @endif
                 <div class="prose max-w-none lg:prose-lg mx-auto text-gray-800 leading-relaxed mb-8">
@@ -35,7 +35,7 @@
                                data-caption="{{ $news->title }}"
                                class="block rounded-lg overflow-hidden shadow-sm border border-gray-200 group">
                                 <img src="{{ asset('uploads/galleries/' . $image->picture_name) }}" alt="รูปภาพประกอบข่าว"
-                                     class="w-full h-48 object-cover transition-transform duration-300 ease-in-out group-hover:scale-105" />
+                                     class="w-full h-48 object-cover transition-transform duration-300 ease-in-out group-hover:scale-105" loading="lazy"/>
                             </a>
                         @endforeach
                     </div>
@@ -61,7 +61,7 @@
                                             <img src="{{ asset('uploads/covers/' . $side_item->picture_name) }}"
                                                  onerror="this.style.display='none'"
                                                  class="w-20 h-20 object-cover rounded-md flex-shrink-0 bg-gray-200"
-                                                 alt="{{ $side_item->title }}">
+                                                 alt="{{ $side_item->title }}" loading="lazy">
                                             <div>
                                                 <h3 class="text-base font-bold text-gray-800 leading-tight hover:text-blue-600">{{ $side_item->title }}</h3>
                                                 <p class="text-gray-500 text-xs mt-1">

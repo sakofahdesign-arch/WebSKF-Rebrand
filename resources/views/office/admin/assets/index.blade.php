@@ -56,7 +56,7 @@
                                 <td class="px-6 py-4">
                                     @if($item->picture_name)
                                         <img src="{{ asset('assets/' . $item->picture_name) }}"
-                                            class="w-24 h-16 object-cover rounded-md shadow-sm" alt="{{ $item->title }}">
+                                            class="w-24 h-16 object-cover rounded-md shadow-sm" alt="{{ $item->title }}" loading="lazy">
                                     @else
                                         <div
                                             class="w-24 h-16 bg-gray-200 rounded-md flex items-center justify-center text-xs text-gray-400">

@@ -58,7 +58,7 @@
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
                             <div>
                                 <img src="{{ asset($product['image']) }}" alt="{{ $product['name'] }}"
-                                     class="rounded-xl shadow-lg w-full h-auto object-cover">
+                                     class="rounded-xl shadow-lg w-full h-auto object-cover" loading="lazy">
                             </div>
                             <div class="space-y-6">
                                 <div>

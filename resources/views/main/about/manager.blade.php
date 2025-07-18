@@ -37,25 +37,25 @@
                     <div x-show="activeTab === 'directors'" x-transition:enter="transition ease-out duration-300"
                         x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
                         <img src="{{ asset('images/board/คณะกรรมการ68.jpg') }}" alt="คณะกรรมการดำเนินการ ชุดที่ 27"
-                            class="mx-auto rounded-2xl shadow-xl max-w-5xl w-full">
+                            class="mx-auto rounded-2xl shadow-xl max-w-5xl w-full" loading="lazy">
                     </div>
 
                     <div x-show="activeTab === 'executives'" x-transition:enter="transition ease-out duration-300"
                         x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" style="display: none;">
                         <img src="{{ asset('images/board/ผู้บริหาร68.jpg') }}" alt="ผู้บริหาร"
-                            class="mx-auto rounded-2xl shadow-xl max-w-5xl w-full">
+                            class="mx-auto rounded-2xl shadow-xl max-w-5xl w-full" loading="lazy">
                     </div>
 
                     <div x-show="activeTab === 'advisors'" x-transition:enter="transition ease-out duration-300"
                         x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" style="display: none;">
                         <img src="{{ asset('images/board/คณะที่ปรึกษา.jpg') }}" alt="คณะที่ปรึกษา"
-                            class="mx-auto rounded-2xl shadow-xl max-w-5xl w-full">
+                            class="mx-auto rounded-2xl shadow-xl max-w-5xl w-full" loading="lazy">
                     </div>
 
                     <div x-show="activeTab === 'founders'" x-transition:enter="transition ease-out duration-300"
                         x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" style="display: none;">
                         <img src="{{ asset('images/board/บอร์ดก่อตั้ง.jpg') }}" alt="ทำเนียบผู้ก่อตั้ง"
-                            class="mx-auto rounded-2xl shadow-xl max-w-5xl w-full">
+                            class="mx-auto rounded-2xl shadow-xl max-w-5xl w-full" loading="lazy">
                     </div>
                 </div>
             </div>

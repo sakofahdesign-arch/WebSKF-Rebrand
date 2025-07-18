@@ -33,7 +33,7 @@
                 </div>
                 <div class="md:w-1/2 flex justify-center">
                     <img src="{{asset('images/welfare/สวัสดิการช่วยเหลือค่ารักษาพยาบาล.jpg')}}" alt=""
-                        class="w-full max-w-md rounded-lg shadow-md border border-gray-200">
+                        class="w-full max-w-md rounded-lg shadow-md border border-gray-200" loading="lazy">
                 </div>
             </div>
 

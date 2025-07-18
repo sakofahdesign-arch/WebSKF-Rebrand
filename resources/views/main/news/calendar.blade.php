@@ -18,7 +18,7 @@
         </div>
         
         <div class="mb-12">
-             <img src="{{ asset('images/calendar/ปกโปสเตอร์.jpg') }}" class="w-full rounded-2xl shadow-xl object-cover h-auto" alt="ปฏิทินสหกรณ์">
+             <img src="{{ asset('images/calendar/ปกโปสเตอร์.jpg') }}" class="w-full rounded-2xl shadow-xl object-cover h-auto" alt="ปฏิทินสหกรณ์" loading="lazy">
         </div>
 
         <div x-data="{ activeTab: '{{ strtolower($months[$currentMonth ?? array_key_first($months)]) }}' }" class="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -45,7 +45,7 @@
                             <h3 class="text-center text-green-700 font-bold text-3xl mb-6">{{ $month }} 2568</h3>
                             
                             <a href="{{ url('images/calendar/' . $month . '.jpg') }}" data-fancybox="gallery" data-caption="{{ $month }} 2568">
-                                <img src="{{ url('images/calendar/' . $month . '.jpg') }}" class="w-full rounded-lg shadow-lg object-cover h-auto cursor-pointer hover:shadow-2xl transition-shadow" alt="ปฏิทินเดือน{{ $month }}">
+                                <img src="{{ url('images/calendar/' . $month . '.jpg') }}" class="w-full rounded-lg shadow-lg object-cover h-auto cursor-pointer hover:shadow-2xl transition-shadow" alt="ปฏิทินเดือน{{ $month }}" loading="lazy">
                             </a>
                         </div>
                     @endforeach

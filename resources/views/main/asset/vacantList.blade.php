@@ -15,7 +15,7 @@
                 @foreach ($asset as $item)
                     <div class="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200">
                         <a href="vacant/{{$item->id}}" class="block">
-                            <img src="{{ asset('assets/' . $item->picture_name) }}" alt="{{ $item->title ?? 'รูปภาพบ้าน' }}" class="w-full h-48 object-cover" />
+                            <img src="{{ asset('assets/' . $item->picture_name) }}" alt="{{ $item->title ?? 'รูปภาพบ้าน' }}" class="w-full h-48 object-cover" loading="lazy"/>
                             <div class="p-4">
                                 <h3 class="text-xl font-bold text-gray-800 mb-2 truncate">{{ $item->title }}</h3> 
                                 <p class="text-gray-700 leading-relaxed text-sm mb-2">

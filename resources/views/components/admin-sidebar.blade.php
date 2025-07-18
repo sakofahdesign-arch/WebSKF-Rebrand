@@ -9,7 +9,7 @@
     <div class="flex items-center justify-center mt-8">
         <div class="flex items-center">
             <img src="{{ asset('images/sakofah-logo.png') }}" alt="Logo" class="h-10 w-auto bg-white p-1 rounded-full"
-                onerror="this.onerror=null;this.src='https://placehold.co/40x40/FFFFFF/34D399?text=S';">
+                onerror="this.onerror=null;this.src='https://placehold.co/40x40/FFFFFF/34D399?text=S';" loading="lazy">
             <span class="ml-3 text-2xl font-bold">DASHBOARD</span>
         </div>
     </div>

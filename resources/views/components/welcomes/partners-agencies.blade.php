@@ -83,7 +83,7 @@
          <div class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-8 gap-x-6 gap-y-10 items-center justify-center">
              @foreach ($partners as $partner)
                  <a href="{{ $partner['url'] }}" target="_blank" rel="noopener noreferrer" class="block text-center">
-                     <img src="{{ url($partner['logo']) }}" alt="{{ $partner['name'] }}" class="h-20 w-auto mx-auto object-contain grayscale hover:grayscale-0 hover:scale-110 transition-all duration-300 ease-in-out" />
+                     <img src="{{ url($partner['logo']) }}" alt="{{ $partner['name'] }}" class="h-20 w-auto mx-auto object-contain grayscale hover:grayscale-0 hover:scale-110 transition-all duration-300 ease-in-out" loading="lazy"/>
                  </a>
              @endforeach
          </div>

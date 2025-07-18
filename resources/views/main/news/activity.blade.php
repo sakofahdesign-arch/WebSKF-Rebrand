@@ -29,7 +29,7 @@
                             <div class="overflow-hidden">
                                 <img src="{{ asset('uploads/covers/' . $item->picture_name) }}"
                                      alt="{{ $item->title ?? 'News Image' }}"
-                                     class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"/>
+                                     class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy"/>
                             </div>
 
                             <div class="p-6 flex-grow flex flex-col">
