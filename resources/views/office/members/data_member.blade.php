@@ -1,10 +1,6 @@
 @extends('layouts.admin-layout')
 @section('title', 'ข้อมูลสมาชิก: ' . $data_member->FNAME . ' ' . $data_member->LNAME)
 
-
-
-
-
 @section('content')
     <div class="container mx-auto space-y-8">
         <div class="flex flex-col sm:flex-row justify-between items-start">
