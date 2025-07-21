@@ -110,7 +110,7 @@
                         <td class="p-4 text-center">{{ $item->name_upload }}</td>
                         <td class="p-4 text-center">{{ $item->date_upload ? thaidate('j M Y', strtotime($item->date_upload)) : '-' }}</td>
                         <td class="p-4 text-center">
-                            <a href="{{ url($item->path . '/' . $item->file_name) }}" target="_blank" class="inline-flex items-center justify-center w-10 h-10 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-200" aria-label="ดาวน์โหลด">
+                            <a href="{{ asset('file/credit_folder/' . $item->file_name) }}" target="_blank" class="inline-flex items-center justify-center w-10 h-10 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-200" aria-label="ดาวน์โหลด">
                                 <i class="fas fa-download"></i>
                             </a>
                         </td>
@@ -128,7 +128,7 @@
         </div>
         @if(isset($data) && $data->hasPages())
             <div class="p-4 bg-gray-50 border-t">
-                {{ $data->appends(request()->query())->links('pagination::tailwind') }}
+                {{ $data->links() }}
             </div>
         @endif
     </div>

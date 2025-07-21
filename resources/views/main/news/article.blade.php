@@ -56,7 +56,7 @@
                         <ul class="space-y-4">
                             @foreach ($side_news as $side_item)
                                 <li>
-                                    <a href="{{ route('news.show', $side_item->news_number) }}" class="block p-3 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+                                    <a href="{{ route('article', $side_item->news_number) }}" class="block p-3 rounded-lg hover:bg-gray-100 transition-colors duration-200">
                                         <div class="flex items-start gap-4">
                                             <img src="{{ asset('uploads/covers/' . $side_item->picture_name) }}"
                                                  onerror="this.style.display='none'"

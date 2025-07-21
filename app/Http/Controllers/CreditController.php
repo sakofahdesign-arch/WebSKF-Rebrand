@@ -80,7 +80,7 @@ class CreditController extends Controller
         $uploadedFile = $request->file('file');
 
         // 1. สร้าง Path สำหรับจัดเก็บไฟล์
-        $path = 'file/credit_folder/' . $request->contractYear . '/' . $request->branch . '/' . $request->contractType;
+        $path = 'file/credit_folder/';
 
         // 2. สร้างชื่อไฟล์ใหม่ที่ปลอดภัยและไม่ซ้ำกัน
         // ทำความสะอาดเลขที่สัญญาเพื่อใช้เป็นส่วนหนึ่งของชื่อไฟล์
@@ -102,7 +102,7 @@ class CreditController extends Controller
                 'branch_id'   => $request->branch,
                 'credit_id'   => $request->contractType,
                 'year'        => $request->contractYear,
-                'file_name'   => $newFileName, // ใช้ชื่อไฟล์ใหม่ที่สร้างขึ้น
+                'file_name'   => $newFileName, 
                 'path'        => $path,
                 'name_upload' => session('username'),
                 'date_upload' => date('Y-m-d'),
