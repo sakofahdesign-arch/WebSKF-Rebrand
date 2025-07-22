@@ -60,17 +60,6 @@
 @push('scripts')
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-@if (session('success'))
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            Swal.fire({
-                icon: 'success',
-                title: 'สำเร็จ!',
-                text: "{{ session('success') }}",
-                timer: 2500,
-                showConfirmButton: false
-            });
-        });
-    </script>
-@endif
 @endpush
+
+@include('components.sweetalert2')

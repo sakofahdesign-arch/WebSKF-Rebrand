@@ -2,11 +2,6 @@
 
 @section('title', 'อัพโหลดไฟล์สินเชื่อ')
 
-{{-- Push SweetAlert2 script to the layout's head --}}
-@push('styles')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-@endpush
-
 @section('content')
     <div class="container mx-auto">
         <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6">อัพโหลดไฟล์สินเชื่อ</h1>
@@ -140,26 +135,4 @@
     </div>
 @endsection
 
-@push('scripts')
-    {{-- This script will display a SweetAlert2 notification if a session message exists --}}
-    @if (session('success'))
-        <script>
-            Swal.fire({
-                title: "สำเร็จ!",
-                text: "{{ session('success') }}",
-                icon: "success",
-                confirmButtonColor: '#34D399'
-            });
-        </script>
-    @endif
-    @if (session('error'))
-        <script>
-            Swal.fire({
-                title: "เกิดข้อผิดพลาด!",
-                text: "{{ session('error') }}",
-                icon: "error",
-                confirmButtonColor: '#EF4444'
-            });
-        </script>
-    @endif
-@endpush
+@include('components.sweetalert2')

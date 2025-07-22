@@ -2,10 +2,8 @@
 
 @section('title', 'แก้ไขข่าวสาร')
 
-{{-- Push required styles for Summernote and SweetAlert2 --}}
 @push('styles')
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endpush
 
 @section('content')
@@ -105,7 +103,6 @@
 @endsection
 
 @push('scripts')
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
 
     <script>
@@ -127,3 +124,5 @@
         });
     </script>
 @endpush
+
+@include('components.sweetalert2')

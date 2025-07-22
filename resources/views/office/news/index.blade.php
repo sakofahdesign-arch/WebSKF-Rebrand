@@ -2,9 +2,7 @@
 
 @section('title', 'Admin รายการข่าวสาร')
 
-@push('styles')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-@endpush
+
 
 @section('content')
     <div class="container mx-auto">
@@ -87,17 +85,4 @@
     </div>
 @endsection
 
-@push('scripts')
-    @if (session('success'))
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                Swal.fire({
-                    title: "สำเร็จ!",
-                    text: "{{ session('success') }}",
-                    icon: "success",
-                    confirmButtonColor: '#34D399'
-                });
-            });
-        </script>
-    @endif
-@endpush
+@include('components.sweetalert2')

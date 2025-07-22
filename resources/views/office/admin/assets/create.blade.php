@@ -134,18 +134,4 @@
     </div>
 @endsection
 
-@push('scripts')
-    @if (session('success'))
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'สำเร็จ!',
-                    text: "{{ session('success') }}",
-                    timer: 2500,
-                    showConfirmButton: false
-                });
-            });
-        </script>
-    @endif
-@endpush
+@include('components.sweetalert2')

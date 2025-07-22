@@ -3,7 +3,6 @@
 @section('title', 'เพิ่มข่าวสาร')
 @push('styles')
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endpush
 
 @section('content')
@@ -123,29 +122,6 @@
     });
 </script>
 
-{{-- This script will display a SweetAlert2 notification if a session message exists --}}
-@if (session('success'))
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Swal.fire({
-                title: "สำเร็จ!",
-                text: "{{ session('success') }}",
-                icon: "success",
-                confirmButtonColor: '#34D399'
-            });
-        });
-    </script>
-@endif
-@if (session('error'))
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Swal.fire({
-                title: "เกิดข้อผิดพลาด!",
-                text: "{{ session('error') }}",
-                icon: "error",
-                confirmButtonColor: '#EF4444'
-            });
-        });
-    </script>
-@endif
 @endpush
+
+@include('components.sweetalert2')
