@@ -7,7 +7,7 @@
                 <a href="https://www.facebook.com/Sakofah.Islam.Savings/" class="text-green-300 hover:text-white transition duration-300" aria-label="Facebook">
                     <i class="fab fa-facebook-f fa-lg"></i>
                 </a>
-                <a href="#" class="text-green-300 hover:text-white transition duration-300" aria-label="Line">
+                <a href="@sakofah" class="text-green-300 hover:text-white transition duration-300" aria-label="Line">
                     <i class="fab fa-line fa-lg"></i>
                 </a>
             </div>

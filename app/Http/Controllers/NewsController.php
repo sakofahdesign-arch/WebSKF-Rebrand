@@ -28,9 +28,29 @@ class NewsController extends Controller
             'news_type'       => 'required',
             'date'            => 'required|date',
             'description'     => 'required|string',
-            'coverImage'      => 'required|image|mimes:jpeg,png,jpg,gif', // 50MB
-            'uploadedFiles.*' => 'nullable|image|mimes:jpeg,png,jpg,gif', // Gallery images are optional
-        ]);
+            'coverImage'      => 'required|image|mimes:jpeg,png,jpg,gif',
+            'uploadedFiles.*' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+        ],
+            [
+                'title.required'        => 'กรุณาระบุหัวข้อข่าว',
+                'title.string'          => 'หัวข้อข่าวต้องเป็นข้อความ',
+                'title.max'             => 'หัวข้อข่าวต้องไม่เกิน 255 ตัวอักษร',
+
+                'news_type.required'    => 'กรุณาเลือกประเภทข่าว',
+
+                'date.required'         => 'กรุณาระบุวันที่เผยแพร่',
+                'date.date'             => 'วันที่เผยแพร่ไม่ถูกต้อง',
+
+                'description.required'  => 'กรุณาระบุรายละเอียดข่าว',
+                'description.string'    => 'รายละเอียดข่าวต้องเป็นข้อความ',
+
+                'coverImage.required'   => 'กรุณาอัปโหลดรูปภาพหน้าปก',
+                'coverImage.image'      => 'ไฟล์หน้าปกต้องเป็นรูปภาพ',
+                'coverImage.mimes'      => 'รูปภาพหน้าปกต้องเป็นไฟล์ประเภท jpeg, png, jpg หรือ gif',
+
+                'uploadedFiles.*.image' => 'ไฟล์แนบแต่ละไฟล์ต้องเป็นรูปภาพ',
+                'uploadedFiles.*.mimes' => 'ไฟล์แนบต้องเป็นประเภท jpeg, png, jpg หรือ gif',
+            ]);
 
         do {
             $news_number = mt_rand(10000, 99999);
@@ -42,10 +62,10 @@ class NewsController extends Controller
         $coverImage->move(public_path($coverPath), $hashedCoverImage);
         DB::table('news')->insert([
             'news_number'  => $news_number,
-            'title'        => $request->title,
-            'news_typeid'  => $request->news_type,
-            'dateupload'   => $request->date,
-            'description'  => $request->description,
+            'title'        => $request->input('title'),
+            'news_typeid'  => $request->input('news_type'),
+            'dateupload'   => $request->input('date'),
+            'description'  => $request->input('description'),
             'picture_name' => $hashedCoverImage,
         ]);
 
@@ -133,10 +153,10 @@ class NewsController extends Controller
         }
 
         DB::table('news')->where('news_number', $news_number)->update([
-            'title'       => $request->title,
-            'news_typeid' => $request->news_type,
-            'dateupload'  => $request->date,
-            'description' => $request->description,
+            'title'       => $request->input('title'),
+            'news_typeid' => $request->input('news_type'),
+            'dateupload'  => $request->input('date'),
+            'description' => $request->input('description'),
             'date'        => now(),
         ]);
 
