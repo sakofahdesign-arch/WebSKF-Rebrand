@@ -2,11 +2,11 @@
     <div class="relative h-[280px] overflow-hidden md:h-[480px]">
         <div class="hidden duration-700 ease-in-out" data-carousel-item>
             <img src="{{ asset('images/267-1.jpg') }}" class="absolute block w-full h-full object-cover"
-                alt="แบนเนอร์โปรโมชัน" loading="lazy">
+                alt="แบนเนอร์โปรโมชัน">
         </div>
         <div class="hidden duration-700 ease-in-out" data-carousel-item>
             <img src="{{ asset('images/values.jpg') }}" class="absolute block w-full h-full object-cover"
-                alt="ค่านิยมองค์กร" loading="lazy">
+                alt="ค่านิยมองค์กร">
         </div>
     </div>
     <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">

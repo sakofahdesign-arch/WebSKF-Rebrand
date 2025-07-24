@@ -1,20 +1,19 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class CreditController extends Controller
 {
     public function searchcredit(Request $request)
     {
         // สร้าง Query Builder สำหรับตาราง credit_upload และ join ตารางที่เกี่ยวข้อง
-        $query = DB::table('credit_upload')
-            ->join('credit_type', 'credit_type.credit_id', '=', 'credit_upload.credit_id')
-            ->join('branch_name', 'branch_name.branch_id', '=', 'credit_upload.branch_id');
+        $query = DB::table('credit_upload')->join('credit_type', 'credit_type.credit_id', '=', 'credit_upload.credit_id')->join('branch_name', 'branch_name.branch_id', '=', 'credit_upload.branch_id');
 
         // เก็บพารามิเตอร์ทั้งหมดจาก Request ยกเว้น 'page'
         // เพื่อนำไปใช้กับลิงก์ pagination ให้คงค่าการค้นหาไว้
@@ -28,9 +27,9 @@ class CreditController extends Controller
         // โดยเช็คว่ามีพารามิเตอร์การค้นหาใดๆ อยู่ใน Request หรือไม่
         // (แม้ว่าค่าจะเป็นสตริงว่างเปล่าก็ตาม)
         $isSearchTriggered = $request->has('year') ||
-                             $request->has('branch_id') ||
-                             $request->has('credit_id') ||
-                             $request->has('mem_id');
+            $request->has('branch_id') ||
+            $request->has('credit_id') ||
+            $request->has('mem_id');
 
         // หากมีการกดปุ่มค้นหา (isSearchTriggered เป็น true)
         // หรือหากเป็นการกดลิงก์ pagination (มีพารามิเตอร์ 'page')
@@ -72,8 +71,8 @@ class CreditController extends Controller
                 'credit_type.credit_name'
             )
                 ->orderBy('credit_upload.date_upload', 'desc') // เรียงตามวันที่อัปโหลดล่าสุด
-                ->paginate(15) // แบ่งหน้า 15 รายการต่อหน้า
-                ->appends($searchParams); // แนบพารามิเตอร์การค้นหาไปกับลิงก์ pagination
+                ->paginate(15)                                 // แบ่งหน้า 15 รายการต่อหน้า
+                ->appends($searchParams);                      // แนบพารามิเตอร์การค้นหาไปกับลิงก์ pagination
         }
         // หาก $isSearchTriggered เป็น false และ $request->has('page') เป็น false
         // (คือการเข้าหน้าครั้งแรกโดยไม่มีพารามิเตอร์ใดๆ)
