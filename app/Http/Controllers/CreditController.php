@@ -13,31 +13,11 @@ class CreditController extends Controller
 {
     public function searchcredit(Request $request)
     {
-        // สร้าง Query Builder สำหรับตาราง credit_upload และ join ตารางที่เกี่ยวข้อง
-        $query = DB::table('credit_upload')->join('credit_type', 'credit_type.credit_id', '=', 'credit_upload.credit_id')->join('branch_name', 'branch_name.branch_id', '=', 'credit_upload.branch_id');
-
-        // เก็บพารามิเตอร์ทั้งหมดจาก Request ยกเว้น 'page'
-        // เพื่อนำไปใช้กับลิงก์ pagination ให้คงค่าการค้นหาไว้
-        $searchParams = $request->except('page');
-
-        // กำหนดตัวแปร $data ให้เป็น LengthAwarePaginator ที่ว่างเปล่าเป็นค่าเริ่มต้น
-        // เพื่อให้เมื่อเข้าหน้าครั้งแรกโดยไม่มีการค้นหา จะไม่แสดงข้อมูลใดๆ
-        $data = new LengthAwarePaginator([], 0, 15);
-
-        // ตรวจสอบว่ามีการกดปุ่มค้นหาหรือไม่
-        // โดยเช็คว่ามีพารามิเตอร์การค้นหาใดๆ อยู่ใน Request หรือไม่
-        // (แม้ว่าค่าจะเป็นสตริงว่างเปล่าก็ตาม)
-        $isSearchTriggered = $request->has('year') ||
-        $request->has('branch_id') ||
-        $request->has('credit_id') ||
-        $request->has('mem_id');
-
-        // หากมีการกดปุ่มค้นหา (isSearchTriggered เป็น true)
-        // หรือหากเป็นการกดลิงก์ pagination (มีพารามิเตอร์ 'page')
+        $query             = DB::table('credit_upload')->join('credit_type', 'credit_type.credit_id', '=', 'credit_upload.credit_id')->join('branch_name', 'branch_name.branch_id', '=', 'credit_upload.branch_id');
+        $searchParams      = $request->except('page');
+        $data              = new LengthAwarePaginator([], 0, 15);
+        $isSearchTriggered = $request->has('year') || $request->has('branch_id') || $request->has('credit_id') || $request->has('mem_id');
         if ($isSearchTriggered || $request->has('page')) {
-
-            // ตรวจสอบและเพิ่มเงื่อนไขการค้นหาตามที่ผู้ใช้กรอก
-            // จะเพิ่มเงื่อนไข where ก็ต่อเมื่อช่องนั้นๆ มีข้อมูล (filled)
             if ($request->filled('year')) {
                 $query->where('credit_upload.year', $request->input('year'));
             }
@@ -47,18 +27,15 @@ class CreditController extends Controller
             }
 
             if ($request->filled('credit_id')) {
-                // ใช้ credit_upload.credit_id เนื่องจากเป็นคอลัมน์ประเภทสัญญาตามโครงสร้างตาราง
                 $query->where('credit_upload.credit_id', $request->input('credit_id'));
             }
 
             if ($request->filled('mem_id')) {
-                // ใช้ 'like' สำหรับการค้นหาบางส่วนของเลขสมาชิก
                 $query->where('credit_upload.mem_id', 'like', '%' . $request->input('mem_id') . '%');
             }
 
-            // ดึงข้อมูลที่เลือกทั้งหมด พร้อมเรียงลำดับและแบ่งหน้า
             $data = $query->select(
-                'credit_upload.id', // แก้ไขจาก 'id' เป็น 'id_credit' ตามโครงสร้างตาราง
+                'credit_upload.id',
                 'credit_upload.mem_id',
                 'credit_upload.fname',
                 'credit_upload.lname',
@@ -71,15 +48,10 @@ class CreditController extends Controller
                 'branch_name.name_branch',
                 'credit_type.credit_name'
             )
-                ->orderBy('credit_upload.date_upload', 'desc') // เรียงตามวันที่อัปโหลดล่าสุด
-                ->paginate(15)                                 // แบ่งหน้า 15 รายการต่อหน้า
-                ->appends($searchParams);                      // แนบพารามิเตอร์การค้นหาไปกับลิงก์ pagination
+                ->orderBy('credit_upload.date_upload', 'desc')
+                ->paginate(15)
+                ->appends($searchParams);
         }
-        // หาก $isSearchTriggered เป็น false และ $request->has('page') เป็น false
-        // (คือการเข้าหน้าครั้งแรกโดยไม่มีพารามิเตอร์ใดๆ)
-        // $data จะยังคงเป็น LengthAwarePaginator ที่ว่างเปล่าตามที่กำหนดไว้ตอนต้น
-
-        // ส่งข้อมูลไปยัง View
         return view('office.credits.searchcredit', compact('data'));
     }
 
@@ -105,7 +77,6 @@ class CreditController extends Controller
             'file.max'                => 'ไฟล์ขนาดไม่เกิน 10MB',
         ];
 
-        // ใช้ Validator::make แทน $request->validate เพื่อควบคุม error เอง
         $validator = Validator::make($request->all(), [
             'memberID'       => 'required|max:5',
             'firstName'      => 'required',
@@ -118,11 +89,8 @@ class CreditController extends Controller
         ], $messages);
 
         if ($validator->fails()) {
-            $errorMessages = implode('<br>', $validator->errors()->all());
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput()
-                ->with('error', $errorMessages);
+            $errorMessages = $validator->errors()->first();
+            return redirect()->back()->withErrors($validator)->withInput()->with('error', $errorMessages);
         }
 
         $uploadedFile       = $request->file('file');
@@ -143,7 +111,6 @@ class CreditController extends Controller
                 'credit_id'   => $request->input('contractType'),
                 'year'        => $request->input('contractYear'),
                 'file_name'   => $newFileName,
-                'path'        => $storagePath,
                 'name_upload' => session('username'),
                 'date_upload' => now()->toDateString(),
             ];
@@ -160,6 +127,7 @@ class CreditController extends Controller
         $credits = DB::table('credit_upload')
             ->join('credit_type', 'credit_upload.credit_id', '=', 'credit_type.credit_id')
             ->join('branch_name', 'credit_upload.branch_id', '=', 'branch_name.branch_id')
+            ->orderBy('credit_upload.date_upload', 'desc')
             ->get();
         foreach ($credits as $credit) {
             $filePath            = public_path('file/credit_folder/' . $credit->file_name);
