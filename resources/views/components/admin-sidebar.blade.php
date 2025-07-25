@@ -8,8 +8,7 @@
 
     <div class="flex items-center justify-center mt-8">
         <div class="flex items-center">
-            <img src="{{ asset('images/sakofah-logo.png') }}" alt="Logo" class="h-10 w-auto bg-white p-1 rounded-full"
-                onerror="this.onerror=null;this.src='https://placehold.co/40x40/FFFFFF/34D399?text=S';" loading="lazy">
+            <img src="{{ asset('images/sakofah-logo.png') }}" alt="Logo" class="h-10 w-auto bg-white p-1 rounded-full">
             <span class="ml-3 text-2xl font-bold">DASHBOARD</span>
         </div>
     </div>
@@ -107,6 +106,11 @@
                             <span class="ml-3">ประวัติการล็อกอิน</span>
                         </a>
                         <a href="{{route('announcements.index')}}"
+                            class="flex items-center px-4 py-2 rounded-md hover:bg-green-700 transition-colors duration-200">
+                            <i class="fas fa-file-upload w-5 h-5"></i>
+                            <span class="ml-3">อัพโหลดประกาศ</span>
+                        </a>
+                        <a href="{{route('credit.index')}}"
                             class="flex items-center px-4 py-2 rounded-md hover:bg-green-700 transition-colors duration-200">
                             <i class="fas fa-file-upload w-5 h-5"></i>
                             <span class="ml-3">อัพโหลดประกาศ</span>

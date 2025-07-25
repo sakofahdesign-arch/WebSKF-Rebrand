@@ -19,7 +19,7 @@
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 Swal.fire({
-                    title: "สำเร็จ!",
+                    title: "Error!",
                     text: "{{ session('error') }}",
                     icon: "error",
                     confirmButtonColor: '##ff0000'

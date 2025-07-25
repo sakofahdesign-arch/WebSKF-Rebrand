@@ -108,7 +108,7 @@
                         </td>
                         <td class="p-4 text-left">{{ $item->fname . '  ' . $item->lname }}</td>
                         <td class="p-4 text-center">{{ $item->name_upload }}</td>
-                        <td class="p-4 text-center">{{ $item->date_upload ? thaidate('j M Y', strtotime($item->date_upload)) : '-' }}</td>
+                        <td class="p-4 text-center">{{ thaidate('j M Y', strtotime($item->date_upload)) }}</td>
                         <td class="p-4 text-center">
                             <a href="{{ asset('file/credit_folder/' . $item->file_name) }}" target="_blank" class="inline-flex items-center justify-center w-10 h-10 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-200" aria-label="ดาวน์โหลด">
                                 <i class="fas fa-download"></i>

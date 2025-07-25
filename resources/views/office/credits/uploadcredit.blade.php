@@ -8,7 +8,7 @@
 
         <!-- Upload Form Card -->
         <div class="bg-white p-6 rounded-xl shadow-lg">
-            <form action="/postcredit" method="post" enctype="multipart/form-data">
+            <form action="{{route('postcredit')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 

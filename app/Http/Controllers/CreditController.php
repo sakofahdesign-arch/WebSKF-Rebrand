@@ -1,12 +1,13 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class CreditController extends Controller
 {
@@ -27,9 +28,9 @@ class CreditController extends Controller
         // โดยเช็คว่ามีพารามิเตอร์การค้นหาใดๆ อยู่ใน Request หรือไม่
         // (แม้ว่าค่าจะเป็นสตริงว่างเปล่าก็ตาม)
         $isSearchTriggered = $request->has('year') ||
-            $request->has('branch_id') ||
-            $request->has('credit_id') ||
-            $request->has('mem_id');
+        $request->has('branch_id') ||
+        $request->has('credit_id') ||
+        $request->has('mem_id');
 
         // หากมีการกดปุ่มค้นหา (isSearchTriggered เป็น true)
         // หรือหากเป็นการกดลิงก์ pagination (มีพารามิเตอร์ 'page')
@@ -89,7 +90,23 @@ class CreditController extends Controller
 
     public function postcredit(Request $request)
     {
-        $request->validate([
+        $messages = [
+            'memberID.required'       => 'กรุณาระบุรหัสสมาชิก',
+            'memberID.max'            => 'รหัสสมาชิกต้องไม่เกิน 5 ตัวอักษร',
+            'firstName.required'      => 'ใส่ชื่อด้วย',
+            'lastName.required'       => 'ใส่นามสกุลด้วย',
+            'contractNumber.required' => 'กรุณาระบุเลขที่สัญญา',
+            'contractYear.required'   => 'กรุณาระบุปีสัญญา',
+            'branch.required'         => 'กรุณาเลือกสาขา',
+            'contractType.required'   => 'กรุณาเลือกประเภทสัญญา',
+            'file.required'           => 'กรุณาแนบไฟล์',
+            'file.file'               => 'ไฟล์ไม่ถูกต้อง',
+            'file.mimes'              => 'ไฟล์ต้องเป็น pdf, doc หรือ docx เท่านั้น',
+            'file.max'                => 'ไฟล์ขนาดไม่เกิน 10MB',
+        ];
+
+        // ใช้ Validator::make แทน $request->validate เพื่อควบคุม error เอง
+        $validator = Validator::make($request->all(), [
             'memberID'       => 'required|max:5',
             'firstName'      => 'required',
             'lastName'       => 'required',
@@ -98,7 +115,15 @@ class CreditController extends Controller
             'branch'         => 'required',
             'contractType'   => 'required',
             'file'           => 'required|file|mimes:pdf,doc,docx|max:10240',
-        ]);
+        ], $messages);
+
+        if ($validator->fails()) {
+            $errorMessages = implode('<br>', $validator->errors()->all());
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', $errorMessages);
+        }
 
         $uploadedFile       = $request->file('file');
         $storagePath        = 'file/credit_folder/';
@@ -129,4 +154,32 @@ class CreditController extends Controller
             return redirect()->back()->with('error', 'เกิดข้อผิดพลาด ไม่สามารถอัพโหลดไฟล์ได้');
         }
     }
+
+    public function index()
+    {
+        $credits = DB::table('credit_upload')
+            ->join('credit_type', 'credit_upload.credit_id', '=', 'credit_type.credit_id')
+            ->join('branch_name', 'credit_upload.branch_id', '=', 'branch_name.branch_id')
+            ->get();
+        foreach ($credits as $credit) {
+            $filePath            = public_path('file/credit_folder/' . $credit->file_name);
+            $credit->file_exists = $credit->file_name && File::exists($filePath);
+        }
+        return view('office.credits.index', compact('credits'));
+    }
+
+    public function destroy($id)
+    {
+        $credit = DB::table('credit_upload')->where('id', $id)->first();
+
+        $filePath = public_path('file/credit_folder/' . $credit->file_name);
+        if (File::exists($filePath)) {
+            File::delete($filePath);
+        }
+
+        DB::table('credit_upload')->where('id', $id)->delete();
+
+        return redirect()->back()->with('success', 'ลบข้อมูลเรียบร้อยแล้ว');
+    }
+
 }

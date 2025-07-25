@@ -58,9 +58,13 @@ Route::middleware(['check.session'])->group(function () {
     Route::get('/form', [OrderController::class, 'form'])->name('form');
     Route::get('/publish', [OrderController::class, 'publish'])->name('publish');
 
+    // Credit
     Route::get('/searchcredit', [CreditController::class, 'searchcredit'])->name('searchcredit');
     Route::get('/uploadcredit', [CreditController::class, 'uploadcredit'])->name('uploadcredit');
     Route::post('/postcredit', [CreditController::class, 'postcredit'])->name('postcredit');
+    Route::get('/credit', [CreditController::class, 'index'])->name('credit.index');
+    Route::delete('/credit/{id}', [CreditController::class, 'destroy'])->name('credit.delete');
+
 
     // Perfomance
     Route::get('/performance', [PerformanceController::class, 'index'])->name('performance.index');
