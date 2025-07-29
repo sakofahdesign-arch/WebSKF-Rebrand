@@ -1,11 +1,10 @@
-<header class="bg-green-600 shadow-lg p-3 relative z-50">
+<header class="sticky top-0 z-50 bg-green-600 shadow-lg p-3">
     <div class="container mx-auto flex items-center justify-between h-10">
         <a href="{{route('index')}}" class="flex-shrink-0">
             <img src="{{ asset('images/sakofah-logo.png') }}" alt="Co-op Logo" class="h-9 w-auto">
         </a>
         <nav class="hidden md:block">
-            <ul class="flex items-center space-x-5 lg:space-x-6">
-               
+            <ul class="flex items-center space-x-5 lg:space-x-6">        
                 <li>
                     <a href="{{route('index')}}" class="nav-link text-white text-base font-medium hover:text-green-100 transition duration-300">หน้าหลัก</a>
                 </li>
@@ -191,7 +190,6 @@
                 </ul>
             </li>
 
-            {{-- Mobile Dropdown: ข่าวสาร --}}
             <li>
                 <div class="text-white text-2xl font-bold py-3 hover:text-green-200 flex items-center justify-center w-full cursor-pointer"
                     data-mobile-dropdown-toggle="news">
@@ -247,7 +245,6 @@
                 </ul>
             </li>
 
-            {{-- Mobile Dropdown: ติดต่อ --}}
             <li>
                 <div class="text-white text-2xl font-bold py-3 hover:text-green-200 flex items-center justify-center w-full cursor-pointer"
                     data-mobile-dropdown-toggle="contact">
@@ -266,7 +263,6 @@
                 </ul>
             </li>
 
-            {{-- Mobile Dropdown: พาทเนอร์สหกรณ์ --}}
             <li>
                 <div class="text-white text-2xl font-bold py-3 hover:text-green-200 flex items-center justify-center w-full cursor-pointer"
                     data-mobile-dropdown-toggle="partners">
@@ -278,13 +274,9 @@
                     </svg>
                 </div>
                 <ul class="hidden bg-green-800 bg-opacity-80 py-2" data-mobile-dropdown-menu="partners">
-                    <li><a href="#" class="block text-white text-xl py-2 hover:bg-green-700">ทิพยตะกาฟุล</a>
-                    </li>
-                    <li><a href="https://www.tiptakaful.com/th/insurance" target="_blank" rel="noopener noreferrer"
-                            class="block text-white text-xl py-2 hover:bg-green-700">ผลิตภัณฑ์ทิพยตะกาฟุล</a></li>
-                    <li><a href="https://affinity.tipinsure.com/product/affinity/takaful_branch?branch=TKF_SKF"
-                            target="_blank" rel="noopener noreferrer"
-                            class="block text-white text-xl py-2 hover:bg-green-700">ซื้อประกันกับทิพยตะกาฟุล</a></li>
+                    <li><a href="#" class="block text-white text-xl py-2 hover:bg-green-700">ทิพยตะกาฟุล</a></li>
+                    <li><a href="https://www.tiptakaful.com/th/insurance" target="_blank" rel="noopener noreferrer" class="block text-white text-xl py-2 hover:bg-green-700">ผลิตภัณฑ์ทิพยตะกาฟุล</a></li>
+                    <li><a href="https://affinity.tipinsure.com/product/affinity/takaful_branch?branch=TKF_SKF" target="_blank" rel="noopener noreferrer" class="block text-white text-xl py-2 hover:bg-green-700">ซื้อประกันกับทิพยตะกาฟุล</a></li>
                 </ul>
             </li>
         </ul>
@@ -340,13 +332,7 @@
             const fullWidthDropdownTriggers = document.querySelectorAll('.full-width-dropdown-trigger');
             const fullWidthDropdownOverlay = document.getElementById('full-width-dropdown-overlay');
             const dropdownContentArea = document.getElementById('dropdown-content-area');
-            
-            // **FIX 1: Shared hideTimeout**
-            // Move hideTimeout outside the loop to prevent flickering when moving between triggers.
             let hideTimeout;
-
-            // **FIX 2: Cleaner Content Layout**
-            // Removed images and wrapper divs. Using CSS columns on the <ul> for a clean, responsive layout.
             const dropdownContents = {
                 'เกี่ยวกับเรา': `
                     <div>
@@ -434,7 +420,7 @@
             };
 
             function showDropdown(trigger) {
-                clearTimeout(hideTimeout); // Clear any pending hide action
+                clearTimeout(hideTimeout); 
                 const menuText = trigger.querySelector('.nav-link').textContent.trim();
                 const content = dropdownContents[menuText];
 
@@ -449,7 +435,7 @@
                 hideTimeout = setTimeout(() => {
                     fullWidthDropdownOverlay.classList.remove('visible', 'opacity-100');
                     fullWidthDropdownOverlay.classList.add('invisible', 'opacity-0');
-                }, 200); // Delay before hiding
+                }, 200);
             }
 
             fullWidthDropdownTriggers.forEach(trigger => {
