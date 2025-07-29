@@ -47,7 +47,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-slate-600">{{ number_format($item->LCONT_APPROVE_SAL, 2) }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right font-bold text-red-600">{{ number_format($item->LCONT_AMOUNT_SAL, 2) }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-center">
-                                    <form action="/loan_details" method="POST"> @csrf
+                                    <form action="/loan_details" method="POST">  @csrf
                                         <input type="hidden" name="code" value="{{ $item->CODE }}"><input type="hidden" name="br_no" value="{{ $item->BR_NO }}">
                                         <button type="submit" class="px-4 py-2 bg-blue-100 text-blue-700 hover:bg-blue-200 text-xs font-bold rounded-full transition-colors">ดูรายการ</button>
                                     </form>
