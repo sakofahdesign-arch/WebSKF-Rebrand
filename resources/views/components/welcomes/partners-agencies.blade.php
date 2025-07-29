@@ -73,7 +73,7 @@
     ];
  @endphp
 
-<section class="py-20 bg-gradient-to-b from-white to-gray-50">
+<section class="py-20 bg-gradient-to-b from-white to-gray-50 mb-4">
     <div class="container mx-auto px-4">
         <div class="text-center mb-16">
             <h2 class="text-4xl font-extrabold text-gray-800 tracking-tight">พันธมิตรและหน่วยงานที่เกี่ยวข้อง</h2>
@@ -81,12 +81,10 @@
             <div class="mt-3 h-1 w-20 bg-blue-600 mx-auto rounded-full"></div>
         </div>
 
-        <div
-            class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-8 items-center justify-center">
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-8 items-center justify-center">
             @foreach ($partners as $partner)
                 <a href="{{ $partner['url'] }}" target="_blank" rel="noopener noreferrer" class="block text-center">
-                    <div
-                        class="bg-white rounded-2xl border border-gray-200 shadow-sm p-4 hover:shadow-md transition-all duration-300 hover:scale-105">
+                    <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-4 hover:shadow-md transition-all duration-300 hover:scale-105">
                         <img src="{{ url($partner['logo']) }}" alt="{{ $partner['name'] }}"
                             class="h-20 w-auto mx-auto object-contain" loading="lazy" />
                     </div>

@@ -10,6 +10,13 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PerformanceController;
 use App\Http\Controllers\PublishController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+
+Route::post('/accept-cookie', function (Request $request) {
+    session(['cookie_accepted' => true]);
+    return response()->json(['status' => 'ok']);
+});
+Route::view('/privacy-policy', 'privacy');
 
 //  Main page
 Route::get('/', [HomeController::class, 'index'])->name('index');
@@ -64,7 +71,6 @@ Route::middleware(['check.session'])->group(function () {
     Route::post('/postcredit', [CreditController::class, 'postcredit'])->name('postcredit');
     Route::get('/credit', [CreditController::class, 'index'])->name('credit.index');
     Route::delete('/credit/{id}', [CreditController::class, 'destroy'])->name('credit.delete');
-
 
     // Perfomance
     Route::get('/performance', [PerformanceController::class, 'index'])->name('performance.index');

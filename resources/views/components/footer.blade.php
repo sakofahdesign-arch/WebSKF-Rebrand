@@ -1,24 +1,33 @@
 <footer class="bg-green-800 text-white p-8 mt-auto">
-    <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 text-center md:text-left">
+    <div
+        class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 text-center md:text-left">
         <div>
             <h3 class="text-xl font-bold mb-4 text-green-200"> สหกรณ์อิสลามษะกอฟะฮ จำกัด</h3>
-            <p class="text-sm text-green-100 leading-relaxed">เรามุ่งมั่นที่จะเป็นองค์กรทางการเงินที่มั่นคงและยั่งยืน เพื่อยกระดับคุณภาพชีวิตของสมาชิกภายใต้หลักการอิสลาม</p>
+            <p class="text-sm text-green-100 leading-relaxed">เรามุ่งมั่นที่จะเป็นองค์กรทางการเงินที่มั่นคงและยั่งยืน
+                เพื่อยกระดับคุณภาพชีวิตของสมาชิกภายใต้หลักการอิสลาม</p>
             <div class="mt-4 flex justify-center md:justify-start space-x-4">
-                <a href="https://www.facebook.com/Sakofah.Islam.Savings/" class="text-green-300 hover:text-white transition duration-300" aria-label="Facebook">
+                <a href="https://www.facebook.com/Sakofah.Islam.Savings/"
+                    class="text-green-300 hover:text-white transition duration-300" aria-label="Facebook">
                     <i class="fab fa-facebook-f fa-lg"></i>
                 </a>
-                <a href="@sakofah" class="text-green-300 hover:text-white transition duration-300" aria-label="Line">
+                <a href="https://line.me/R/ti/p/@sakofah"
+                    class="text-green-300 hover:text-white transition duration-300" aria-label="Line">
                     <i class="fab fa-line fa-lg"></i>
                 </a>
+
             </div>
         </div>
         <div>
             <h3 class="text-xl font-bold mb-4 text-green-200">บริการ</h3>
             <ul class="space-y-2 text-sm">
-                <li><a href="{{ route('register') }}" class="text-green-100 hover:text-white transition duration-300">สมัครสมาชิก</a></li>
-                <li><a href="{{ route('deposit') }}" class="text-green-100 hover:text-white transition duration-300">บริการเงินฝาก</a></li>
-                <li><a href="{{ route('credit_service') }}" class="text-green-100 hover:text-white transition duration-300">บริการสินเชื่อ</a></li>
-                <li><a href="{{ route('document') }}" class="text-green-100 hover:text-white transition duration-300">ดาวน์โหลดเอกสาร</a></li>
+                <li><a href="{{ route('register') }}"
+                        class="text-green-100 hover:text-white transition duration-300">สมัครสมาชิก</a></li>
+                <li><a href="{{ route('deposit') }}"
+                        class="text-green-100 hover:text-white transition duration-300">บริการเงินฝาก</a></li>
+                <li><a href="{{ route('credit_service') }}"
+                        class="text-green-100 hover:text-white transition duration-300">บริการสินเชื่อ</a></li>
+                <li><a href="{{ route('document') }}"
+                        class="text-green-100 hover:text-white transition duration-300">ดาวน์โหลดเอกสาร</a></li>
             </ul>
         </div>
         <div>
@@ -44,7 +53,8 @@
             <p class="text-sm text-green-100 mb-4">
                 เข้าสู่ระบบเพื่อจัดการข้อมูลหลังบ้านของสหกรณ์
             </p>
-            <a href="{{route('login')}}" class="inline-flex items-center justify-center bg-green-600 text-white hover:bg-green-700 font-bold py-2 px-4 rounded-lg text-sm shadow-md transition duration-300 w-full md:w-auto">
+            <a href="{{route('login')}}"
+                class="inline-flex items-center justify-center bg-green-600 text-white hover:bg-green-700 font-bold py-2 px-4 rounded-lg text-sm shadow-md transition duration-300 w-full md:w-auto">
                 <i class="fas fa-sign-in-alt mr-2"></i>
                 เข้าสู่ระบบ
             </a>
@@ -52,6 +62,8 @@
     </div>
 
     <div class="border-t border-green-700 mt-8 pt-6 text-center text-sm text-green-200">
-        <p>&copy; {{ date('Y') }} สหกรณ์อิสลามษะกอฟะฮ จำกัด. สงวนลิขสิทธิ์.</p>
+        <p>&copy; {{ date('Y') }} สหกรณ์อิสลามษะกอฟะฮ จำกัด. สงวนลิขสิทธิ์.
+            <a href="/privacy-policy" class="text-blue-600 hover:underline ml-1">นโยบายความเป็นส่วนตัว</a>
+        </p>
     </div>
 </footer>
