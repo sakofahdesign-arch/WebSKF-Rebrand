@@ -52,7 +52,8 @@
         @yield('content')
     </main>
     @include('components.footer')
-    <div id="cookie-consent" class="fixed bottom-4 left-4 right-4 md:left-8 md:right-auto md:bottom-8 max-w-sm bg-white border border-gray-200 rounded-xl shadow-lg p-4 md:p-6 z-50 hidden">
+    <div id="cookie-consent"
+        class="fixed bottom-4 left-4 right-4 md:left-8 md:right-auto md:bottom-8 max-w-sm bg-white border border-gray-200 rounded-xl shadow-lg p-4 md:p-6 z-50 hidden">
         <div class="text-sm text-gray-700">
             เว็บไซต์นี้ใช้คุกกี้เพื่อวิเคราะห์และปรับปรุงประสบการณ์ของผู้ใช้
             <a href="/privacy-policy" class="text-blue-600 underline hover:text-blue-800 ml-1">เรียนรู้เพิ่มเติม</a>
@@ -66,26 +67,31 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const consent = localStorage.getItem("cookie_consent");
-            if (!consent) {
-                document.getElementById("cookie-consent").classList.remove("hidden");
-            }
-
-            document.getElementById("accept-cookies").addEventListener("click", function () {
-                localStorage.setItem("cookie_consent", "true");
-                document.getElementById("cookie-consent").classList.add("hidden");
-                fetch("/accept-cookie", {
+    document.addEventListener("DOMContentLoaded", function () {
+        const consent = localStorage.getItem("cookie_consent");
+        if (consent === "true") {
+            // เรียก backend ให้บันทึกข้อมูลแค่ครั้งเดียว
+            if (!localStorage.getItem("visitor_logged")) {
+                fetch("/track-visitor", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                         "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
                     },
-                    body: JSON.stringify({ consent: true })
-                });
-            });
-        });
-    </script>
+                    body: JSON.stringify({ track: true })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    console.log("Visited saved", data);
+                    localStorage.setItem("visitor_logged", "true"); // ป้องกันการบันทึกซ้ำ
+                })
+                .catch(err => console.error("Visitor tracking failed", err));
+            }
+        }
+    });
+</script>
+
+
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
     @stack('scripts')

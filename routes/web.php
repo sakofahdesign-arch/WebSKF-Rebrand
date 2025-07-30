@@ -10,12 +10,10 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PerformanceController;
 use App\Http\Controllers\PublishController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
 
-Route::post('/accept-cookie', function (Request $request) {
-    session(['cookie_accepted' => true]);
-    return response()->json(['status' => 'ok']);
-});
+
+Route::post('/accept-cookie', [HomeController::class, 'acceptCookie'])->name('accept.cookie');
+Route::post('/track-visitor', [HomeController::class, 'track']);
 Route::view('/privacy-policy', 'privacy');
 
 //  Main page

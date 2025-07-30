@@ -3,10 +3,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Jenssegers\Agent\Agent;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $information = DB::table('news')->orderByDesc('dateupload')->where('news_typeid', 1)->limit(8)->get();
         $welfare     = DB::table('news')->orderByDesc('dateupload')->where('news_typeid', 2)->limit(8)->get();
@@ -15,6 +17,35 @@ class HomeController extends Controller
         return view('welcome', compact('information', 'welfare', 'credit', 'foundation'));
     }
 
+    public function acceptCookie(Request $request)
+    {
+        session(['cookie_accepted' => true]);
+        DB::table('visited_history')->insert([
+            'login_time' => now(),
+            'ip_address' => $request->ip(),
+            'browser'    => (new Agent())->browser(),
+            'version'    => (new Agent())->version((new Agent())->browser()),
+            'platform'   => (new Agent())->platform(),
+        ]);
+        return response()->json(['status' => 'ok']);
+    }
+
+    public function track(Request $request)
+    {
+        $agent = new Agent();
+
+        DB::table('visited_history')->insert([
+            'login_time' => now(),
+            'ip_address' => $request->ip(),
+            'browser'    => $agent->browser(),
+            'version'    => $agent->version($agent->browser()),
+            'platform'   => $agent->platform(),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return response()->json(['status' => 'ok']);
+    }
     public function history()
     {
         return view('main.about.history');
