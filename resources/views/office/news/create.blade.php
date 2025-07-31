@@ -2,8 +2,24 @@
 
 @section('title', 'เพิ่มข่าวสาร')
 @push('styles')
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
+    <style>
+        .note-editable ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+        }
+
+        .note-editable ol {
+            list-style-type: decimal;
+            padding-left: 1.5rem;
+        }
+
+        .note-editable li {
+            margin-bottom: 0.25rem;
+        }
+    </style>
 @endpush
+
 
 @section('content')
 <div class="container mx-auto">
@@ -96,31 +112,28 @@
 @endsection
 
 @push('scripts')
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
 
-<script>
-    $(document).ready(function() {
-        $('#summernote').summernote({
-            placeholder: 'ใส่รายละเอียดข่าวสารที่นี่...',
-            tabsize: 2,
-            height: 300,
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']]
-            ]
+    <script>
+        $(document).ready(function () {
+            $('#summernote').summernote({
+                placeholder: 'ใส่รายละเอียดข่าวสารที่นี่...',
+                tabsize: 2,
+                height: 300,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['fullscreen', 'codeview', 'help']]
+                ]
+            });
+            document.getElementById('date').valueAsDate = new Date();
         });
-
-        // Set default date to today
-        document.getElementById('date').valueAsDate = new Date();
-    });
-</script>
-
+    </script>
 @endpush
 
 @include('components.sweetalert2')

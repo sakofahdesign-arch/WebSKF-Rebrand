@@ -29,7 +29,10 @@
                         ['name' => 'แบบฟอร์มยินยอมหักผ่านบัญชี', 'path' => 'file/form/แบบฟอร์มคำขอชำระผ่านการหัก.pdf'],
                         ['name' => 'แบบฟอร์มคำขอลาออกสมาชิก', 'path' => 'file/form/คำขอลาออกสมาชิก.pdf'],
                         ['name' => 'ใบสมัครเข้าร่วมโครงการ', 'path' => 'file/form/ใบสมัครเข้าร่วมโครงการ.pdf'],
-                        ['name' => 'Check list สินเชื่อฮาลาล', 'path' => 'file/form/CHECK LIST.pdf']
+                        ['name' => 'Check list สินเชื่อฮาลาล', 'path' => 'file/form/CHECK LIST.pdf'],
+                        ['name' => 'LY-SH-003-69 แบบคำขอไถ่ถอนจากจำนอง', 'path' => 'file/form/LY-SH-003-69 แบบคำขอไถ่ถอนจากจำนอง.pdf'],
+                        ['name' => 'LY-SH-002-69 แบบคำขออนุมัติใช้หลักทรัพย์ระหว่างจำนอง', 'path' => 'file/form/LY-SH-002-69 แบบคำขออนุมัติใช้หลักทรัพย์ระหว่างจำนอง.pdf'],
+                        ['name' => 'LY-SH-001-69 แบบคำขอปลอด หรือ เปลี่ยนแปลงหลักทรัพย์', 'path' => 'file/form/LY-SH-001-69 แบบคำขอปลอด หรือ เปลี่ยนแปลงหลักทรัพย์.pdf'],
                     ] as $file)
                         <div class="col-span-1">
                             <div class="bg-blue-50 rounded-lg shadow-md h-full flex items-center justify-center

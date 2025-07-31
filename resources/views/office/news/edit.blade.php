@@ -3,8 +3,25 @@
 @section('title', 'แก้ไขข่าวสาร')
 
 @push('styles')
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
+
+    <style>
+        .note-editable ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+        }
+
+        .note-editable ol {
+            list-style-type: decimal;
+            padding-left: 1.5rem;
+        }
+
+        .note-editable li {
+            margin-bottom: 0.25rem;
+        }
+    </style>
 @endpush
+
 
 @section('content')
     <div class="container mx-auto">
@@ -103,11 +120,11 @@
 @endsection
 
 @push('scripts')
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#summernote').summernote({
                 placeholder: 'ใส่รายละเอียดข่าวสารที่นี่...',
                 tabsize: 2,
@@ -126,4 +143,4 @@
     </script>
 @endpush
 
-{{-- @include('components.sweetalert2') --}}
+@include('components.sweetalert2')
