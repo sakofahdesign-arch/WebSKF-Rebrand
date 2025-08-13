@@ -27,7 +27,7 @@
                                     {{ $item->date ? thaidate('j M Y', strtotime($item->date)) : '-' }}
                                 </td>
                                 <td class="p-4 text-center">
-                                    <a href="{{ url('file/inside_publish/' . $item->uploadfile) }}" target="_blank"
+                                    <a href="{{ asset('file/inside_publish/' . $item->uploadfile) }}" target="_blank"
                                         class="inline-flex items-center justify-center w-10 h-10 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors duration-200"
                                         aria-label="ดาวน์โหลด {{ $item->title }}">
                                         <i class="fas fa-download"></i>
