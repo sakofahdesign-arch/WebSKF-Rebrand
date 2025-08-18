@@ -2,9 +2,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Jenssegers\Agent\Agent;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -343,6 +343,10 @@ class HomeController extends Controller
         return view('main.download.businessreport');
     }
 
+    public function contact()
+    {
+        return view('main.contact.contact');
+    }
     public function withus()
     {
         return view('main.contact.withus');

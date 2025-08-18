@@ -5,15 +5,13 @@
 @section('content')
     <div class="container mx-auto">
         <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6">แบบฟอร์มฝ่ายบุคคล</h1>
-
         <div class="bg-white rounded-xl shadow-lg overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="w-full text-sm">
                     <thead class="bg-gray-50">
                         <tr>
                             <th class="p-4 font-semibold text-gray-600 uppercase tracking-wider text-center">ชื่อเอกสาร</th>
-                            <th class="p-4 font-semibold text-gray-600 uppercase tracking-wider text-center">วันที่ประกาศ
-                            </th>
+                            <th class="p-4 font-semibold text-gray-600 uppercase tracking-wider text-center">วันที่ประกาศ</th>
                             <th class="p-4 font-semibold text-gray-600 uppercase tracking-wider text-center">ดาวน์โหลด</th>
                         </tr>
                     </thead>
@@ -27,9 +25,7 @@
                                     {{ $item->date ? thaidate('j M Y', strtotime($item->date)) : '-' }}
                                 </td>
                                 <td class="p-4 text-center">
-                                    <a href="{{ asset('file/inside_publish/' . $item->uploadfile) }}" target="_blank"
-                                        class="inline-flex items-center justify-center w-10 h-10 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors duration-200"
-                                        aria-label="ดาวน์โหลด {{ $item->title }}">
+                                    <a href="{{ asset('file/inside_publish/' . $item->uploadfile) }}" target="_blank" class="inline-flex items-center justify-center w-10 h-10 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors duration-200" aria-label="ดาวน์โหลด {{ $item->title }}">
                                         <i class="fas fa-download"></i>
                                     </a>
                                 </td>

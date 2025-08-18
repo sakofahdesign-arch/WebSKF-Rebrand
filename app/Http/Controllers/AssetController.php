@@ -38,7 +38,7 @@ class AssetController extends Controller
             'description2' => $request->description2 ?? '',
             'contact'      => $request->contact ?? '',
             'asset_type'   => $request->asset_type,
-            'picture_name' => '', // <-- ค่าว่างชั่วคราว
+            'picture_name' => '', 
             'date'         => now(),
         ]);
 
@@ -74,7 +74,7 @@ class AssetController extends Controller
 
                 // บันทึกข้อมูลลงตาราง asset_picture
                 DB::table('asset_picture')->insert([
-                    'id' => $asset_id,
+                    'id'           => $asset_id,
                     'picture_name' => $galleryFileName,
                 ]);
             }
