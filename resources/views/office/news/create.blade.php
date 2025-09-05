@@ -136,4 +136,3 @@
     </script>
 @endpush
 
-@include('components.sweetalert2')

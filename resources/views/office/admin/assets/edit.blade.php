@@ -58,4 +58,3 @@
 </div>
 @endsection
 
-@include('components.sweetalert2')

@@ -62,4 +62,3 @@
 
 @endpush
 
-@include('components.sweetalert2')

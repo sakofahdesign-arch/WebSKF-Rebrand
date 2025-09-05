@@ -10,12 +10,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" href="{{ url('images/sakofah-logo.png') }}" type="image/x-icon">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])    
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
 </head>
 
 <body class="font-sans antialiased bg-gray-100">
-    <div x-data="{ sidebarOpen: window.innerWidth >= 1024 }" @resize.window="sidebarOpen = window.innerWidth >= 1024" class="flex h-screen bg-gray-100">
+    <div x-data="{ sidebarOpen: window.innerWidth >= 1024 }" @resize.window="sidebarOpen = window.innerWidth >= 1024"
+        class="flex h-screen bg-gray-100">
         @include('components.admin-sidebar')
         <div class="flex-1 flex flex-col overflow-hidden">
             @include('components.admin-header')
@@ -25,6 +26,31 @@
         </div>
     </div>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                Swal.fire({
+                    title: "สำเร็จ!",
+                    text: "{{ session('success') }}",
+                    icon: "success",
+                    confirmButtonColor: '#34D399'
+                });
+            });
+        </script>
+    @endif
+    @if (session('error'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                Swal.fire({
+                    title: "Error!",
+                    text: "{{ session('error') }}",
+                    icon: "error",
+                    confirmButtonColor: '##ff0000'
+                });
+            });
+        </script>
+    @endif
     @stack('scripts')
 </body>
 

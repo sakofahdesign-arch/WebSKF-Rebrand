@@ -104,4 +104,3 @@
 
 @endsection
 
-@include('components.sweetalert2')
