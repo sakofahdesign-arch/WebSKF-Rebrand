@@ -3,9 +3,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage; // ใช้ Storage Facade
+use Illuminate\Support\Facades\File; // ใช้ Storage Facade
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\File; 
 
 class PublishController extends Controller
 {
@@ -16,7 +15,14 @@ class PublishController extends Controller
     {
         $announcements = DB::table('internal_announcement')
             ->orderBy('date', 'desc')
-            ->paginate(10); // แบ่งหน้า
+            ->paginate(10);
+
+        // เพิ่มการตรวจสอบไฟล์ก่อนส่งไป view
+        $announcements->map(function ($item) {
+            $filePath          = public_path('file/inside_publish/' . $item->uploadfile);
+            $item->file_exists = file_exists($filePath) && ! empty($item->uploadfile);
+            return $item;
+        });
 
         return view('office.admin.announcements.index', ['announcements' => $announcements]);
     }
@@ -77,20 +83,20 @@ class PublishController extends Controller
     public function update(Request $request, $id)
     {
         $announcement = DB::table('internal_announcement')->find($id);
-        if (!$announcement) {
+        if (! $announcement) {
             return redirect()->route('admin.announcements.index')->with('error', 'ไม่พบประกาศ');
         }
 
         $request->validate([
             'type_announcement' => 'required|string|max:255',
-            'title' => 'required|string|max:255',
-            'uploadfile' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,jpg,png|max:10240',
+            'title'             => 'required|string|max:255',
+            'uploadfile'        => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,jpg,png|max:10240',
         ]);
-        
+
         $uploadPath = 'file/inside_publish';
-        $data = [
+        $data       = [
             'type_announcement' => $request->type_announcement,
-            'title' => $request->title,
+            'title'             => $request->title,
         ];
 
         if ($request->hasFile('uploadfile')) {
@@ -114,7 +120,7 @@ class PublishController extends Controller
     /**
      * 6. จัดการการ "ลบ" ประกาศ
      */
-     public function destroy($id)
+    public function destroy($id)
     {
         $announcement = DB::table('internal_announcement')->find($id);
         if ($announcement) {

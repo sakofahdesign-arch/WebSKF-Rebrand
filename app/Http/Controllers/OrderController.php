@@ -18,13 +18,13 @@ class OrderController extends Controller
 
     public function form()
     {
-        $data = DB::table('internal_announcement')->select('id', 'title', 'date', 'uploadfile')->where('type_announcement', 1)->orderBy('date', 'DESC')->paginate(20);
+        $data = DB::table('internal_announcement')->select('id', 'title', 'date', 'uploadfile','type_announcement')->where('type_announcement', 1)->orderBy('date', 'DESC')->paginate(20);
         return view('office.orders.form', compact('data'));
     }
 
     public function publish()
     {
-        $data = DB::table('internal_announcement')->select('id', 'title', 'date', 'uploadfile')->where('type_announcement', 2)->orderByDesc('date')->paginate(15);
+        $data = DB::table('internal_announcement')->select('id', 'title', 'date', 'uploadfile','type_announcement')->where('type_announcement', 2)->orderByDesc('date')->paginate(15);
         return view('office.orders.publish', compact('data'));
     }
 
