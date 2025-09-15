@@ -40,7 +40,6 @@ class CreditController extends Controller
                 'credit_upload.fname',
                 'credit_upload.lname',
                 'credit_upload.fullcont_id',
-                'credit_upload.path',
                 'credit_upload.file_name',
                 'credit_upload.name_upload',
                 'credit_upload.date_upload',
