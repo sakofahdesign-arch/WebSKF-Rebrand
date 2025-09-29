@@ -1,43 +1,49 @@
 @php
     $promotions = [
-         [
+        [
             'id' => 1,
+            'slide_image' => 'images/banners/69-01-36.jpg',
+            'modal_type' => 'image',
+            'modal_content' => 'images/banners/69-01-31.jpg',
+        ],
+        [
+            'id' => 2,
             'slide_image' => 'images/banners/69-01-33.jpg',
             'modal_type' => null,
-            'modal_content' => null
+            'modal_content' => null,
         ],
-         [
-            'id' => 2,
+        [
+            'id' => 3,
             'slide_image' => 'images/banners/69-01-34.jpg',
             'modal_type' => null,
-            'modal_content' => null
-        ],
-         [
-            'id' => 3,
-            'slide_image' => 'images/banners/69-01-35.jpg',
-            'modal_type' => null,
-            'modal_content' => null
+            'modal_content' => null,
         ],
         [
             'id' => 4,
-            'slide_image' => 'images/banners/521-2.jpg',
+            'slide_image' => 'images/banners/69-01-35.jpg',
             'modal_type' => null,
-            'modal_content' => null
+            'modal_content' => null,
         ],
         [
             'id' => 5,
-            'slide_image' => 'images/banners/515-1.jpg',
+            'slide_image' => 'images/banners/521-2.jpg',
             'modal_type' => null,
-            'modal_content' => null
+            'modal_content' => null,
         ],
         [
             'id' => 6,
+            'slide_image' => 'images/banners/515-1.jpg',
+            'modal_type' => null,
+            'modal_content' => null,
+        ],
+        [
+            'id' => 7,
             'slide_image' => 'images/banners/450.jpg',
             'modal_type' => 'video',
             'modal_content' => 'https://www.youtube.com/embed/Wjw0Eovdgg0',
         ],
         [
-            'id' => 7,
+            'id' => 8,
             'slide_image' => 'images/banners/345-1.jpg',
             'modal_type' => 'image',
             'modal_content' => 'images/banners/345.jpg',
@@ -50,23 +56,27 @@
         <h2 class="text-4xl font-extrabold text-gray-800 mb-2">✨ โปรโมชันและข่าวสารล่าสุด</h2>
     </div>
 
-    <div x-data="{ activeSlide: 1, slideCount: {{ count($promotions) }}, 
-                 next() { this.activeSlide = this.activeSlide === this.slideCount ? 1 : this.activeSlide + 1 }, 
-                 prev() { this.activeSlide = this.activeSlide === 1 ? this.slideCount : this.activeSlide - 1 }, 
-                 autoplay() { setInterval(() => { this.next() }, 5000) } }" x-init="autoplay()"
-        class="relative w-full max-w-6xl mx-auto group">
+    <div x-data="{
+        activeSlide: 1,
+        slideCount: {{ count($promotions) }},
+        next() { this.activeSlide = this.activeSlide === this.slideCount ? 1 : this.activeSlide + 1 },
+        prev() { this.activeSlide = this.activeSlide === 1 ? this.slideCount : this.activeSlide - 1 },
+        autoplay() { setInterval(() => { this.next() }, 5000) }
+    }" x-init="autoplay()" class="relative w-full max-w-6xl mx-auto group">
         <!-- Slides -->
         <div
             class="relative h-auto md:h-[420px] overflow-hidden rounded-2xl shadow-xl bg-gray-100 flex items-center justify-center">
             @foreach ($promotions as $promo)
                 <div x-show="activeSlide === {{ $loop->iteration }}" x-transition:enter="transition ease-out duration-700"
                     x-transition:enter-start="opacity-0 scale-105" x-transition:enter-end="opacity-100 scale-100"
-                    x-transition:leave="transition ease-in duration-700" x-transition:leave-start="opacity-100 scale-100"
-                    x-transition:leave-end="opacity-0 scale-95" class="absolute inset-0">
+                    x-transition:leave="transition ease-in duration-700"
+                    x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
+                    class="absolute inset-0">
                     <!-- รูป -->
                     <img src="{{ asset($promo['slide_image']) }}"
                         class="max-h-[420px] w-auto object-contain {{ $promo['modal_content'] ? 'cursor-pointer' : '' }}"
-                        alt="โปรโมชัน" @if ($promo['modal_content']) data-modal-target="promotion-modal-{{ $promo['id'] }}"
+                        alt="โปรโมชัน"
+                        @if ($promo['modal_content']) data-modal-target="promotion-modal-{{ $promo['id'] }}"
                         data-modal-toggle="promotion-modal-{{ $promo['id'] }}" @endif>
 
                     <!-- Overlay ข้อความ -->
@@ -97,7 +107,8 @@
         <div class="absolute z-30 flex -translate-x-1/2 bottom-6 left-1/2 space-x-3">
             @foreach ($promotions as $promo)
                 <button @click="activeSlide = {{ $loop->iteration }}"
-                    :class="{'bg-blue-600 w-6': activeSlide === {{ $loop->iteration }}, 'bg-gray-300 w-3': activeSlide !== {{ $loop->iteration }}}"
+                    :class="{ 'bg-blue-600 w-6': activeSlide === {{ $loop->iteration }}, 'bg-gray-300 w-3': activeSlide !==
+                            {{ $loop->iteration }} }"
                     class="h-3 rounded-full transition-all duration-300"></button>
             @endforeach
         </div>
@@ -125,7 +136,8 @@
 <!-- Modal -->
 @foreach ($promotions as $promo)
     @if ($promo['modal_content'])
-        <div id="promotion-modal-{{ $promo['id'] }}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 
+        <div id="promotion-modal-{{ $promo['id'] }}" tabindex="-1" aria-hidden="true"
+            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 
                     justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full 
                 bg-gray-900/70 backdrop-blur-sm transition-opacity duration-300">
 
@@ -147,11 +159,12 @@
                     <!-- เนื้อหา -->
                     <div class="rounded-2xl overflow-hidden">
                         @if ($promo['modal_type'] == 'image')
-                            <img src="{{ asset($promo['modal_content']) }}" class="w-full h-auto" alt="รายละเอียดโปรโมชัน">
+                            <img src="{{ asset($promo['modal_content']) }}" class="w-full h-auto"
+                                alt="รายละเอียดโปรโมชัน">
                         @elseif ($promo['modal_type'] == 'video')
                             <div class="aspect-video">
-                                <iframe class="w-full h-full" src="{{ $promo['modal_content'] }}" title="YouTube video player"
-                                    frameborder="0"
+                                <iframe class="w-full h-full" src="{{ $promo['modal_content'] }}"
+                                    title="YouTube video player" frameborder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                     allowfullscreen></iframe>
                             </div>
