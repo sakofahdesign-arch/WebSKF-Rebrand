@@ -9,10 +9,17 @@ use App\Http\Controllers\OfficerController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PerformanceController;
 use App\Http\Controllers\PublishController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-
-Route::post('/accept-cookie', [HomeController::class, 'acceptCookie'])->name('accept.cookie');
+// Route สำหรับ JavaScript ที่ส่งมาเมื่อผู้ใช้กด 'ยอมรับ'
+Route::post('/set-cookie-consent', function (Request $request) {
+    if ($request->accepted) {
+        session()->put('cookie_accepted', true);
+        return response()->json(['status' => 'success', 'message' => 'Cookie consent session set.']);
+    }
+    return response()->json(['status' => 'error', 'message' => 'Invalid request.'], 400);
+});
 Route::post('/track-visitor', [HomeController::class, 'track']);
 Route::view('/privacy-policy', 'privacy');
 

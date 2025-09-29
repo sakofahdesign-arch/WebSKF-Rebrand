@@ -1,25 +1,43 @@
 @php
     $promotions = [
-        [
+         [
             'id' => 1,
+            'slide_image' => 'images/banners/69-01-33.jpg',
+            'modal_type' => null,
+            'modal_content' => null
+        ],
+         [
+            'id' => 2,
+            'slide_image' => 'images/banners/69-01-34.jpg',
+            'modal_type' => null,
+            'modal_content' => null
+        ],
+         [
+            'id' => 3,
+            'slide_image' => 'images/banners/69-01-35.jpg',
+            'modal_type' => null,
+            'modal_content' => null
+        ],
+        [
+            'id' => 4,
             'slide_image' => 'images/banners/521-2.jpg',
             'modal_type' => null,
             'modal_content' => null
         ],
         [
-            'id' => 2,
+            'id' => 5,
             'slide_image' => 'images/banners/515-1.jpg',
             'modal_type' => null,
             'modal_content' => null
         ],
         [
-            'id' => 3,
+            'id' => 6,
             'slide_image' => 'images/banners/450.jpg',
             'modal_type' => 'video',
             'modal_content' => 'https://www.youtube.com/embed/Wjw0Eovdgg0',
         ],
         [
-            'id' => 4,
+            'id' => 7,
             'slide_image' => 'images/banners/345-1.jpg',
             'modal_type' => 'image',
             'modal_content' => 'images/banners/345.jpg',

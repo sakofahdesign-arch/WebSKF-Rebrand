@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'สหกรณ์ออมทรัพย์ษะกอฟะฮ') }}@hasSection('title')
-        | @yield('title')
-    @endif
+            | @yield('title')
+        @endif
     </title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,15 +32,18 @@
     <meta name="twitter:image" content="@yield('og_image', asset('images/default-og-image.jpg'))" />
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @if (session('cookie_accepted'))
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y7M3HX122N"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag() { dataLayer.push(arguments); }
-            gtag('js', new Date());
-            gtag('config', 'G-Y7M3HX122N');
-        </script>
-    @endif
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y7M3HX122N"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'G-Y7M3HX122N');
+    </script>
+
 
     @stack('styles')
 </head>
@@ -64,33 +67,6 @@
             </button>
         </div>
     </div>
-
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const consent = localStorage.getItem("cookie_consent");
-        if (consent === "true") {
-            // เรียก backend ให้บันทึกข้อมูลแค่ครั้งเดียว
-            if (!localStorage.getItem("visitor_logged")) {
-                fetch("/track-visitor", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
-                    },
-                    body: JSON.stringify({ track: true })
-                })
-                .then(res => res.json())
-                .then(data => {
-                    console.log("Visited saved", data);
-                    localStorage.setItem("visitor_logged", "true"); // ป้องกันการบันทึกซ้ำ
-                })
-                .catch(err => console.error("Visitor tracking failed", err));
-            }
-        }
-    });
-</script>
-
-
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
     @stack('scripts')
