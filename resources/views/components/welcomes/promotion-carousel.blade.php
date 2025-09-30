@@ -107,8 +107,11 @@
         <div class="absolute z-30 flex -translate-x-1/2 bottom-6 left-1/2 space-x-3">
             @foreach ($promotions as $promo)
                 <button @click="activeSlide = {{ $loop->iteration }}"
-                    :class="{ 'bg-blue-600 w-6': activeSlide === {{ $loop->iteration }}, 'bg-gray-300 w-3': activeSlide !==
-                            {{ $loop->iteration }} }"
+                    :class="{
+                        'bg-blue-600 w-6': activeSlide === {{ $loop->iteration }},
+                        'bg-gray-300 w-3': activeSlide !==
+                            {{ $loop->iteration }}
+                    }"
                     class="h-3 rounded-full transition-all duration-300"></button>
             @endforeach
         </div>
