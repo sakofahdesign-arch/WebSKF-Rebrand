@@ -32,18 +32,12 @@
         ],
         [
             'id' => 6,
-            'slide_image' => 'images/banners/515-1.jpg',
-            'modal_type' => null,
-            'modal_content' => null,
-        ],
-        [
-            'id' => 7,
             'slide_image' => 'images/banners/450.jpg',
             'modal_type' => 'video',
             'modal_content' => 'https://www.youtube.com/embed/Wjw0Eovdgg0',
         ],
         [
-            'id' => 8,
+            'id' => 7,
             'slide_image' => 'images/banners/345-1.jpg',
             'modal_type' => 'image',
             'modal_content' => 'images/banners/345.jpg',
