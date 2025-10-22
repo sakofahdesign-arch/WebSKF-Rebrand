@@ -53,6 +53,7 @@ Route::get('/document', [HomeController::class, 'document'])->name('document');
 Route::get('/businessreport', [HomeController::class, 'businessreport'])->name('businessreport');
 Route::get('/withus', [HomeController::class, 'withus'])->name('withus');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+
 // Login
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'store'])->name('store');
