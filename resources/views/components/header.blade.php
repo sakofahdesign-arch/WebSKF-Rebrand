@@ -4,12 +4,12 @@
             <img src="{{ asset('images/sakofah-logo.png') }}" alt="Co-op Logo" class="h-9 w-auto">
         </a>
         <nav class="hidden md:block">
-            <ul class="flex items-center space-x-5 lg:space-x-6">        
+            <ul class="flex items-center space-x-5 lg:space-x-6">
                 <li>
                     <a href="{{route('index')}}" class="nav-link text-white text-base font-medium hover:text-green-100 transition duration-300">หน้าหลัก</a>
                 </li>
 
-        
+
                 <li class="relative full-width-dropdown-trigger">
                     <a href="#"
                         class="nav-link text-white text-base font-medium hover:text-green-100 transition duration-300 flex items-center">
@@ -150,7 +150,7 @@
                 </ul>
             </li>
             <li>
-                <div class="text-white text-2xl font-bold py-3 hover:text-green-200 flex items-center justify-center w-full cursor-pointer" data-mobile-dropdown-toggle="coop-services">บริการสหกรณ์ 
+                <div class="text-white text-2xl font-bold py-3 hover:text-green-200 flex items-center justify-center w-full cursor-pointer" data-mobile-dropdown-toggle="coop-services">บริการสหกรณ์
                     <svg class="ml-2 w-6 h-6 transform transition-transform duration-300" data-mobile-dropdown-icon="coop-services" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
@@ -420,7 +420,7 @@
             };
 
             function showDropdown(trigger) {
-                clearTimeout(hideTimeout); 
+                clearTimeout(hideTimeout);
                 const menuText = trigger.querySelector('.nav-link').textContent.trim();
                 const content = dropdownContents[menuText];
 

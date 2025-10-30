@@ -1,4 +1,4 @@
-<section id="main-hero-carousel" class="relative w-full" data-carousel="slide">
+<section id="main-hero-carousel" class="relative w-full md:pt-16" data-carousel="slide">
     <div class="relative h-[280px] overflow-hidden md:h-[480px]">
         <div class="hidden duration-700 ease-in-out" data-carousel-item>
             <img src="{{ asset('images/267-1.jpg') }}" class="absolute block w-full h-full object-cover"
