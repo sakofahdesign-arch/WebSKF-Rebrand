@@ -62,7 +62,7 @@ class PublishController extends Controller
             'date'              => now(),
         ]);
 
-        return redirect()->route('admin.announcements.index')->with('success', 'เพิ่มประกาศใหม่เรียบร้อยแล้ว');
+        return redirect()->route('announcements.index')->with('success', 'เพิ่มประกาศใหม่เรียบร้อยแล้ว');
     }
 
     /**
@@ -72,7 +72,7 @@ class PublishController extends Controller
     {
         $announcement = DB::table('internal_announcement')->find($id);
         if (! $announcement) {
-            return redirect()->route('office.admin.announcements.index')->with('error', 'ไม่พบประกาศที่ต้องการแก้ไข');
+            return redirect()->route('announcements.index')->with('error', 'ไม่พบประกาศที่ต้องการแก้ไข');
         }
         return view('office.admin.announcements.edit', ['announcement' => $announcement]);
     }
@@ -84,7 +84,7 @@ class PublishController extends Controller
     {
         $announcement = DB::table('internal_announcement')->find($id);
         if (! $announcement) {
-            return redirect()->route('admin.announcements.index')->with('error', 'ไม่พบประกาศ');
+            return redirect()->route('announcements.index')->with('error', 'ไม่พบประกาศ');
         }
 
         $request->validate([
@@ -114,7 +114,7 @@ class PublishController extends Controller
 
         DB::table('internal_announcement')->where('id', $id)->update($data);
 
-        return redirect()->route('office.admin.announcements.index')->with('success', 'แก้ไขประกาศเรียบร้อยแล้ว');
+        return redirect()->route('announcements.index')->with('success', 'แก้ไขประกาศเรียบร้อยแล้ว');
     }
 
     /**
@@ -129,8 +129,8 @@ class PublishController extends Controller
                 File::delete(public_path('file/inside_publish/' . $announcement->uploadfile));
             }
             DB::table('internal_announcement')->where('id', $id)->delete();
-            return redirect()->route('office.admin.announcements.index')->with('success', 'ลบประกาศเรียบร้อยแล้ว');
+            return redirect()->route('announcements.index')->with('success', 'ลบประกาศเรียบร้อยแล้ว');
         }
-        return redirect()->route('office.admin.announcements.index')->with('error', 'เกิดข้อผิดพลาดในการลบ');
+        return redirect()->route('announcements.index')->with('error', 'เกิดข้อผิดพลาดในการลบ');
     }
 }
