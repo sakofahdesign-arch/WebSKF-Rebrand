@@ -4,6 +4,13 @@
 @section('og_description', Str::limit(strip_tags($news->description), 155))
 @section('og_image', asset('uploads/covers/' . $news->picture_name))
 @push('styles')
+    <style>
+        .summernote-content ul,
+        .summernote-content ol {
+            list-style: initial !important;
+            margin-left: 20px;
+        }
+    </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
 @endpush
 
@@ -31,7 +38,10 @@
                         </div>
                     @endif
                     <div class="prose max-w-none lg:prose-lg mx-auto text-gray-800 leading-relaxed mb-8">
-                        {!! $news->description ?? '<p>ไม่พบเนื้อหาข่าวสาร</p>' !!}
+                        <div class="summernote-content">
+                            {!! $news->description !!}
+                        </div>
+
                     </div>
                     @if ($image_news && $image_news->isNotEmpty())
                         <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">รูปภาพประกอบ</h2>
