@@ -36,7 +36,7 @@
 
                     <div x-show="activeTab === 'directors'" x-transition:enter="transition ease-out duration-300"
                         x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
-                        <img src="{{ asset('images/board/คณะกรรมการ68.jpg') }}" alt="คณะกรรมการดำเนินการ ชุดที่ 27"
+                        <img src="{{ asset('images/board/คณะกรรมการชุดที่ 28.jpg') }}" alt="คณะกรรมการดำเนินการ ชุดที่ 28"
                             class="mx-auto rounded-2xl shadow-xl max-w-5xl w-full" loading="lazy">
                     </div>
 
