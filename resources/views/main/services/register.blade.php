@@ -2,36 +2,35 @@
 @section('title', 'สมัครสมาชิก')
 
 @php
-    // We structure the page data in an array for cleaner, more maintainable code.
     $steps = [
         [
             'step' => '01',
             'title' => 'คุณสมบัติและเงื่อนไข',
-            'icon' => '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>',
+            'icon' => '<i class="fas fa-file-contract text-2xl"></i>',
             'content_type' => 'conditions',
             'conditions' => [
                 'เปิดบัญชีครั้งแรกไม่ต่ำกว่า <strong class="text-green-700">200 บาท</strong>',
-                'ค่าธรรมเนียมแรกเข้า <strong class="text-green-700">100 บาท</strong> ตลอดการเป็นสมาชิก',
-                'สมทบกองทุนสวัสดิการสมาชิก <strong class="text-green-700">100 บาท</strong>',
-                'ฝากประจำเดือนละไม่ต่ำกว่า <strong class="text-green-700">200 บาท</strong>',
+                'ค่าธรรมเนียมแรกเข้า <strong class="text-green-700">100 บาท</strong> (ครั้งเดียว)',
+                'สมทบกองทุนสวัสดิการ <strong class="text-green-700">100 บาท</strong>',
+                'ฝากประจำรายเดือนขั้นต่ำ <strong class="text-green-700">200 บาท</strong>',
             ],
             'image' => 'images/sakofah_book.png',
         ],
         [
             'step' => '02',
-            'title' => 'สิทธิประโยชน์ที่จะได้รับ',
-            'icon' => '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>',
+            'title' => 'สิทธิประโยชน์สมาชิก',
+            'icon' => '<i class="fas fa-gift text-2xl"></i>',
             'content_type' => 'benefits',
             'benefits' => [
-                ['icon' => 'calendar-days', 'title' => 'เมื่อฝากครบ 6 เดือน', 'description' => 'สมาชิกสามารถยื่นขอสวัสดิการต่างๆ ของสหกรณ์ได้', 'color' => 'blue'],
-                ['icon' => 'calendar', 'title' => 'เมื่อฝากครบ 12 เดือน', 'description' => 'สมาชิกสามารถยื่นขอสินเชื่อกับสหกรณ์ฯ ได้', 'color' => 'blue'],
-                ['icon' => 'gift', 'title' => 'เงินปันผล', 'description' => 'มีการจัดสรรเงินปันผลทุกสิ้นปีตามเงื่อนไขของสหกรณ์ฯ', 'color' => 'yellow'],
+                ['icon' => 'fas fa-hand-holding-heart', 'title' => 'สวัสดิการครบวงจร', 'description' => 'ยื่นขอสวัสดิการต่างๆ ได้เมื่อฝากครบ 6 เดือน', 'color' => 'blue'],
+                ['icon' => 'fas fa-hand-holding-usd', 'title' => 'บริการสินเชื่อ', 'description' => 'สิทธิ์ยื่นขอสินเชื่อเมื่อเป็นสมาชิกครบ 12 เดือน', 'color' => 'cyan'],
+                ['icon' => 'fas fa-chart-line', 'title' => 'เงินปันผลประจำปี', 'description' => 'รับเงินปันผลและเฉลี่ยคืนตามผลประกอบการ', 'color' => 'yellow'],
             ],
         ],
         [
             'step' => '03',
             'title' => 'เริ่มต้นสมัครสมาชิก',
-            'icon' => '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" /></svg>',
+            'icon' => '<i class="fas fa-pen-fancy text-2xl"></i>',
             'content_type' => 'action',
             'video_url' => 'https://www.youtube.com/embed/TY-o6-CDB3Q',
         ],
@@ -39,91 +38,122 @@
 @endphp
 
 @section('content')
-<div class="bg-gray-50" x-data="{ loaded: false }" x-init="() => { setTimeout(() => loaded = true, 100) }">
-    <div class="container mx-auto px-4 py-16">
+<div class="bg-white min-h-screen pb-20" data-theme="light" x-data="{ loaded: false }" x-init="() => { setTimeout(() => loaded = true, 100) }">
 
-        <div class="text-center mb-16 transition-all duration-700 ease-out" :class="loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-green-500 mb-4">
-                ร่วมเป็นส่วนหนึ่งกับเรา
+    <div class="relative bg-green-50 py-20 overflow-hidden">
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full bg-green-100 opacity-50 blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-blue-100 opacity-50 blur-3xl"></div>
+
+        <div class="container mx-auto px-4 text-center relative z-10 transition-all duration-700 ease-out"
+             :class="loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-gray-800 mb-6 leading-tight">
+                ร่วมเป็นส่วนหนึ่งกับ<span class="text-green-600">เรา</span>
             </h1>
-            <p class="text-lg text-gray-600 max-w-3xl mx-auto">
-                เริ่มต้นเส้นทางสู่ความมั่นคงทางการเงินและชีวิตที่ดียิ่งขึ้นกับครอบครัวสหกรณ์ออมทรัพย์ษะกอฟะฮ
+            <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+                เริ่มต้นเส้นทางสู่ความมั่นคงทางการเงินและคุณภาพชีวิตที่ดียิ่งขึ้น กับครอบครัวสหกรณ์ออมทรัพย์ษะกอฟะฮ
             </p>
         </div>
+    </div>
 
-        <div class="relative max-w-5xl mx-auto">
-            <div class="hidden md:block absolute top-12 left-10 h-full border-l-2 border-dashed border-gray-300"></div>
+    <div class="container mx-auto px-4 py-16 max-w-5xl">
+        <div class="relative">
+            <div class="hidden md:block absolute left-[3.5rem] top-0 bottom-0 w-1 bg-gradient-to-b from-green-500 via-green-200 to-transparent z-0"></div>
 
             <div class="space-y-16">
-                @foreach($steps as $item)
-                    <section class="relative pl-10 md:pl-20 transition-all duration-500 ease-out opacity-0" 
-                             :class="{ 'opacity-100 translate-y-0': loaded }" 
-                             style="transition-delay: {{ ($loop->index * 200) + 300 }}ms">
+                @foreach($steps as $index => $item)
+                    <div class="relative z-10 group transition-all duration-700 ease-out"
+                         style="transition-delay: {{ $index * 200 }}ms"
+                         :class="loaded ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'">
 
-                        <div class="absolute top-0 left-0 flex items-center">
-                            <span class="z-10 flex items-center justify-center w-20 h-20 text-3xl font-bold text-white bg-green-600 rounded-full shadow-lg">
-                                {{ $item['step'] }}
-                            </span>
-                        </div>
-                        
-                        <div class="pl-4 md:pl-12">
-                            <div class="flex items-center mb-6">
-                                <div class="w-12 h-12 text-green-600">{!! $item['icon'] !!}</div>
-                                <h2 class="text-3xl font-bold text-gray-800 ml-4">{{ $item['title'] }}</h2>
+                        <div class="flex flex-col md:flex-row gap-8 items-start">
+
+                            <div class="flex-shrink-0 flex items-center justify-center w-28 h-28 mx-auto md:mx-0">
+                                <div class="w-full h-full rounded-full bg-white border-4 border-green-100 shadow-xl flex flex-col items-center justify-center text-green-600 relative overflow-hidden group-hover:scale-110 transition-transform duration-300">
+                                    <div class="absolute inset-0 bg-green-50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                    <span class="text-3xl font-black z-10">{{ $item['step'] }}</span>
+                                    <div class="z-10 mt-1">{!! $item['icon'] !!}</div>
+                                </div>
                             </div>
 
-                            <div class="bg-white p-6 md:p-8 rounded-2xl shadow-xl border border-gray-200/80">
+                            <div class="flex-grow w-full">
+                                <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center md:text-left flex items-center justify-center md:justify-start gap-3">
+                                    {{ $item['title'] }}
+                                    <div class="h-1 flex-grow bg-gray-100 rounded-full ml-4 hidden md:block"></div>
+                                </h2>
+
                                 @if($item['content_type'] === 'conditions')
-                                    <div class="grid md:grid-cols-2 gap-8 items-center">
-                                        <img src="{{ asset($item['image']) }}" alt="สมุดบัญชีสหกรณ์" class="rounded-lg shadow-md w-full max-w-xs mx-auto" loading="lazy">
-                                        <ul class="space-y-4 text-lg text-gray-700">
-                                            @foreach($item['conditions'] as $condition)
-                                                <li class="flex items-start">
-                                                    <svg class="h-6 w-6 text-green-500 mr-3 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                                    <span>{!! $condition !!}</span>
-                                                </li>
-                                            @endforeach
-                                        </ul>
+                                    <div class="card md:card-side bg-white shadow-xl border border-gray-100 overflow-hidden hover:shadow-2xl transition-shadow duration-300">
+                                        <figure class="md:w-2/5 bg-gray-50 p-6 flex items-center justify-center">
+                                            <img src="{{ asset($item['image']) }}" alt="Book" class="max-w-[180px] shadow-lg transform rotate-3 hover:rotate-0 transition-transform duration-500">
+                                        </figure>
+                                        <div class="card-body md:w-3/5 p-6 md:p-8">
+                                            <ul class="space-y-4">
+                                                @foreach($item['conditions'] as $condition)
+                                                    <li class="flex items-start gap-3 p-3 rounded-lg hover:bg-green-50 transition-colors">
+                                                        <i class="fas fa-check-circle text-green-500 text-xl mt-1 flex-shrink-0"></i>
+                                                        <span class="text-gray-700 text-lg">{!! $condition !!}</span>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
                                     </div>
                                 @endif
 
                                 @if($item['content_type'] === 'benefits')
-                                    <div class="grid sm:grid-cols-2 gap-6">
+                                    <div class="grid md:grid-cols-3 gap-6">
                                         @foreach($item['benefits'] as $benefit)
-                                            <div class="p-6 rounded-lg bg-{{ $benefit['color'] }}-50 border border-{{ $benefit['color'] }}-200 transition-all duration-300 hover:shadow-lg hover:border-{{ $benefit['color'] }}-300">
-                                                <h3 class="text-xl font-semibold text-{{ $benefit['color'] }}-800 mb-2">{{ $benefit['title'] }}</h3>
-                                                <p class="text-{{ $benefit['color'] }}-700">{{ $benefit['description'] }}</p>
+                                            @php
+                                                $colors = [
+                                                    'blue' => 'border-blue-200 bg-blue-50 text-blue-600 hover:border-blue-400',
+                                                    'cyan' => 'border-cyan-200 bg-cyan-50 text-cyan-600 hover:border-cyan-400',
+                                                    'yellow' => 'border-yellow-200 bg-yellow-50 text-yellow-600 hover:border-yellow-400',
+                                                ];
+                                                $theme = $colors[$benefit['color']] ?? $colors['blue'];
+                                            @endphp
+                                            <div class="card bg-white shadow-lg border-b-4 hover:-translate-y-2 transition-all duration-300 {{ $theme }}">
+                                                <div class="card-body p-6 text-center">
+                                                    <div class="w-14 h-14 mx-auto rounded-full bg-white shadow-sm flex items-center justify-center mb-3">
+                                                        <i class="{{ $benefit['icon'] }} text-2xl"></i>
+                                                    </div>
+                                                    <h3 class="card-title justify-center text-gray-800 mb-2">{{ $benefit['title'] }}</h3>
+                                                    <p class="text-sm text-gray-600">{{ $benefit['description'] }}</p>
+                                                </div>
                                             </div>
                                         @endforeach
                                     </div>
                                 @endif
-                                
+
                                 @if($item['content_type'] === 'action')
-                                    <div class="w-full max-w-3xl mx-auto rounded-lg overflow-hidden shadow-lg mb-8">
-                                        <div class="aspect-w-16 aspect-h-9">
-                                            <iframe src="{{ $item['video_url'] }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="w-full h-full"></iframe>
+                                    <div class="card bg-white shadow-xl overflow-hidden border border-gray-100">
+                                        <div class="grid md:grid-cols-2">
+                                            <div class="relative bg-gray-900 aspect-video md:aspect-auto">
+                                                <iframe class="w-full h-full absolute inset-0" src="{{ $item['video_url'] }}" title="Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                            </div>
+
+                                            <div class="p-8 md:p-10 flex flex-col justify-center items-center text-center bg-gradient-to-br from-green-50 to-white">
+                                                <h3 class="text-2xl font-bold text-gray-800 mb-3">พร้อมเริ่มต้นกับเราไหม?</h3>
+                                                <p class="text-gray-600 mb-8">ดาวน์โหลดใบสมัคร กรอกข้อมูล และยื่นเอกสารได้ที่สาขาใกล้บ้านท่าน</p>
+
+                                                <a href="{{asset('file/form/ใบคำขอสมัครสมาชิก INFORM 68-001.pdf')}}" target="_blank" class="btn btn-primary btn-lg rounded-full px-8 shadow-lg hover:shadow-green-200 hover:scale-105 transition-all text-white border-none bg-green-600 hover:bg-green-700">
+                                                    <i class="fas fa-file-download mr-2"></i> ดาวน์โหลดใบสมัคร
+                                                </a>
+
+                                                <div class="mt-6 text-sm text-gray-400">
+                                                    <i class="fas fa-info-circle mr-1"></i> ไฟล์ PDF ขนาด 2MB
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="text-center">
-                                        <h3 class="text-2xl font-bold mb-3 text-gray-800">พร้อมที่จะเริ่มต้นหรือยัง?</h3>
-                                        <p class="text-lg text-gray-600 mb-6">ดาวน์โหลดใบสมัคร หรือติดต่อเราเพื่อสอบถามข้อมูลเพิ่มเติมได้ทันที</p>
-                                        <a href="{{asset('file/form/ใบคำขอสมัครสมาชิก INFORM 68-001.pdf')}}" target="_blank" class="inline-flex items-center px-8 py-3 bg-green-600 text-white font-bold text-lg rounded-full shadow-lg hover:bg-green-700 hover:scale-105 transform transition-all duration-300">
-                                            <svg class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                                            ดาวน์โหลดใบสมัคร
-                                        </a>
-                                    </div>
                                 @endif
+
                             </div>
                         </div>
-                    </section>
+                    </div>
                 @endforeach
             </div>
+
+            <div class="hidden md:block absolute left-[3.3rem] bottom-0 w-3 h-3 bg-gray-300 rounded-full"></div>
         </div>
     </div>
 </div>
 @endsection
-
-@push('scripts')
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/aspect-ratio@0.4.2/src/index.min.js"></script>
-@endpush

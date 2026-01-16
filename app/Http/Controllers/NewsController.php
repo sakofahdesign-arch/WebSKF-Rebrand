@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
@@ -22,69 +23,84 @@ class NewsController extends Controller
 
     public function store(Request $request)
     {
-
         $request->validate([
             'title'           => 'required|string|max:255',
-            'news_type'       => 'required',
+            'news_type'       => 'required|exists:news_type,news_typeid',
             'date'            => 'required|date',
             'description'     => 'required|string',
-            'coverImage'      => 'required|image|mimes:jpeg,png,jpg,gif',
-            'uploadedFiles.*' => 'nullable|image|mimes:jpeg,png,jpg,gif',
-        ],
-            [
-                'title.required'        => 'กรุณาระบุหัวข้อข่าว',
-                'title.string'          => 'หัวข้อข่าวต้องเป็นข้อความ',
-                'title.max'             => 'หัวข้อข่าวต้องไม่เกิน 255 ตัวอักษร',
-
-                'news_type.required'    => 'กรุณาเลือกประเภทข่าว',
-
-                'date.required'         => 'กรุณาระบุวันที่เผยแพร่',
-                'date.date'             => 'วันที่เผยแพร่ไม่ถูกต้อง',
-
-                'description.required'  => 'กรุณาระบุรายละเอียดข่าว',
-                'description.string'    => 'รายละเอียดข่าวต้องเป็นข้อความ',
-
-                'coverImage.required'   => 'กรุณาอัปโหลดรูปภาพหน้าปก',
-                'coverImage.image'      => 'ไฟล์หน้าปกต้องเป็นรูปภาพ',
-                'coverImage.mimes'      => 'รูปภาพหน้าปกต้องเป็นไฟล์ประเภท jpeg, png, jpg หรือ gif',
-
-                'uploadedFiles.*.image' => 'ไฟล์แนบแต่ละไฟล์ต้องเป็นรูปภาพ',
-                'uploadedFiles.*.mimes' => 'ไฟล์แนบต้องเป็นประเภท jpeg, png, jpg หรือ gif',
-            ]);
-
-        do {
-            $news_number = mt_rand(10000, 99999);
-        } while (DB::table('news')->where('news_number', $news_number)->exists());
-
-        $coverImage       = $request->file('coverImage');
-        $coverPath        = 'uploads/covers';
-        $hashedCoverImage = $news_number . '_' . date('Ymd') . '.' . $coverImage->getClientOriginalExtension();
-        $coverImage->move(public_path($coverPath), $hashedCoverImage);
-        DB::table('news')->insert([
-            'news_number'  => $news_number,
-            'title'        => $request->input('title'),
-            'news_typeid'  => $request->input('news_type'),
-            'dateupload'   => $request->input('date'),
-            'description'  => $request->input('description'),
-            'picture_name' => $hashedCoverImage,
+            'coverImage'      => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'uploadedFiles.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+        ], [
+            'title.required'        => 'กรุณาระบุหัวข้อข่าว',
+            'title.max'             => 'หัวข้อข่าวต้องไม่เกิน 255 ตัวอักษร',
+            'news_type.required'    => 'กรุณาเลือกประเภทข่าว',
+            'date.required'         => 'กรุณาระบุวันที่เผยแพร่',
+            'description.required'  => 'กรุณาระบุรายละเอียดข่าว',
+            'coverImage.required'   => 'กรุณาอัปโหลดรูปภาพหน้าปก',
+            'coverImage.image'      => 'ไฟล์หน้าปกต้องเป็นรูปภาพ',
+            'coverImage.max'        => 'รูปภาพหน้าปกต้องมีขนาดไม่เกิน 5MB',
+            'uploadedFiles.*.image' => 'ไฟล์แนบแต่ละไฟล์ต้องเป็นรูปภาพ',
         ]);
 
-        if ($request->hasFile('uploadedFiles')) {
-            $galleryPath = 'uploads/galleries';
+        DB::beginTransaction();
+        $uploadedFilePaths = [];
 
-            foreach ($request->file('uploadedFiles') as $index => $file) {
-                $order          = sprintf('%02d', $index + 1);
-                $hashedFileName = $news_number . '_' . date('Ymd') . $order . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path($galleryPath), $hashedFileName);
+        try {
+            do {
+                $news_number = mt_rand(10000, 99999);
+            } while (DB::table('news')->where('news_number', $news_number)->exists());
 
-                DB::table('picture')->insert([
-                    'news_number'  => $news_number,
-                    'picture_name' => $hashedFileName,
-                ]);
+            $coverImage = $request->file('coverImage');
+            $coverPath = 'uploads/covers';
+            $hashedCoverImage = $news_number . '_' . date('YmdHis') . '.' . $coverImage->getClientOriginalExtension();
+
+            $coverImage->move(public_path($coverPath), $hashedCoverImage);
+            $uploadedFilePaths[] = public_path($coverPath . '/' . $hashedCoverImage);
+
+            DB::table('news')->insert([
+                'news_number'  => $news_number,
+                'title'        => $request->input('title'),
+                'news_typeid'  => $request->input('news_type'),
+                'dateupload'   => $request->input('date'),
+                'description'  => $request->input('description'),
+                'picture_name' => $hashedCoverImage,
+                'date'         => now(),
+            ]);
+
+            if ($request->hasFile('uploadedFiles')) {
+                $galleryPath = 'uploads/galleries';
+
+                foreach ($request->file('uploadedFiles') as $index => $file) {
+                    $order = sprintf('%02d', $index + 1);
+                    $hashedFileName = $news_number . '_' . date('YmdHis') . $order . '.' . $file->getClientOriginalExtension();
+
+                    $file->move(public_path($galleryPath), $hashedFileName);
+
+
+                    $uploadedFilePaths[] = public_path($galleryPath . '/' . $hashedFileName);
+
+                    DB::table('picture')->insert([
+                        'news_number'  => $news_number,
+                        'picture_name' => $hashedFileName,
+                    ]);
+                }
             }
-        }
 
-        return redirect()->route('news.index')->with('success', 'อัพโหลดข่าวสารสำเร็จ');
+            DB::commit();
+
+            return redirect()->route('news.index')->with('success', 'อัพโหลดข่าวสารสำเร็จ');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            foreach ($uploadedFilePaths as $path) {
+                if (File::exists($path)) {
+                    File::delete($path);
+                }
+            }
+
+            Log::error('News Upload Error: ' . $e->getMessage());
+
+            return back()->withInput()->with('error', 'เกิดข้อผิดพลาด: ' . $e->getMessage());
+        }
     }
 
     public function edit($news_number)
@@ -102,65 +118,114 @@ class NewsController extends Controller
 
     public function update(Request $request, $news_number)
     {
+        // 1. Validation
         $request->validate([
             'title'           => 'required|string|max:255',
             'news_type'       => 'required',
             'date'            => 'required|date',
             'description'     => 'required|string',
-            'coverImage'      => 'nullable|image|mimes:jpeg,png,jpg,gif',
-            'uploadedFiles.*' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+            'coverImage'      => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'uploadedFiles.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
         ]);
 
-        $existing_news = DB::table('news')->where('news_number', $news_number)->first();
-        if (! $existing_news) {
-            return redirect()->back()->with('error', 'ไม่พบข่าวที่ต้องการอัปเดต');
-        }
+        DB::beginTransaction();
 
-        $coverImagePath = 'uploads/covers/' . $existing_news->picture_name;
+        $newFilesPath = []; // เก็บ path ไฟล์ใหม่ (ลบทิ้งถ้า Error)
+        $oldFilesToDelete = []; // เก็บ path ไฟล์เก่า (ลบทิ้งถ้า Success)
 
-        if ($request->hasFile('coverImage')) {
-            if (File::exists(public_path($coverImagePath))) {
-                File::delete(public_path($coverImagePath));
+        try {
+            // 2. ตรวจสอบว่ามีข่าวนี้จริงไหม
+            $existing_news = DB::table('news')->where('news_number', $news_number)->first();
+            if (! $existing_news) {
+                return redirect()->back()->with('error', 'ไม่พบข่าวที่ต้องการอัปเดต');
             }
 
-            $coverFile        = $request->file('coverImage');
-            $coverPath        = 'uploads/covers';
-            $hashedCoverImage = $news_number . '_' . date('Ymd') . '.' . $coverFile->getClientOriginalExtension();
-            $coverFile->move(public_path($coverPath), $hashedCoverImage);
+            // 3. เตรียมข้อมูลสำหรับอัปเดต (ข้อความ)
+            $updateData = [
+                'title'       => $request->input('title'),
+                'news_typeid' => $request->input('news_type'),
+                'dateupload'  => $request->input('date'),
+                'description' => $request->input('description'),
+            ];
 
-            DB::table('news')->where('news_number', $news_number)->update([
-                'picture_name' => $hashedCoverImage,
-            ]);
-        }
-        if ($request->hasFile('uploadedFiles')) {
-            $oldPictures = DB::table('picture')->where('news_number', $news_number)->get();
-            foreach ($oldPictures as $pic) {
-                if (File::exists(public_path('uploads/galleries/' . $pic->picture_name))) {
-                    File::delete(public_path('uploads/galleries/' . $pic->picture_name));
+            // 4. จัดการรูปภาพหน้าปก (Cover Image)
+            if ($request->hasFile('coverImage')) {
+                $coverFile = $request->file('coverImage');
+                $coverPath = 'uploads/covers';
+                $hashedCoverImage = $news_number . '_' . date('YmdHis') . '_cover.' . $coverFile->getClientOriginalExtension();
+
+                // อัปโหลดไฟล์ใหม่
+                $coverFile->move(public_path($coverPath), $hashedCoverImage);
+                $newFilesPath[] = public_path($coverPath . '/' . $hashedCoverImage);
+
+                // เพิ่มชื่อไฟล์ลงใน Array ที่จะอัปเดต
+                $updateData['picture_name'] = $hashedCoverImage;
+
+                // เก็บ Path รูปเก่าไว้รอการลบ (ยังไม่ลบตอนนี้ รอ Commit ก่อน)
+                if ($existing_news->picture_name) {
+                    $oldFilesToDelete[] = public_path($coverPath . '/' . $existing_news->picture_name);
                 }
             }
-            DB::table('picture')->where('news_number', $news_number)->delete();
-            $galleryPath = 'uploads/galleries';
-            foreach ($request->file('uploadedFiles') as $index => $file) {
-                $order          = sprintf('%02d', $index + 1);
-                $hashedFileName = $news_number . '_' . date('Ymd') . $order . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path($galleryPath), $hashedFileName);
-                DB::table('picture')->insert([
-                    'news_number'  => $news_number,
-                    'picture_name' => $hashedFileName,
-                ]);
+
+            // อัปเดตตาราง news
+            DB::table('news')->where('news_number', $news_number)->update($updateData);
+
+            // 5. จัดการรูปภาพประกอบ (Gallery) - แบบแทนที่ของเดิม (Replace All)
+            if ($request->hasFile('uploadedFiles')) {
+                $galleryPath = 'uploads/galleries';
+
+                // ดึงรูปประกอบเก่ามาเก็บไว้รอการลบ
+                $oldPictures = DB::table('picture')->where('news_number', $news_number)->get();
+                foreach ($oldPictures as $pic) {
+                    $oldFilesToDelete[] = public_path($galleryPath . '/' . $pic->picture_name);
+                }
+
+                // ลบข้อมูลใน Database (ตาราง picture) ก่อน
+                DB::table('picture')->where('news_number', $news_number)->delete();
+
+                // วนลูปอัปโหลดรูปใหม่
+                foreach ($request->file('uploadedFiles') as $index => $file) {
+                    $order = sprintf('%02d', $index + 1);
+                    $hashedFileName = $news_number . '_' . date('YmdHis') . '_' . $order . '.' . $file->getClientOriginalExtension();
+
+                    // อัปโหลดไฟล์
+                    $file->move(public_path($galleryPath), $hashedFileName);
+                    $newFilesPath[] = public_path($galleryPath . '/' . $hashedFileName);
+
+                    // Insert ลง Database
+                    DB::table('picture')->insert([
+                        'news_number'  => $news_number,
+                        'picture_name' => $hashedFileName,
+                    ]);
+                }
             }
+
+            // 6. ถ้าทำงานถึงตรงนี้แสดงว่าไม่มี Error -> ยืนยัน Transaction
+            DB::commit();
+
+            // 7. ลบไฟล์เก่าจริงๆ (ทำหลังจากมั่นใจว่าข้อมูลใหม่เข้า DB แล้ว)
+            foreach ($oldFilesToDelete as $path) {
+                if (File::exists($path)) {
+                    File::delete($path);
+                }
+            }
+
+            return redirect()->route('news.index')->with('success', 'อัปเดตข่าวสารสำเร็จ');
+        } catch (\Exception $e) {
+            // 8. กรณีเกิด Error -> ยกเลิก Transaction
+            DB::rollBack();
+
+            // ลบไฟล์ใหม่ที่เพิ่งอัปโหลดไปทิ้ง (เพราะการบันทึกล้มเหลว)
+            foreach ($newFilesPath as $path) {
+                if (File::exists($path)) {
+                    File::delete($path);
+                }
+            }
+
+            Log::error('News Update Error: ' . $e->getMessage());
+
+            return back()->with('error', 'เกิดข้อผิดพลาด: ' . $e->getMessage())->withInput();
         }
-
-        DB::table('news')->where('news_number', $news_number)->update([
-            'title'       => $request->input('title'),
-            'news_typeid' => $request->input('news_type'),
-            'dateupload'  => $request->input('date'),
-            'description' => $request->input('description'),
-            'date'        => now(),
-        ]);
-
-        return redirect()->route('news.index')->with('success', 'อัปเดตข่าวสารสำเร็จ');
     }
 
     public function destroy($news_number)
@@ -202,7 +267,6 @@ class NewsController extends Controller
             DB::commit();
 
             return redirect()->back()->with('success', 'ลบข่าวสารพร้อมรูปภาพเรียบร้อยแล้ว');
-
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('เกิดข้อผิดพลาดในการลบข่าว: ' . $e->getMessage());
@@ -210,5 +274,4 @@ class NewsController extends Controller
             return redirect()->back()->with('error', 'เกิดข้อผิดพลาดในการลบข่าวสาร');
         }
     }
-
 }

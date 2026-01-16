@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
@@ -161,7 +162,7 @@ class OfficerController extends Controller
         $dividend = DB::connection('mysql_second')->table('SHR_PAY_DIVIDEND')
             ->where('SHR_PAY_DIVIDEND.MEM_ID', $mem_id)
             ->where('SHR_PAY_DIVIDEND.BR_NO', $br_no)
-            ->where('SHR_PAY_DIVIDEND.SHR_YEAR', '2023')
+            ->where('SHR_PAY_DIVIDEND.SHR_YEAR', date('Y') - 1)
             ->join('BK_M_BRANCH', 'BK_M_BRANCH.BR_NO', '=', 'SHR_PAY_DIVIDEND.BR_NO_PAY')
             ->select('SHR_PAY_DIVIDEND.SHR_YEAR', 'SHR_PAY_DIVIDEND.SHR_OUT_DATE', 'SHR_PAY_DIVIDEND.SHR_SUMUP_DIV', 'BK_M_BRANCH.BR_NAME')
             ->first();
@@ -178,7 +179,6 @@ class OfficerController extends Controller
             'stock_details'        => $stock_details,
             'dividend'             => $dividend,
         ]);
-
     }
 
     public function account_details(Request $request)
@@ -197,12 +197,12 @@ class OfficerController extends Controller
 
         $account_transactions = DB::connection('mysql_second')->table('BK_T_FINANCE')
             ->where('F_FROM_ACC', $request->account_number)
-            ->orderByDesc('F_TIME') 
-            ->get();       
+            ->orderByDesc('F_TIME')
+            ->get();
 
         return view('office.members.account_details', [
             'account_info' => $account_info,
-            'account'      => $account_transactions, 
+            'account'      => $account_transactions,
         ]);
     }
 
@@ -225,5 +225,4 @@ class OfficerController extends Controller
         ])->orderByDesc('LPD_DATE')->select('LPD_DATE', 'SUM_SAL', 'LCONT_BAL_AMOUNT', 'LPD_NUM_INST')->get();
         return view('office.members.loan_details', compact('loan_detail', 'loan_select'));
     }
-
 }

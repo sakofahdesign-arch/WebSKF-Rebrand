@@ -1,93 +1,144 @@
-<div class="bg-white rounded-2xl shadow-xl border border-gray-200/80">
+<div class="card bg-white shadow-lg border border-gray-100 overflow-hidden">
+    <div class="h-2 bg-gradient-to-r from-emerald-500 to-teal-400"></div>
 
-    <div class="p-6 border-b border-gray-200 flex justify-between items-center">
-        <div class="flex items-center">
-            <div class="w-12 h-12 flex items-center justify-center bg-green-100 rounded-full mr-4">
-                <svg class="w-6 h-6 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-3.75-2.25M21 18l-3.75-2.25m0 0l-3.75 2.25M15 15.75l-3.75 2.25" />
-                </svg>
-            </div>
-            <h3 class="text-2xl font-bold text-slate-800">ข้อมูลหุ้น</h3>
-        </div>
-        <a href="#" class="text-sm font-semibold text-blue-600 hover:underline">พิมพ์ใบหุ้น</a>
-    </div>
-
-    @if ($stock_exists)
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 p-6 bg-slate-50 border-b border-gray-200">
-            <div class="bg-white p-4 rounded-xl shadow-sm border flex items-center gap-4">
-                <div class="w-10 h-10 flex-shrink-0 flex items-center justify-center bg-green-100 rounded-full text-green-600">
-                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12m18 0v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6m18 0V9M3 12V9m18 3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+    <div class="p-6 md:p-8">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 border-b border-gray-100 pb-6">
+            <div class="flex items-center gap-4">
+                <div class="w-14 h-14 rounded-2xl bg-emerald-100 flex items-center justify-center text-emerald-600 shadow-sm">
+                    <i class="fas fa-chart-line text-2xl"></i>
                 </div>
                 <div>
-                    <span class="text-2xl font-bold text-green-600">{{ number_format($stock_select->SHR_SUM_BTH, 2) }}</span>
-                    <strong class="block text-xs text-slate-500">มูลค่าหุ้นทั้งหมด</strong>
+                    <h3 class="text-2xl font-bold text-gray-800">ข้อมูลหุ้น</h3>
+                    <p class="text-sm text-gray-500 mt-1">รายละเอียดและประวัติการถือครองหุ้น</p>
                 </div>
             </div>
-            <div class="bg-white p-4 rounded-xl shadow-sm border flex items-center gap-4">
-                <div class="w-10 h-10 flex-shrink-0 flex items-center justify-center bg-sky-100 rounded-full text-sky-600">
-                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0h18" /></svg>
-                </div>
-                <div>
-                    <span class="text-2xl font-bold text-slate-800">{{ $stock_select->MEM_AGE_OLD + $stock_age->total }}</span>
-                    <strong class="block text-xs text-slate-500">อายุสมาชิก (เดือน)</strong>
-                </div>
-            </div>
-            <div class="bg-white p-4 rounded-xl shadow-sm border flex items-center gap-4">
-                <div class="w-10 h-10 flex-shrink-0 flex items-center justify-center bg-amber-100 rounded-full text-amber-600">
-                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" /></svg>
-                </div>
-                <div>
-                    <span class="text-2xl font-bold text-slate-800">{{ number_format($stock_select->POINT_SHR, 2) }}</span>
-                    <strong class="block text-xs text-slate-500">คะแนนสะสม</strong>
-                </div>
-            </div>
-            <div class="bg-white p-4 rounded-xl shadow-sm border flex items-center gap-4">
-                <div class="w-10 h-10 flex-shrink-0 flex items-center justify-center bg-pink-100 rounded-full text-pink-600">
-                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 11.25v8.25a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 19.5v-8.25M12 4.875A2.625 2.625 0 1014.625 7.5H9.375A2.625 2.625 0 1012 4.875z" /></svg>
-                </div>
-                <div>
-                    <span class="text-2xl font-bold text-slate-800">{{ $dividend ? number_format($dividend->SHR_SUMUP_DIV, 2) : 'N/A' }}</span>
-                    <strong class="block text-xs text-slate-500">ปันผลปี 2566</strong>
-                </div>
-            </div>
+            
+            <a href="#" class="btn btn-sm btn-outline btn-success hover:text-white gap-2 transition-all">
+                <i class="fas fa-print"></i> พิมพ์ใบหุ้น
+            </a>
         </div>
 
-        <div class="p-6">
-            <h4 class="text-lg font-bold text-slate-700 mb-4">รายการเคลื่อนไหวหุ้น</h4>
-            <div class="overflow-x-auto">
-                <table class="datatable-init w-full text-sm">
-                    <thead class="bg-slate-50">
-                        <tr>
-                            <th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">วันที่</th>
-                            <th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">เลขที่ใบเสร็จ</th>
-                            <th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">ประเภท</th>
-                            <th class="px-6 py-3 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">จำนวนหุ้น</th>
-                            <th class="px-6 py-3 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">จำนวนเงิน (บาท)</th>
-                            <th class="px-6 py-3 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">มูลค่าคงเหลือ (บาท)</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-slate-700">
-                        @foreach ($stock_details as $item)
-                            <tr class="border-b border-slate-200 last:border-b-0 hover:bg-slate-50">
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $item->TMP_DATE_TODAY ? thaidate('j M Y', $item->TMP_DATE_TODAY) : '-' }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap font-mono">{{ $item->SLIP_NO }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2.5 py-1 text-xs font-semibold leading-tight text-blue-700 bg-blue-100 rounded-full">{{ $item->SHR_NA }}</span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right">{{ $item->TMP_SHARE_QTY }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right">{{ number_format($item->TMP_SHARE_BHT, 2) }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right font-bold text-slate-900">{{ number_format($item->SHR_SUM_BTH, 2) }}</td>
+        @if (isset($stock_exists) && $stock_exists)
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                
+                <div class="stat bg-emerald-50/50 rounded-xl border border-emerald-100 p-4 transition-transform hover:-translate-y-1 duration-300">
+                    <div class="stat-figure text-emerald-600">
+                        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                    </div>
+                    <div class="stat-title text-xs font-semibold text-emerald-600 uppercase tracking-wide">มูลค่าหุ้นทั้งหมด</div>
+                    <div class="stat-value text-2xl font-bold text-emerald-700 mt-1">
+                        {{ number_format($stock_select->SHR_SUM_BTH, 2) }}
+                    </div>
+                    <div class="stat-desc text-emerald-500 font-medium">บาท</div>
+                </div>
+
+                <div class="stat bg-sky-50/50 rounded-xl border border-sky-100 p-4 transition-transform hover:-translate-y-1 duration-300">
+                    <div class="stat-figure text-sky-600">
+                        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm">
+                            <i class="fas fa-user-clock"></i>
+                        </div>
+                    </div>
+                    <div class="stat-title text-xs font-semibold text-sky-600 uppercase tracking-wide">อายุสมาชิก</div>
+                    <div class="stat-value text-2xl font-bold text-sky-700 mt-1">
+                        {{ $stock_select->MEM_AGE_OLD + $stock_age->total }}
+                    </div>
+                    <div class="stat-desc text-sky-500 font-medium">เดือน</div>
+                </div>
+
+                <div class="stat bg-amber-50/50 rounded-xl border border-amber-100 p-4 transition-transform hover:-translate-y-1 duration-300">
+                    <div class="stat-figure text-amber-600">
+                        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm">
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="stat-title text-xs font-semibold text-amber-600 uppercase tracking-wide">คะแนนสะสม</div>
+                    <div class="stat-value text-2xl font-bold text-amber-700 mt-1">
+                        {{ number_format($stock_select->POINT_SHR, 2) }}
+                    </div>
+                    <div class="stat-desc text-amber-500 font-medium">คะแนน</div>
+                </div>
+
+                <div class="stat bg-pink-50/50 rounded-xl border border-pink-100 p-4 transition-transform hover:-translate-y-1 duration-300">
+                    <div class="stat-figure text-pink-600">
+                        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                    </div>
+                    <div class="stat-title text-xs font-semibold text-pink-600 uppercase tracking-wide">ปันผลปี {{ thaidate('Y', strtotime('-1 year')) }}</div>
+                    <div class="stat-value text-2xl font-bold text-pink-700 mt-1">
+                        {{ $dividend ? number_format($dividend->SHR_SUMUP_DIV, 2) : '-' }}
+                    </div>
+                    <div class="stat-desc text-pink-500 font-medium">บาท</div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-100 pt-6">
+                <div class="flex items-center gap-2 mb-4">
+                    <i class="fas fa-list-ul text-emerald-500"></i>
+                    <h4 class="text-lg font-bold text-gray-700">รายการเคลื่อนไหวหุ้น</h4>
+                </div>
+
+                <div class="rounded-lg border border-gray-100 overflow-hidden">
+                    <table class="stockTable w-full text-sm">
+                        <thead class="bg-gray-50 text-gray-500 font-bold">
+                            <tr>
+                                <th class="py-3 px-4 text-left w-32">วันที่</th>
+                                <th class="py-3 px-4 text-left">เลขที่ใบเสร็จ</th>
+                                <th class="py-3 px-4 text-center">ประเภท</th>
+                                <th class="py-3 px-4 text-right">จำนวนหุ้น</th>
+                                <th class="py-3 px-4 text-right">จำนวนเงิน (บาท)</th>
+                                <th class="py-3 px-4 text-right">คงเหลือ (บาท)</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="text-gray-700">
+                            @foreach ($stock_details as $item)
+                                <tr class="hover:bg-emerald-50/40 transition-colors border-b border-gray-100">
+                                    <td class="py-3 px-4 whitespace-nowrap">
+                                        <div class="font-medium text-gray-600">
+                                            {{ $item->TMP_DATE_TODAY ? thaidate('j M Y', $item->TMP_DATE_TODAY) : '-' }}
+                                        </div>
+                                    </td>
+                                    
+                                    <td class="py-3 px-4 font-mono text-gray-500">
+                                        {{ $item->SLIP_NO }}
+                                    </td>
+
+                                    <td class="py-3 px-4 text-center">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-600 border border-blue-100">
+                                            {{ $item->SHR_NA }}
+                                        </span>
+                                    </td>
+
+                                    <td class="py-3 px-4 text-right">
+                                        {{ number_format($item->TMP_SHARE_QTY) }}
+                                    </td>
+
+                                    <td class="py-3 px-4 text-right font-bold text-emerald-600">
+                                        {{ number_format($item->TMP_SHARE_BHT, 2) }}
+                                    </td>
+
+                                    <td class="py-3 px-4 text-right text-gray-800 font-semibold bg-gray-50/50">
+                                        {{ number_format($item->SHR_SUM_BTH, 2) }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-    @else
-        <div class="text-center py-16 text-gray-500">
-             <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" /></svg>
-             <h3 class="mt-2 text-lg font-medium text-gray-800">ไม่พบข้อมูลหุ้น</h3>
-             <p class="mt-1 text-sm">ไม่พบข้อมูลหุ้นของสมาชิกรายนี้ในระบบ</p>
-        </div>
-    @endif
+
+        @else
+            <div class="py-16 text-center">
+                <div class="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-folder-open text-3xl text-gray-300"></i>
+                </div>
+                <h3 class="text-lg font-bold text-gray-700">ไม่พบข้อมูลหุ้น</h3>
+                <p class="text-gray-500 mt-1">สมาชิกรายนี้ยังไม่มีประวัติการถือครองหุ้น</p>
+            </div>
+        @endif
+    </div>
 </div>
+
+

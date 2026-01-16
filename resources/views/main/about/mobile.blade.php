@@ -13,108 +13,241 @@
 
     // Data for Mobile Unit 2 Schedule (Weekly)
     $mobileUnit2Schedule = [
-        'week1' => [ 'title' => 'สัปดาห์ที่ 1 ของเดือน', 'schedule' => [ ['day' => 'จันทร์', 'am' => null, 'pm' => null], ['day' => 'อังคาร', 'am' => null, 'pm' => 'ตลาดนัดหน้า รร.บ้านช่องไม้เรียว'], ['day' => 'พุธ', 'am' => null, 'pm' => null], ['day' => 'พฤหัสบดี', 'am' => 'ตลาดนัดทรายขาว', 'pm' => 'ตลาดนัดทรายขาว'], ['day' => 'ศุกร์', 'am' => null, 'pm' => null], ], ],
-        'week2' => [ 'title' => 'สัปดาห์ที่ 2 ของเดือน', 'schedule' => [ ['day' => 'จันทร์', 'am' => null, 'pm' => null], ['day' => 'อังคาร', 'am' => null, 'pm' => 'ตลาดนัดหน้า รร.บ้านช่องไม้เรียว'], ['day' => 'พุธ', 'am' => 'บ้านร่าหมาด', 'pm' => 'บ้านร่าหมาด'], ['day' => 'พฤหัสบดี', 'am' => 'ตลาดนัดทรายขาว', 'pm' => 'ตลาดนัดทรายขาว'], ['day' => 'ศุกร์', 'am' => null, 'pm' => 'บ้านโคนกหน้าเขา'], ], ],
-        'week3' => [ 'title' => 'สัปดาห์ที่ 3 ของเดือน', 'schedule' => [ ['day' => 'จันทร์', 'am' => null, 'pm' => null], ['day' => 'อังคาร', 'am' => 'มัสยิดบ้านหัวประดู', 'pm' => 'มัสยิดบ้านหัวประดู'], ['day' => 'พุธ', 'am' => 'บ้านแหลมไทร', 'pm' => 'บ้านแหลมไทร'], ['day' => 'พฤหัสบดี', 'am' => 'ตลาดนัดทรายขาว', 'pm' => 'ตลาดนัดทรายขาว'], ['day' => 'ศุกร์', 'am' => null, 'pm' => 'มัสยิดบ้านม่วง'], ], ],
-        'week4' => [ 'title' => 'สัปดาห์ที่ 4 ของเดือน', 'schedule' => [ ['day' => 'จันทร์', 'am' => 'บ้านเกาะปู', 'pm' => null], ['day' => 'อังคาร', 'am' => 'บ้านทุ่งครก', 'pm' => 'บ้านทุ่งครก'], ['day' => 'พุธ', 'am' => 'บ้านห้วยน้ำปูน', 'pm' => 'บ้านห้วยน้ำปูน'], ['day' => 'พฤหัสบดี', 'am' => 'ตลาดนัดทรายขาว', 'pm' => 'ตลาดนัดทรายขาว'], ['day' => 'ศุกร์', 'am' => null, 'pm' => null], ], ],
+        'week1' => [
+            'title' => 'สัปดาห์ที่ 1 ของเดือน',
+            'schedule' => [
+                ['day' => 'จันทร์', 'am' => null, 'pm' => null],
+                ['day' => 'อังคาร', 'am' => null, 'pm' => 'ตลาดนัดหน้า รร.บ้านช่องไม้เรียว'],
+                ['day' => 'พุธ', 'am' => null, 'pm' => null],
+                ['day' => 'พฤหัสบดี', 'am' => 'ตลาดนัดทรายขาว', 'pm' => 'ตลาดนัดทรายขาว'],
+                ['day' => 'ศุกร์', 'am' => null, 'pm' => null],
+            ],
+        ],
+        'week2' => [
+            'title' => 'สัปดาห์ที่ 2 ของเดือน',
+            'schedule' => [
+                ['day' => 'จันทร์', 'am' => null, 'pm' => null],
+                ['day' => 'อังคาร', 'am' => null, 'pm' => 'ตลาดนัดหน้า รร.บ้านช่องไม้เรียว'],
+                ['day' => 'พุธ', 'am' => 'บ้านร่าหมาด', 'pm' => 'บ้านร่าหมาด'],
+                ['day' => 'พฤหัสบดี', 'am' => 'ตลาดนัดทรายขาว', 'pm' => 'ตลาดนัดทรายขาว'],
+                ['day' => 'ศุกร์', 'am' => null, 'pm' => 'บ้านโคนกหน้าเขา'],
+            ],
+        ],
+        'week3' => [
+            'title' => 'สัปดาห์ที่ 3 ของเดือน',
+            'schedule' => [
+                ['day' => 'จันทร์', 'am' => null, 'pm' => null],
+                ['day' => 'อังคาร', 'am' => 'มัสยิดบ้านหัวประดู', 'pm' => 'มัสยิดบ้านหัวประดู'],
+                ['day' => 'พุธ', 'am' => 'บ้านแหลมไทร', 'pm' => 'บ้านแหลมไทร'],
+                ['day' => 'พฤหัสบดี', 'am' => 'ตลาดนัดทรายขาว', 'pm' => 'ตลาดนัดทรายขาว'],
+                ['day' => 'ศุกร์', 'am' => null, 'pm' => 'มัสยิดบ้านม่วง'],
+            ],
+        ],
+        'week4' => [
+            'title' => 'สัปดาห์ที่ 4 ของเดือน',
+            'schedule' => [
+                ['day' => 'จันทร์', 'am' => 'บ้านเกาะปู', 'pm' => null],
+                ['day' => 'อังคาร', 'am' => 'บ้านทุ่งครก', 'pm' => 'บ้านทุ่งครก'],
+                ['day' => 'พุธ', 'am' => 'บ้านห้วยน้ำปูน', 'pm' => 'บ้านห้วยน้ำปูน'],
+                ['day' => 'พฤหัสบดี', 'am' => 'ตลาดนัดทรายขาว', 'pm' => 'ตลาดนัดทรายขาว'],
+                ['day' => 'ศุกร์', 'am' => null, 'pm' => null],
+            ],
+        ],
     ];
 @endphp
 
 @section('content')
-<div class="bg-gray-100" x-data="{ loaded: false }" x-init="() => { setTimeout(() => loaded = true, 50) }">
-    <div class="container mx-auto px-4 py-16">
+    {{-- ใช้ data-theme="light" ครอบไว้เพื่อบังคับ DaisyUI ให้ใช้ธีมสว่างเสมอ --}}
+    <div class="bg-white min-h-screen text-gray-800" data-theme="light" x-data="{ loaded: false }" x-init="() => { setTimeout(() => loaded = true, 50) }">
 
-        <div class="text-center mb-12 transition-all duration-700 ease-out" :class="loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-lime-500 mb-4">
-                หน่วยบริการเคลื่อนที่
-            </h1>
-            <p class="text-lg text-gray-600 max-w-3xl mx-auto">
-                อำนวยความสะดวกให้บริการทางการเงินแก่สมาชิกในพื้นที่ต่างๆ ตามตารางเวลาประจำเดือน
-            </p>
-        </div>
+        <div class="container mx-auto px-4 py-16">
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 transition-all duration-700 ease-out" style="transition-delay: 200ms" :class="loaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'">
-            <img src="{{ asset('images/branch/mo1.jpg') }}" alt="Mobile Unit 1" class="rounded-2xl shadow-xl w-full h-64 object-cover" loading="lazy">
-            <img src="{{ asset('images/branch/mo2.jpg') }}" alt="Mobile Unit 2" class="rounded-2xl shadow-xl w-full h-64 object-cover" loading="lazy">
-        </div>
-
-        <div x-data="{ activeTab: 'mobile1' }">
-            <div class="border-b border-gray-300 mb-8">
-                <nav class="-mb-px flex justify-center gap-6" aria-label="Tabs">
-                    <button @click="activeTab = 'mobile1'" :class="activeTab === 'mobile1' ? 'border-green-500 text-green-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'" class="whitespace-nowrap py-4 px-1 border-b-4 font-bold text-xl transition-colors">
-                        รถบริการเคลื่อนที่ 1 (โมบาย)
-                    </button>
-                    <button @click="activeTab = 'mobile2'" :class="activeTab === 'mobile2' ? 'border-green-500 text-green-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'" class="whitespace-nowrap py-4 px-1 border-b-4 font-bold text-xl transition-colors">
-                        รถบริการเคลื่อนที่ 2 (โมบาย)
-                    </button>
-                </nav>
+            <div class="text-center mb-12 transition-all duration-700 ease-out"
+                :class="loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'">
+                <h1 class="text-4xl md:text-5xl font-extrabold text-green-800 mb-4">
+                    หน่วยบริการเคลื่อนที่
+                </h1>
+                <div class="h-1.5 w-24 bg-green-500 mx-auto rounded-full mb-6"></div>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    อำนวยความสะดวกให้บริการทางการเงินแก่สมาชิกในพื้นที่ต่างๆ ใกล้บ้านท่าน
+                </p>
             </div>
 
-            <div class="mt-8">
-                <div x-show="activeTab === 'mobile1'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
-                    <div class="bg-white rounded-2xl shadow-2xl p-6 md:p-8">
-                        <h3 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-6">ตารางให้บริการโดยรถบริการเคลื่อนที่โมบาย</h3>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left">
-                                <thead class="bg-green-100 text-green-800 text-base">
-                                    <tr>
-                                        <th scope="col" class="px-6 py-4 rounded-l-xl font-bold">วัน</th>
-                                        <th scope="col" class="px-6 py-4 font-bold">09.30-10.30</th>
-                                        <th scope="col" class="px-6 py-4 font-bold">13.30-15.30</th>
-                                        <th scope="col" class="px-6 py-4 rounded-r-xl font-bold">15.30-16.30</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="text-base text-gray-700">
-                                    @foreach($mobileUnit1Schedule as $item)
-                                    <tr class="border-b border-gray-200">
-                                        <td class="px-6 py-4 font-bold">{{ $item['day'] }}</td>
-                                        <td class="px-6 py-4">{{ $item['t1'] ?? '-' }}</td>
-                                        <td class="px-6 py-4">{{ $item['t2'] ?? '-' }}</td>
-                                        <td class="px-6 py-4">{{ $item['t3'] ?? '-' }}</td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            <p class="text-base text-red-600 mt-6 p-2"><strong>*หมายเหตุ:</strong> วันจันทร์ วันอังคาร วันพุธ เดินทางไปตามลำดับก่อนหลัง / ในระหว่างเดือนมีการปรับเปลี่ยนตามความเหมาะสม</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 max-w-5xl mx-auto transition-all duration-700 ease-out"
+                style="transition-delay: 200ms" :class="loaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'">
+
+                <div class="hover-3d">
+                    <div
+                        class="card bg-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 overflow-hidden border border-gray-100">
+                        <figure class="h-64">
+                            <img src="{{ asset('images/branch/mo1.jpg') }}" alt="Mobile Unit 1"
+                                class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-700">
+                        </figure>
+                        <div class="card-body p-4 text-center">
+                            <h3 class="font-bold text-gray-700">รถโมบายคันที่ 1</h3>
                         </div>
+                    </div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div class="hover-3d">
+                    <div
+                        class="card bg-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 overflow-hidden border border-gray-100">
+                        <figure class="h-64">
+                            <img src="{{ asset('images/branch/mo2.jpg') }}" alt="Mobile Unit 2"
+                                class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-700">
+                        </figure>
+                        <div class="card-body p-4 text-center">
+                            <h3 class="font-bold text-gray-700">รถโมบายคันที่ 2</h3>
+                        </div>
+                    </div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+
+
+            <div x-data="{ activeTab: 'mobile1' }" class="max-w-6xl mx-auto">
+
+                <div class="flex justify-center mb-8">
+                    <div class="tabs tabs-boxed bg-green-50 p-2 rounded-2xl shadow-inner gap-2 border border-green-100">
+                        <a @click="activeTab = 'mobile1'"
+                            class="tab tab-lg rounded-xl transition-all duration-300 font-bold"
+                            :class="activeTab === 'mobile1' ? 'tab-active bg-green-600 text-white shadow-md' :
+                                'text-gray-600 hover:text-green-700 bg-transparent'">
+                            <i class="fas fa-truck mr-2"></i> รถโมบาย 1
+                        </a>
+                        <a @click="activeTab = 'mobile2'"
+                            class="tab tab-lg rounded-xl transition-all duration-300 font-bold"
+                            :class="activeTab === 'mobile2' ? 'tab-active bg-green-600 text-white shadow-md' :
+                                'text-gray-600 hover:text-green-700 bg-transparent'">
+                            <i class="fas fa-truck-moving mr-2"></i> รถโมบาย 2
+                        </a>
                     </div>
                 </div>
 
-                <div x-show="activeTab === 'mobile2'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" style="display:none;">
-                    <h3 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-6">ตารางให้บริการโดยรถบริการเคลื่อนที่นโยบาย</h3>
-                     <div class="grid grid-cols-1 gap-10">
-                        @foreach($mobileUnit2Schedule as $weekData)
-                        <div class="bg-white rounded-2xl shadow-2xl p-6 md:p-8 transition-all duration-500 ease-out opacity-0"
-                             :class="loaded && activeTab === 'mobile2' ? 'opacity-100 translate-y-0' : 'translate-y-5'"
-                             style="transition-delay: {{ ($loop->index * 100) + 200 }}ms">
-                            <h4 class="font-bold text-xl text-center mb-4 text-green-700">{{ $weekData['title'] }}</h4>
-                             <div class="overflow-x-auto">
-                                <table class="w-full text-left">
-                                    <thead class="bg-green-100 text-green-800 text-base">
-                                        <tr>
-                                            <th class="px-6 py-4 rounded-l-xl font-bold">วัน</th>
-                                            <th class="px-6 py-4 font-bold">10.00-12.00</th>
-                                            <th class="px-6 py-4 rounded-r-xl font-bold">13.30-15.30</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="text-base text-gray-700">
-                                        @foreach($weekData['schedule'] as $item)
-                                        <tr class="border-b border-gray-200">
-                                            <td class="px-6 py-4 font-semibold">{{ $item['day'] }}</td>
-                                            <td class="px-6 py-4">{{ $item['am'] ?? '-' }}</td>
-                                            <td class="px-6 py-4">{{ $item['pm'] ?? '-' }}</td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                {{-- บังคับ bg-white ที่นี่ --}}
+                <div class="bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden relative min-h-[400px]">
+
+                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-green-400 to-blue-500"></div>
+
+                    <div x-show="activeTab === 'mobile1'" x-transition:enter="transition ease-out duration-300"
+                        x-transition:enter-start="opacity-0 translate-y-4"
+                        x-transition:enter-end="opacity-100 translate-y-0" class="p-6 md:p-10">
+
+                        <div class="flex items-center justify-center gap-3 mb-8">
+                            <div
+                                class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+                                <i class="fas fa-calendar-alt text-xl"></i>
                             </div>
+                            <h3 class="text-2xl md:text-3xl font-bold text-gray-800">ตารางเดินรถโมบาย (คันที่ 1)</h3>
                         </div>
-                        @endforeach
-                     </div>
-                      <p class="text-base text-red-600 mt-8 text-center"><strong>*หมายเหตุ:</strong> อาจมีการเปลี่ยนแปลงตามความเหมาะสม</p>
+
+                        <div class="overflow-x-auto rounded-xl border border-gray-100 shadow-sm">
+                            {{-- ใช้ text-gray-700 เพื่อป้องกันสีขาวใน dark mode --}}
+                            <table class="table table-zebra table-lg w-full text-gray-700">
+                                <thead class="bg-green-600 text-white text-base">
+                                    <tr>
+                                        <th class="rounded-tl-xl font-bold text-white"><i class="fas fa-sun mr-2"></i>วัน
+                                        </th>
+                                        <th class="font-bold text-white"><i class="far fa-clock mr-2"></i>09.30 - 10.30 น.
+                                        </th>
+                                        <th class="font-bold text-white"><i class="far fa-clock mr-2"></i>13.30 - 15.30 น.
+                                        </th>
+                                        <th class="rounded-tr-xl font-bold text-white"><i
+                                                class="far fa-clock mr-2"></i>15.30 - 16.30 น.</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-base">
+                                    @foreach ($mobileUnit1Schedule as $item)
+                                        <tr class="hover:bg-green-50 transition-colors border-b border-gray-100">
+                                            <td class="font-bold text-green-700 bg-white">{{ $item['day'] }}</td>
+                                            <td class="text-gray-700">{{ $item['t1'] ?? '-' }}</td>
+                                            <td class="text-gray-700">{{ $item['t2'] ?? '-' }}</td>
+                                            <td class="text-gray-700">{{ $item['t3'] ?? '-' }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div
+                            class="alert bg-red-50 border border-red-200 mt-6 text-red-700 shadow-sm rounded-lg flex items-start gap-3">
+                            <i class="fas fa-info-circle mt-1 text-red-600"></i>
+                            <span class="text-red-800"><strong>หมายเหตุ:</strong> วันจันทร์-พุธ เดินทางไปตามลำดับก่อนหลัง /
+                                ตารางอาจมีการเปลี่ยนแปลงตามความเหมาะสม</span>
+                        </div>
+                    </div>
+
+                    <div x-show="activeTab === 'mobile2'" x-transition:enter="transition ease-out duration-300"
+                        x-transition:enter-start="opacity-0 translate-y-4"
+                        x-transition:enter-end="opacity-100 translate-y-0" class="p-6 md:p-10" style="display:none;">
+
+                        <div class="flex items-center justify-center gap-3 mb-8">
+                            <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                                <i class="fas fa-calendar-alt text-xl"></i>
+                            </div>
+                            <h3 class="text-2xl md:text-3xl font-bold text-gray-800">ตารางเดินรถโมบาย (คันที่ 2)</h3>
+                        </div>
+
+                        <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                            @foreach ($mobileUnit2Schedule as $weekData)
+                                {{-- บังคับ bg-white --}}
+                                <div
+                                    class="bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+                                    <div class="bg-green-50 p-4 border-b border-green-100">
+                                        <h4
+                                            class="font-bold text-lg text-green-800 text-center flex items-center justify-center gap-2">
+                                            <i class="far fa-calendar-check"></i> {{ $weekData['title'] }}
+                                        </h4>
+                                    </div>
+                                    <div class="overflow-x-auto">
+                                        <table class="table table-sm w-full">
+                                            <thead class="bg-gray-50 border-b border-gray-200">
+                                                <tr>
+                                                    <th class="pl-4 text-gray-600 font-bold">วัน</th>
+                                                    <th class="text-gray-600 font-bold">10.00-12.00</th>
+                                                    <th class="pr-4 text-gray-600 font-bold">13.30-15.30</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="text-gray-600">
+                                                @foreach ($weekData['schedule'] as $item)
+                                                    <tr class="hover:bg-gray-50 border-b border-gray-100">
+                                                        <td class="font-semibold text-green-700 pl-4 bg-white">
+                                                            {{ $item['day'] }}</td>
+                                                        <td class="text-gray-700">{{ $item['am'] ?? '-' }}</td>
+                                                        <td class="pr-4 text-gray-700">{{ $item['pm'] ?? '-' }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <div
+                            class="alert bg-yellow-50 border border-yellow-200 mt-8 text-yellow-800 shadow-sm rounded-lg flex items-start gap-3">
+                            <i class="fas fa-exclamation-triangle mt-1 text-yellow-600"></i>
+                            <span class="text-yellow-900"><strong>หมายเหตุ:</strong> ตารางอาจมีการเปลี่ยนแปลงตามความเหมาะสม
+                                กรุณาสอบถามเจ้าหน้าที่ก่อนใช้บริการ</span>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection

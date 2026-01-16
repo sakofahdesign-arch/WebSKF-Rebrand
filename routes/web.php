@@ -22,6 +22,7 @@ Route::post('/set-cookie-consent', function (Request $request) {
 });
 Route::post('/track-visitor', [HomeController::class, 'track']);
 Route::view('/privacy-policy', 'privacy');
+Route::view('/terms-of-service', 'terms');
 
 //  Main page
 Route::get('/', [HomeController::class, 'index'])->name('index');

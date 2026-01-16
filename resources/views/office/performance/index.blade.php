@@ -1,79 +1,112 @@
 @extends('layouts.admin-layout')
+
 @section('title', 'ผลการดำเนินงานประจำปี')
 
+@section('header')
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+            <h2 class="text-2xl font-bold text-gray-800 flex items-center gap-2">
+                <i class="fas fa-chart-line text-emerald-600"></i> ผลการดำเนินงานประจำปี
+            </h2>
+            <nav class="flex text-sm text-gray-500 mt-1" aria-label="Breadcrumb">
+                <ol class="inline-flex items-center space-x-1 md:space-x-2">
+                    <li class="inline-flex items-center">
+                        <a href="#" class="hover:text-emerald-600">เอกสารภายใน</a>
+                    </li>
+                    <li><i class="fas fa-chevron-right text-xs"></i></li>
+                    <li class="text-gray-400" aria-current="page">ผลการดำเนินงาน</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+@endsection
+
 @php
-    // ✨ จัดกลุ่มข้อมูลตามปี พ.ศ. ที่นี่ แทนการทำใน Controller
+    // จัดกลุ่มข้อมูลตามปี พ.ศ.
     $dataByYear = $data->groupBy(function($item) {
         return date('Y', strtotime($item->date)) + 543;
     });
 @endphp
 
 @section('content')
-<div class="bg-gray-100 min-h-screen" x-data="{ loaded: false }" x-init="() => { setTimeout(() => loaded = true, 100) }">
-    <div class="container mx-auto px-4 py-16">
+    <div class="container mx-auto max-w-5xl space-y-10 pb-12">
 
-        <div class="text-center mb-16 transition-all duration-700 ease-out" :class="loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-sky-500 mb-4">
-                ผลการดำเนินงานประจำปี
-            </h1>
-            <p class="text-lg text-gray-600 max-w-3xl mx-auto">
-                รายงานสรุปผลการดำเนินงานและงบการเงินประจำปีของสหกรณ์
-            </p>
+        <div class="card bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg overflow-hidden relative">
+            <div class="absolute right-0 top-0 h-full w-1/2 bg-white/5 skew-x-12 transform origin-bottom-right"></div>
+            <div class="card-body p-8 relative z-10">
+                <div class="flex items-center gap-4">
+                    <div class="p-3 bg-white/20 rounded-full backdrop-blur-sm">
+                        <i class="fas fa-chart-pie text-3xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold">รายงานผลการดำเนินงาน</h2>
+                        <p class="opacity-90 mt-1">สรุปงบการเงินและผลประกอบการของสหกรณ์ แยกตามปีบัญชี</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="space-y-12">
-            @forelse ($dataByYear as $year => $documents)
-                <section class="transition-all duration-500 ease-out opacity-0"
-                         :class="{ 'opacity-100 translate-y-0': loaded }"
-                         style="transition-delay: {{ ($loop->index * 200) + 300 }}ms">
-
-                    <div class="flex items-center mb-6">
-                        <h2 class="text-3xl font-bold text-gray-800">ประจำปี {{ $year }}</h2>
-                        <div class="flex-grow h-px bg-gray-300 ml-4"></div>
+        @forelse ($dataByYear as $year => $documents)
+            <div class="relative">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="bg-emerald-100 text-emerald-700 font-bold px-4 py-1.5 rounded-full shadow-sm text-lg border border-emerald-200">
+                        <i class="far fa-calendar-check mr-2"></i> ประจำปี {{ $year }}
                     </div>
+                    <div class="h-px bg-gray-200 flex-grow"></div>
+                </div>
 
-                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-                        <ul class="divide-y divide-gray-200">
-                            @foreach ($documents as $item)
-                                <li class="p-4 md:p-6 hover:bg-gray-50 transition-colors duration-200">
-                                    <div class="flex items-center justify-between space-x-4">
-                                        <div class="flex items-center min-w-0">
-                                            <div class="flex-shrink-0">
-                                                <svg class="h-10 w-10 text-red-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m.75 12 3 3m0 0 3-3m-3 3v-6m-1.5-9H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
-                                                </svg>
-                                            </div>
-                                            <div class="ml-4 min-w-0">
-                                                <p class="text-lg font-semibold text-gray-800 truncate">{{ $item->document_name }}</p>
-                                                <p class="text-sm text-gray-500">วันที่: {{ thaidate('j M Y', strtotime($item->date)) }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="flex-shrink-0">
-                                            <a href="{{ url('file/performance/' . $item->file_name) }}" target="_blank"
-                                               class="inline-flex items-center px-4 py-2 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 hover:scale-105 transform transition-all duration-200">
-                                                <svg class="h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                                                </svg>
-                                                <span>ดาวน์โหลด</span>
-                                            </a>
+                <div class="card bg-white shadow-md border border-gray-100 overflow-hidden">
+                    <div class="divide-y divide-gray-100">
+                        @foreach ($documents as $item)
+                            <div class="group p-5 hover:bg-emerald-50/30 transition-all duration-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                                
+                                <div class="flex items-start gap-4 flex-grow">
+                                    <div class="flex-shrink-0 mt-1 sm:mt-0">
+                                        <div class="w-12 h-12 rounded-xl bg-red-50 text-red-500 flex items-center justify-center border border-red-100 shadow-sm group-hover:scale-105 transition-transform duration-300">
+                                            <i class="fas fa-file-pdf text-xl"></i>
                                         </div>
                                     </div>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </section>
-            @empty
-                <div class="text-center py-16">
-                    <svg class="mx-auto h-16 w-16 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m-5.25 9v6.75a2.25 2.25 0 0 0 2.25 2.25h13.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H5.25a2.25 2.25 0 0 0-2.25 2.25Z" />
-                    </svg>
-                    <h3 class="mt-4 text-xl font-semibold text-gray-700">ยังไม่มีข้อมูลผลการดำเนินงาน</h3>
-                    <p class="mt-2 text-gray-500">โปรดกลับมาตรวจสอบอีกครั้งในภายหลัง</p>
-                </div>
-            @endforelse
-        </div>
-    </div>
-</div>
-@endsection
 
+                                    <div>
+                                        <h4 class="text-base font-bold text-gray-800 group-hover:text-emerald-700 transition-colors leading-snug">
+                                            {{ $item->document_name }}
+                                        </h4>
+                                        <div class="flex flex-wrap items-center gap-3 mt-1.5">
+                                            <span class="text-xs text-gray-500 flex items-center gap-1">
+                                                <i class="far fa-clock text-emerald-500"></i> 
+                                                {{ thaidate('j M Y', strtotime($item->date)) }}
+                                            </span>
+                                            <span class="badge badge-xs badge-ghost text-[10px] uppercase tracking-wider text-gray-400 border-gray-200">
+                                                PDF FILE
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flex-shrink-0 w-full sm:w-auto mt-2 sm:mt-0">
+                                    <a href="{{ url('file/performance/' . $item->file_name) }}" target="_blank"
+                                       class="btn btn-sm btn-ghost bg-emerald-50 text-emerald-600 hover:bg-emerald-600 hover:text-white border-emerald-100 w-full sm:w-auto gap-2 group-hover:shadow-md transition-all">
+                                        <i class="fas fa-download"></i>
+                                        <span class="sm:hidden lg:inline">ดาวน์โหลดเอกสาร</span>
+                                        <span class="hidden sm:inline lg:hidden">โหลด</span>
+                                    </a>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        @empty
+            <div class="card bg-white shadow-sm border border-gray-100 p-12 text-center">
+                <div class="flex flex-col items-center justify-center">
+                    <div class="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-folder-open text-4xl text-gray-300"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-600">ไม่พบข้อมูล</h3>
+                    <p class="text-gray-400 mt-2">ยังไม่มีรายงานผลการดำเนินงานในระบบ</p>
+                </div>
+            </div>
+        @endforelse
+
+    </div>
+@endsection

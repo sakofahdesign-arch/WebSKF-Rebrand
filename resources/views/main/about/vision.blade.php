@@ -1,193 +1,220 @@
 @extends('layouts.layout')
+
 @section('title', 'วิสัยทัศน์ พันธกิจ และวัตถุประสงค์')
+
 @php
+    // --- ข้อมูลคงเดิม ---
     $vision = [
         'title' => 'สหกรณ์ออมทรัพย์ต้นแบบ',
         'subtitle' => 'เป็นองค์กรที่ก้าวหน้า มั่นคง และมีธรรมาภิบาล',
-        'full_text' =>
-            'สหกรณ์ออมทรัพย์ษะกอฟะฮ จำกัด เป็นองค์กรที่ก้าวหน้าและมั่นคง มีธรรมาภิบาล เป็นที่ยอมรับ และเป็นส่วนหนึ่งของวิถีชีวิตผู้คน',
+        'full_text' => 'สหกรณ์ออมทรัพย์ษะกอฟะฮ จำกัด เป็นองค์กรที่ก้าวหน้าและมั่นคง มีธรรมาภิบาล เป็นที่ยอมรับ และเป็นส่วนหนึ่งของวิถีชีวิตผู้คน',
     ];
 
     $missions = [
-        'บริหารจัดการเงินทุนให้เกิดผลกำไรสูงสุด บนพื้นฐานธรรมาภิบาลและหลักการอิสลาม',
-        'มุ่งเน้นการบริการและกิจกรรมที่เป็นไปตามหลักอิสลาม',
-        'พัฒนาบุคลากรให้มีความสามารถ เชี่ยวชาญและมีคุณธรรม',
-        'บริหารจัดการให้มีระบบงานที่ดี เพื่อเพิ่มประสิทธิภาพและประสิทธิผล',
+        [
+            'text' => 'บริหารจัดการเงินทุนให้เกิดผลกำไรสูงสุด บนพื้นฐานธรรมาภิบาลและหลักการอิสลาม',
+            'icon' => '<i class="fas fa-coins text-4xl"></i>',
+            'color' => 'text-yellow-500'
+        ],
+        [
+            'text' => 'มุ่งเน้นการบริการและกิจกรรมที่เป็นไปตามหลักอิสลาม',
+            'icon' => '<i class="fas fa-praying-hands text-4xl"></i>',
+            'color' => 'text-green-500'
+        ],
+        [
+            'text' => 'พัฒนาบุคลากรให้มีความสามารถ เชี่ยวชาญและมีคุณธรรม',
+            'icon' => '<i class="fas fa-user-tie text-4xl"></i>',
+            'color' => 'text-blue-500'
+        ],
+        [
+            'text' => 'บริหารจัดการให้มีระบบงานที่ดี เพื่อเพิ่มประสิทธิภาพและประสิทธิผล',
+            'icon' => '<i class="fas fa-cogs text-4xl"></i>',
+            'color' => 'text-purple-500'
+        ],
     ];
 
     $core_values = [
         [
             'name' => 'Simple',
-            'description' => 'สะดวก ทันสมัย มีนวัตกรรม ในการให้บริการของลูกค้า',
-            'svg' =>
-                '<svg class="h-14 w-14 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 01-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 013.09-3.09L12 5.25l2.846.813a4.5 4.5 0 013.09 3.09L21.75 12l-2.846.813a4.5 4.5 0 01-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.898 20.553L16.5 21.75l-.398-1.197a3.375 3.375 0 00-2.456-2.456L12.75 18l1.197-.398a3.375 3.375 0 002.456-2.456L16.5 14.25l.398 1.197a3.375 3.375 0 002.456 2.456L20.25 18l-1.197.398a3.375 3.375 0 00-2.456 2.456z" /></svg>',
+            'description' => 'สะดวก ทันสมัย มีนวัตกรรม ในการให้บริการ',
+            'color' => 'text-blue-500',
+            'icon' => '<i class="fas fa-mobile-alt text-4xl"></i>'
         ],
         [
             'name' => 'Knowledge',
             'description' => 'องค์ความรู้สู่ชาติอิสลาม องค์ความรู้สู่การอยู่ดีมีคุณธรรม',
-            'svg' =>
-                '<svg class="h-14 w-14 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>',
+            'color' => 'text-green-500',
+            'icon' => '<i class="fas fa-book-open text-4xl"></i>'
         ],
         [
             'name' => 'Fast',
             'description' => 'รวดเร็ว ทันเวลา ตอบโจทย์ลูกค้า',
-            'svg' =>
-                '<svg class="h-14 w-14 text-red-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>',
+            'color' => 'text-red-500',
+            'icon' => '<i class="fas fa-tachometer-alt text-4xl"></i>'
         ],
         [
             'name' => 'Honesty',
             'description' => 'โปร่งใส ตรวจสอบได้',
-            'svg' =>
-                '<svg class="h-14 w-14 text-purple-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.286zm0 13.036h.008v.008h-.008v-.008z" /></svg>',
+            'color' => 'text-purple-500',
+            'icon' => '<i class="fas fa-balance-scale text-4xl"></i>'
         ],
     ];
 
     $strategy = [
-        'phase1' => [
+        [
+            'phase' => 'ระยะที่ 1',
             'years' => 'ปี 2565-2567',
+            'theme' => 'สร้างรากฐาน',
+            'color' => 'primary',
             'points' => [
-                'เป็นองค์กรที่มุ่งเน้นการเพิ่มทุน เพื่อพัฒนาการให้บริการทางการเงินที่มั่นคง',
-                'เป็นองค์กรที่มุ่งเน้นการเพิ่มปริมาณเงินฝากที่มั่นคงเพื่อเพิ่มสภาพคล่องในการลงทุน',
-                'เป็นองค์กรที่มุ่งเน้นการบริหารจัดการสินทรัพย์ด้อยคุณภาพให้เกิดผลในระดับที่น่าพอใจ',
-                'เป็นองค์กรที่มุ่งเน้นการเพิ่มปริมาณสมาชิกใหม่ให้เป็นไปตามขนาด',
+                'มุ่งเน้นการเพิ่มทุน เพื่อความมั่นคงทางการเงิน',
+                'เพิ่มปริมาณเงินฝากเพื่อสภาพคล่อง',
+                'บริหารสินทรัพย์ด้อยคุณภาพอย่างมีประสิทธิภาพ',
+                'เพิ่มสมาชิกใหม่ให้ได้ตามเป้าหมาย',
             ],
         ],
-        'phase2' => [
+        [
+            'phase' => 'ระยะที่ 2',
             'years' => 'ปี 2568-2570',
+            'theme' => 'พัฒนาระบบ',
+            'color' => 'secondary',
             'points' => [
-                'เป็นองค์กรที่เน้นการปรับปรุงระบบการจัดการเงินทุนให้เกิดประสิทธิภาพและประสิทธิผล',
-                'เป็นองค์กรที่เน้นการปรับปรุงระบบการให้บริการทางการเงินที่ทันสมัยและเป็นไปตามหลักการอิสลาม',
-                'เป็นองค์กรที่เน้นการเพิ่มศักยภาพบุคลากรให้มีความสามารถและมีคุณธรรม',
-                'เป็นองค์กรที่เน้นการพัฒนาระบบเทคโนโลยีสารสนเทศให้มีประสิทธิภาพและประสิทธิผล',
+                'ปรับปรุงระบบจัดการเงินทุนให้มีประสิทธิภาพสูงสุด',
+                'พัฒนาระบบบริการการเงินที่ทันสมัยตามหลักอิสลาม',
+                'พัฒนาศักยภาพบุคลากรให้เชี่ยวชาญและมีคุณธรรม',
+                'ยกระดับระบบเทคโนโลยีสารสนเทศ (IT)',
             ],
         ],
-        'phase3' => [
+        [
+            'phase' => 'ระยะที่ 3',
             'years' => 'ปี 2570-2571',
+            'theme' => 'เติบโตยั่งยืน',
+            'color' => 'accent',
             'points' => [
-                'เป็นองค์กรที่เน้นการรักษาความสมดุลของเงินทุน สมาชิก และการเติบโตทางเศรษฐกิจ',
-                'เป็นองค์กรที่เน้นการพัฒนาและปรับปรุงการบริหารเงินทุนให้มีประสิทธิภาพสูงสุด',
-                'เป็นองค์กรที่มุ่งเน้นการขยายฐานสมาชิก เพิ่มความหลากหลายของบริการ และเพิ่มการแสดงบทบาทในชุมชน',
+                'รักษาสมดุลของเงินทุน สมาชิก และการเติบโต',
+                'บริหารเงินทุนให้เกิดประโยชน์สูงสุด',
+                'ขยายฐานสมาชิกและบทบาททางสังคมในชุมชน',
             ],
         ],
     ];
 @endphp
 
 @section('content')
-    <div class="bg-gray-50" x-data="{ loaded: false }" x-init="() => { setTimeout(() => loaded = true, 100) }">
-        <div class="container mx-auto px-4 py-16">
-            <div class="text-center mb-16 transition-all duration-700 ease-out"
-                :class="loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'">
-                <h1
-                    class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-green-600 mb-4">
-                    วิสัยทัศน์และพันธกิจองค์กร
+
+    <div class="hero min-h-[400px] bg-gradient-to-br from-green-800 to-green-600 text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <svg class="h-full w-full" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="hero-pattern" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M0 40L40 0H20L0 20M40 40V20L20 40" stroke="currentColor" stroke-width="2" fill="none"/></pattern></defs><rect width="100%" height="100%" fill="url(#hero-pattern)"/></svg>
+        </div>
+
+        <div class="hero-content text-center py-16 relative z-10">
+            <div class="max-w-4xl">
+                <div class="badge badge-outline text-white border-white/50 mb-4 p-4 text-sm font-bold tracking-widest">VISION</div>
+                <h1 class="mb-5 text-4xl md:text-5xl font-extrabold leading-tight drop-shadow-lg">
+                    "{{ $vision['full_text'] }}"
                 </h1>
-                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
-                    แนวทางการดำเนินงานที่มุ่งสู่การเป็นสหกรณ์ออมทรัพย์ชั้นนำที่มั่นคงและยั่งยืน
+                <p class="mb-5 text-xl text-green-100 font-light">
+                    {{ $vision['subtitle'] }}
                 </p>
+                <div class="h-1 w-24 bg-white/30 mx-auto rounded-full mt-6"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white min-h-screen">
+        <div class="container mx-auto px-4 py-16">
+
+            <div class="grid lg:grid-cols-2 gap-12 items-stretch mb-24">
+
+                <div class="flex flex-col h-full">
+                    <h2 class="text-3xl font-bold text-green-800 mb-6 flex items-center gap-3">
+                        <i class="fas fa-bullseye text-green-600"></i> พันธกิจ (Mission)
+                    </h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-grow">
+                        @foreach ($missions as $mission)
+                            {{-- h-full เพื่อให้การ์ดสูงเท่ากันในแถว --}}
+                            <div class="card bg-white shadow-lg hover:-translate-y-1 transition-transform border border-gray-200 text-center h-full">
+                                <div class="card-body p-6 items-center justify-center">
+                                    <div class="{{ $mission['color'] }} mb-4">
+                                        {!! $mission['icon'] !!}
+                                    </div>
+                                    <p class="text-gray-700 font-medium text-lg leading-relaxed">{{ $mission['text'] }}</p>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <div class="flex flex-col h-full">
+                    <h2 class="text-3xl font-bold text-green-800 mb-6 flex items-center gap-3">
+                        <i class="fas fa-heart text-red-500"></i> ค่านิยมหลัก (Core Values)
+                    </h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-grow">
+                        @foreach ($core_values as $value)
+                             {{-- h-full เพื่อให้การ์ดสูงเท่ากันในแถว --}}
+                            <div class="card bg-white shadow-lg hover:-translate-y-1 transition-transform border border-gray-200 text-center h-full">
+                                <div class="card-body p-6 items-center justify-center">
+                                    <div class="{{ $value['color'] }} mb-4">
+                                        {!! $value['icon'] !!}
+                                    </div>
+                                    <h3 class="card-title text-2xl font-bold text-gray-800 mb-2">{{ $value['name'] }}</h3>
+                                    <p class="text-base text-gray-600">{{ $value['description'] }}</p>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
             </div>
 
-            <section class="mb-20 transition-all duration-700 ease-out" style="transition-delay: 200ms"
-                :class="loaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'">
-                <div
-                    class="relative bg-gradient-to-br from-blue-600 to-green-500 rounded-2xl shadow-2xl p-8 md:p-12 text-white overflow-hidden">
-                    <div class="absolute -top-10 -right-10 w-48 h-48 bg-white/10 rounded-full"></div>
-                    <div class="absolute -bottom-16 -left-10 w-64 h-64 bg-white/10 rounded-full"></div>
-
-                    <div class="relative z-10 flex flex-col items-center text-center">
-                        <div class="flex items-center text-3xl md:text-4xl font-bold mb-4">
-                            <svg class="h-10 w-10 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
-                                </path>
-                            </svg>
-                            วิสัยทัศน์ (VISION)
-                        </div>
-                        <p class="text-2xl md:text-3xl font-semibold mt-4 mb-6 max-w-4xl italic">
-                            "{{ $vision['full_text'] }}"
-                        </p>
-                        <div class="border-t-2 border-white/30 w-1/3 my-4"></div>
-                        <p class="text-xl font-light">{{ $vision['subtitle'] }}</p>
-                    </div>
+            <div class="mb-12">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-extrabold text-green-800">ยุทธศาสตร์ 7 ปี (7-Year Strategy)</h2>
+                    <p class="text-gray-600 text-lg mt-3">แผนการดำเนินงานเพื่อความมั่นคงและยั่งยืน</p>
                 </div>
-            </section>
 
-            <section class="mb-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-                <div class="transition-all duration-700 ease-out" style="transition-delay: 400ms"
-                    :class="loaded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-6">พันธกิจ (MISSION)</h2>
-                    <ul class="space-y-4">
-                        @foreach ($missions as $mission)
-                            <li class="flex items-start text-lg text-gray-700">
-                                <svg class="h-7 w-7 text-green-500 mr-3 flex-shrink-0 mt-1" fill="currentColor"
-                                    viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                        clip-rule="evenodd"></path>
-                                </svg>
-                                <span>{{ $mission }}</span>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-                <div class="transition-all duration-700 ease-out" style="transition-delay: 500ms"
-                    :class="loaded ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-6">ค่านิยมหลัก (CORE VALUES)</h2>
-                    <div class="grid grid-cols-2 gap-4">
-                        @foreach ($core_values as $value)
-                            <div
-                                class="bg-white p-4 rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col items-center">
+                <ul class="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical">
+                    @foreach ($strategy as $index => $item)
+                        <li>
+                            @if($index > 0) <hr class="bg-green-100" /> @endif
 
-                                <div class="mb-3">
-                                    {!! $value['svg'] !!}
-                                </div>
-
-                                <h3 class="text-xl font-bold text-center text-gray-800">{{ $value['name'] }}</h3>
-                                <p class="text-sm text-center text-gray-600 mt-1">{{ $value['description'] }}</p>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            </section>
-
-            <section>
-                <h2 class="text-3xl font-bold text-center text-gray-800 mb-12 transition-all duration-700 ease-out"
-                    style="transition-delay: 600ms" :class="loaded ? 'opacity-100' : 'opacity-0'">
-                    ยุทธศาสตร์ 7 ปี (7-YEAR STRATEGY)
-                </h2>
-                <div class="relative">
-                    <div class="hidden lg:block absolute top-1/2 left-0 w-full h-1 bg-gray-300 -translate-y-1/2"></div>
-
-                    <div
-                        class="relative flex flex-col lg:flex-row justify-between items-center lg:items-stretch gap-y-12 lg:gap-y-0">
-                        @foreach ($strategy as $key => $phase)
-                            @php
-                                $delay = 800 + $loop->index * 200;
-                                $colors = [
-                                    'phase1' => 'border-blue-500 text-blue-700',
-                                    'phase2' => 'border-green-500 text-green-700',
-                                    'phase3' => 'border-purple-500 text-purple-700',
-                                ];
-                            @endphp
-                            <div class="w-full lg:w-1/3 px-4 transition-all duration-700 ease-out"
-                                style="transition-delay: {{ $delay }}ms"
-                                :class="loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'">
-                                <div class="bg-white p-6 rounded-2xl shadow-xl h-full border-t-4 {{ $colors[$key] }}">
-                                    <h3 class="text-2xl font-bold text-center {{ $colors[$key] }} mb-4">
-                                        {{ $phase['years'] }}</h3>
-                                    <ul class="list-disc pl-5 space-y-2 text-gray-700">
-                                        @foreach ($phase['points'] as $point)
-                                            <li>{{ $point }}</li>
-                                        @endforeach
-                                    </ul>
+                            <div class="timeline-middle">
+                                <div class="w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg z-10 ring-4 ring-white
+                                    {{ $index == 0 ? 'bg-blue-600' : ($index == 1 ? 'bg-green-600' : 'bg-purple-600') }}">
+                                    <span class="font-bold text-2xl">{{ $index + 1 }}</span>
                                 </div>
                             </div>
-                        @endforeach
-                    </div>
-                </div>
-            </section>
+
+                            <div class="{{ $index % 2 == 0 ? 'timeline-start md:text-end' : 'timeline-end' }} mb-12 md:px-6 w-full">
+                                <div class="card bg-white shadow-md border border-gray-100 hover:shadow-xl transition-all duration-300">
+                                    <div class="card-body p-8">
+
+                                        {{-- ส่วนหัว: ปี และ ธีม (ตัวใหญ่ขึ้น) --}}
+                                        <div class="flex flex-col {{ $index % 2 == 0 ? 'md:items-end' : 'md:items-start' }} mb-6">
+                                            <span class="badge badge-lg {{ $index == 0 ? 'badge-primary' : ($index == 1 ? 'badge-success text-white' : 'badge-secondary') }} font-bold mb-3 p-4 text-lg">
+                                                {{ $item['years'] }}
+                                            </span>
+                                            <h3 class="text-3xl font-extrabold text-gray-800 tracking-tight">{{ $item['theme'] }}</h3>
+                                        </div>
+
+                                        {{-- รายการข้อ่อย (ตัวใหญ่ขึ้น + ไอคอนเดียวทางซ้าย) --}}
+                                        <ul class="space-y-4 text-left">
+                                            @foreach ($item['points'] as $point)
+                                                <li class="text-gray-700 text-lg flex items-start">
+                                                    {{-- ไอคอนเดียวอยู่ทางซ้ายเสมอ --}}
+                                                    <i class="fas fa-check-circle text-green-500 mt-1.5 mr-3 shrink-0"></i>
+                                                    <span>{{ $point }}</span>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @if($index < count($strategy) - 1) <hr class="bg-green-100" /> @endif
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+
         </div>
     </div>
 @endsection

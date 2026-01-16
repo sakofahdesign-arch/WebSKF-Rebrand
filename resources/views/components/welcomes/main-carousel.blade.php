@@ -1,42 +1,107 @@
-<section id="main-hero-carousel" class="relative w-full" data-carousel="slide">
-    <div class="relative h-[280px] overflow-hidden md:h-[480px]">
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="{{ asset('images/267-1.jpg') }}" class="absolute block w-full h-full object-cover"
-                alt="แบนเนอร์โปรโมชัน">
+<section class="relative w-full group">
+    <div id="hero-carousel"
+        class="carousel w-full h-[300px] md:h-[500px] relative overflow-hidden rounded-none md:rounded-b-2xl shadow-lg">
+
+        <div id="slide1" class="carousel-item relative w-full duration-700 ease-in-out">
+            <img src="{{ asset('images/267-1.jpg') }}" class="w-full h-full object-cover" alt="Banner 1" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
         </div>
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="{{ asset('images/values.jpg') }}" class="absolute block w-full h-full object-cover"
-                alt="ค่านิยมองค์กร">
+
+        <div id="slide2" class="carousel-item relative w-full duration-700 ease-in-out">
+            <img src="{{ asset('images/values.jpg') }}" class="w-full h-full object-cover" alt="Banner 2" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
         </div>
+
     </div>
-    <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-        <button type="button" class="w-3 h-3 rounded-full bg-white/50" aria-current="true" aria-label="Slide 1"
-            data-carousel-slide-to="0"></button>
-        <button type="button" class="w-3 h-3 rounded-full bg-white/50 hover:bg-white" aria-current="false"
-            aria-label="Slide 2" data-carousel-slide-to="1"></button>
+
+    <div
+        class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2 z-30 pointer-events-none">
+        <button onclick="moveSlide(-1)"
+            class="btn btn-circle btn-sm md:btn-md bg-white/30 hover:bg-white border-none text-white hover:text-green-700 backdrop-blur-sm pointer-events-auto transition-all shadow-md">
+            ❮
+        </button>
+        <button onclick="moveSlide(1)"
+            class="btn btn-circle btn-sm md:btn-md bg-white/30 hover:bg-white border-none text-white hover:text-green-700 backdrop-blur-sm pointer-events-auto transition-all shadow-md">
+            ❯
+        </button>
     </div>
-    <button type="button"
-        class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-        data-carousel-prev>
-        <span
-            class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 focus:ring-4 focus:ring-white focus:outline-none">
-            <svg class="w-4 h-4 text-white rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M5 1 1 5l4 4" />
-            </svg><span class="sr-only">Previous</span>
-        </span>
-    </button>
-    <button type="button"
-        class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-        data-carousel-next>
-        <span
-            class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 focus:ring-4 focus:ring-white focus:outline-none">
-            <svg class="w-4 h-4 text-white rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="m1 9 4-4-4-4" />
-            </svg><span class="sr-only">Next</span>
-        </span>
-    </button>
+
+    <div class="absolute flex justify-center w-full py-2 gap-2 bottom-5 z-30">
+        <button onclick="goToSlide(0)" id="dot-0"
+            class="w-3 h-3 rounded-full bg-white transition-all duration-300 scale-125 shadow"></button>
+        <button onclick="goToSlide(1)" id="dot-1"
+            class="w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-all duration-300 shadow"></button>
+    </div>
 </section>
+
+@push('scripts')
+    <script>
+        let currentSlide = 0;
+        const carousel = document.getElementById('hero-carousel');
+        const totalSlides = carousel.children.length; // จำนวน Slide ทั้งหมด
+        const autoPlayInterval = 5000; // เวลาในการเปลี่ยนรูป (5 วินาที)
+        let autoPlayTimer;
+
+        function updateCarousel() {
+            // คำนวณตำแหน่งที่จะเลื่อนไป
+            const slideWidth = carousel.clientWidth;
+            carousel.scrollTo({
+                left: currentSlide * slideWidth,
+                behavior: 'smooth'
+            });
+
+            // Update Dots styling
+            for (let i = 0; i < totalSlides; i++) {
+                const dot = document.getElementById(`dot-${i}`);
+                if (dot) {
+                    if (i === currentSlide) {
+                        dot.classList.remove('bg-white/50');
+                        dot.classList.add('bg-white', 'scale-125');
+                    } else {
+                        dot.classList.add('bg-white/50');
+                        dot.classList.remove('bg-white', 'scale-125');
+                    }
+                }
+            }
+        }
+
+        function moveSlide(direction) {
+            currentSlide += direction;
+
+            // Loop กลับไปมา
+            if (currentSlide >= totalSlides) {
+                currentSlide = 0;
+            } else if (currentSlide < 0) {
+                currentSlide = totalSlides - 1;
+            }
+
+            updateCarousel();
+            resetAutoPlay();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+            resetAutoPlay();
+        }
+
+        function startAutoPlay() {
+            autoPlayTimer = setInterval(() => {
+                moveSlide(1);
+            }, autoPlayInterval);
+        }
+
+        function resetAutoPlay() {
+            clearInterval(autoPlayTimer);
+            startAutoPlay();
+        }
+
+        // เริ่มทำงานเมื่อโหลดเสร็จ
+        document.addEventListener('DOMContentLoaded', () => {
+            startAutoPlay();
+
+            // ปรับขนาดเมื่อ Resize หน้าจอเพื่อให้ตำแหน่งถูกต้องเสมอ
+            window.addEventListener('resize', updateCarousel);
+        });
+    </script>
+@endpush

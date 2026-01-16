@@ -5,6 +5,8 @@
             'slide_image' => 'images/banners/69-01-36.jpg',
             'modal_type' => 'image',
             'modal_content' => 'images/banners/69-01-31.jpg',
+            'title' => 'โปรโมชันพิเศษ', // สมมติว่ามี
+            'subtitle' => 'ลดแลกแจกแถม', // สมมติว่ามี
         ],
         [
             'id' => 2,
@@ -45,48 +47,42 @@
     ];
 @endphp
 
-<section class="py-20 bg-gradient-to-b from-gray-50 to-white">
-    <div class="container mx-auto px-6 mb-12 text-center">
-        <h2 class="text-4xl font-extrabold text-gray-800 mb-2">✨ โปรโมชันและข่าวสารล่าสุด</h2>
+<section class="py-16 bg-gradient-to-b from-green-50 to-white">
+    <div class="container mx-auto px-4 mb-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-green-800 mb-2">
+            ✨ โปรโมชันและข่าวสารล่าสุด
+        </h2>
+        <div class="h-1 w-24 bg-green-500 mx-auto rounded-full"></div>
     </div>
 
-    <div x-data="{
-        activeSlide: 1,
-        slideCount: {{ count($promotions) }},
-        next() { this.activeSlide = this.activeSlide === this.slideCount ? 1 : this.activeSlide + 1 },
-        prev() { this.activeSlide = this.activeSlide === 1 ? this.slideCount : this.activeSlide - 1 },
-        autoplay() { setInterval(() => { this.next() }, 5000) }
-    }" x-init="autoplay()" class="relative w-full max-w-6xl mx-auto group">
-        <!-- Slides -->
-        <div
-            class="relative h-auto md:h-[420px] overflow-hidden rounded-2xl shadow-xl bg-gray-100 flex items-center justify-center">
-            @foreach ($promotions as $promo)
-                <div x-show="activeSlide === {{ $loop->iteration }}" x-transition:enter="transition ease-out duration-700"
-                    x-transition:enter-start="opacity-0 scale-105" x-transition:enter-end="opacity-100 scale-100"
-                    x-transition:leave="transition ease-in duration-700"
-                    x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
-                    class="absolute inset-0">
-                    <!-- รูป -->
-                    <img src="{{ asset($promo['slide_image']) }}"
-                        class="max-h-[420px] w-auto object-contain {{ $promo['modal_content'] ? 'cursor-pointer' : '' }}"
-                        alt="โปรโมชัน"
-                        @if ($promo['modal_content']) data-modal-target="promotion-modal-{{ $promo['id'] }}"
-                        data-modal-toggle="promotion-modal-{{ $promo['id'] }}" @endif>
+    <div class="relative w-full max-w-5xl mx-auto group">
 
-                    <!-- Overlay ข้อความ -->
-                    @if (!empty($promo['title']) || !empty($promo['subtitle']))
-                        <div class="absolute bottom-6 left-6 bg-black/50 px-6 py-4 rounded-xl">
+        <div id="promo-carousel"
+            class="carousel w-full h-auto md:h-[450px] rounded-2xl shadow-xl bg-white border border-gray-100 overflow-hidden">
+            @foreach ($promotions as $index => $promo)
+                <div id="promo-slide-{{ $index }}" class="carousel-item relative w-full duration-500 ease-in-out">
+
+                    <div class="w-full h-full flex items-center justify-center bg-gray-50">
+                        <img src="{{ asset($promo['slide_image']) }}"
+                            class="max-h-full w-auto object-contain transition-transform duration-500 hover:scale-105 cursor-pointer"
+                            alt="Promotion {{ $promo['id'] }}"
+                            @if ($promo['modal_content']) onclick="promo_modal_{{ $promo['id'] }}.showModal()" @endif>
+                    </div>
+
+                    @if (!empty($promo['title']) || !empty($promo['subtitle']) || $promo['modal_content'])
+                        <div
+                            class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-6 pt-12">
                             <div class="text-white max-w-xl">
                                 @if (!empty($promo['title']))
-                                    <h3 class="text-3xl md:text-4xl font-bold mb-3">{{ $promo['title'] }}</h3>
+                                    <h3 class="text-2xl font-bold mb-1">{{ $promo['title'] }}</h3>
                                 @endif
                                 @if (!empty($promo['subtitle']))
-                                    <p class="text-lg md:text-xl mb-6">{{ $promo['subtitle'] }}</p>
+                                    <p class="text-sm md:text-base opacity-90 mb-3">{{ $promo['subtitle'] }}</p>
                                 @endif
+
                                 @if ($promo['modal_content'])
-                                    <button data-modal-target="promotion-modal-{{ $promo['id'] }}"
-                                        data-modal-toggle="promotion-modal-{{ $promo['id'] }}"
-                                        class="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-full text-white font-medium transition">
+                                    <button onclick="promo_modal_{{ $promo['id'] }}.showModal()"
+                                        class="btn btn-sm bg-green-600 border-none hover:bg-green-700 text-white rounded-full px-6 shadow-md">
                                         ดูรายละเอียด
                                     </button>
                                 @endif
@@ -97,78 +93,115 @@
             @endforeach
         </div>
 
-        <!-- Indicators -->
-        <div class="absolute z-30 flex -translate-x-1/2 bottom-6 left-1/2 space-x-3">
-            @foreach ($promotions as $promo)
-                <button @click="activeSlide = {{ $loop->iteration }}"
-                    :class="{
-                        'bg-blue-600 w-6': activeSlide === {{ $loop->iteration }},
-                        'bg-gray-300 w-3': activeSlide !==
-                            {{ $loop->iteration }}
-                    }"
-                    class="h-3 rounded-full transition-all duration-300"></button>
-            @endforeach
+        <div
+            class="absolute flex justify-between transform -translate-y-1/2 left-2 right-2 top-1/2 z-30 pointer-events-none">
+            <button onclick="movePromoSlide(-1)"
+                class="btn btn-circle btn-sm md:btn-md bg-white/40 hover:bg-white border-none text-gray-800 backdrop-blur-sm pointer-events-auto shadow-lg">❮</button>
+            <button onclick="movePromoSlide(1)"
+                class="btn btn-circle btn-sm md:btn-md bg-white/40 hover:bg-white border-none text-gray-800 backdrop-blur-sm pointer-events-auto shadow-lg">❯</button>
         </div>
 
-        <!-- Prev Button -->
-        <button @click="prev()" type="button"
-            class="absolute top-1/2 left-4 -translate-y-1/2 z-30 flex items-center justify-center w-12 h-12 rounded-full bg-black/30 backdrop-blur-sm hover:bg-black/50 transition">
-            <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M5 1 1 5l4 4" />
-            </svg>
-        </button>
-
-        <!-- Next Button -->
-        <button @click="next()" type="button"
-            class="absolute top-1/2 right-4 -translate-y-1/2 z-30 flex items-center justify-center w-12 h-12 rounded-full bg-black/30 backdrop-blur-sm hover:bg-black/50 transition">
-            <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="m1 9 4-4-4-4" />
-            </svg>
-        </button>
+        <div class="flex justify-center w-full py-4 gap-2">
+            @foreach ($promotions as $index => $promo)
+                <button onclick="goToPromoSlide({{ $index }})" id="promo-dot-{{ $index }}"
+                    class="w-2 h-2 md:w-3 md:h-3 rounded-full transition-all duration-300 {{ $loop->first ? 'bg-green-600 w-6' : 'bg-gray-300' }}">
+                </button>
+            @endforeach
+        </div>
     </div>
 </section>
 
-<!-- Modal -->
 @foreach ($promotions as $promo)
     @if ($promo['modal_content'])
-        <div id="promotion-modal-{{ $promo['id'] }}" tabindex="-1" aria-hidden="true"
-            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 
-                    justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full 
-                bg-gray-900/70 backdrop-blur-sm transition-opacity duration-300">
-
+        <dialog id="promo_modal_{{ $promo['id'] }}" class="modal">
             <div
-                class="relative p-4 w-full {{ $promo['modal_type'] == 'video' ? 'max-w-4xl' : 'max-w-3xl' }} max-h-full transition-all duration-300 ease-in-out">
-                <div class="relative bg-white rounded-2xl shadow-xl">
-                    <!-- ปุ่มปิด -->
-                    <button type="button"
-                        class="absolute -top-3 -right-3 text-white bg-blue-600 hover:bg-blue-700 rounded-full text-sm w-9 h-9 flex justify-center items-center z-50"
-                        data-modal-hide="promotion-modal-{{ $promo['id'] }}">
-                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                        </svg>
-                        <span class="sr-only">Close modal</span>
-                    </button>
+                class="modal-box w-11/12 {{ $promo['modal_type'] == 'video' ? 'max-w-5xl p-0 bg-black' : 'max-w-4xl p-0' }} rounded-xl relative overflow-hidden">
 
-                    <!-- เนื้อหา -->
-                    <div class="rounded-2xl overflow-hidden">
-                        @if ($promo['modal_type'] == 'image')
-                            <img src="{{ asset($promo['modal_content']) }}" class="w-full h-auto"
-                                alt="รายละเอียดโปรโมชัน">
-                        @elseif ($promo['modal_type'] == 'video')
-                            <div class="aspect-video">
-                                <iframe class="w-full h-full" src="{{ $promo['modal_content'] }}"
-                                    title="YouTube video player" frameborder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    allowfullscreen></iframe>
-                            </div>
-                        @endif
+                <form method="dialog">
+                    <button
+                        class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 z-50 {{ $promo['modal_type'] == 'video' ? 'text-white bg-black/50 hover:bg-black' : 'text-gray-600 bg-white/50 hover:bg-white' }}">✕</button>
+                </form>
+
+                @if ($promo['modal_type'] == 'image')
+                    <img src="{{ asset($promo['modal_content']) }}" class="w-full h-auto block" alt="รายละเอียด">
+                @elseif ($promo['modal_type'] == 'video')
+                    <div class="aspect-video w-full">
+                        <iframe class="w-full h-full" src="{{ $promo['modal_content'] }}" title="YouTube video player"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
                     </div>
-                </div>
+                @endif
             </div>
-        </div>
+            <form method="dialog" class="modal-backdrop">
+                <button>close</button>
+            </form>
+        </dialog>
     @endif
 @endforeach
+
+@push('scripts')
+    <script>
+        let currentPromoSlide = 0;
+        const promoCarousel = document.getElementById('promo-carousel');
+        const totalPromoSlides = {{ count($promotions) }};
+        const promoIntervalTime = 5000;
+        let promoTimer;
+
+        function updatePromoCarousel() {
+            if (!promoCarousel) return;
+
+            const slideWidth = promoCarousel.clientWidth;
+            promoCarousel.scrollTo({
+                left: currentPromoSlide * slideWidth,
+                behavior: 'smooth'
+            });
+
+            // Update Dots
+            for (let i = 0; i < totalPromoSlides; i++) {
+                const dot = document.getElementById(`promo-dot-${i}`);
+                if (dot) {
+                    if (i === currentPromoSlide) {
+                        dot.classList.remove('bg-gray-300');
+                        dot.classList.add('bg-green-600', 'w-6');
+                    } else {
+                        dot.classList.remove('bg-green-600', 'w-6');
+                        dot.classList.add('bg-gray-300');
+                    }
+                }
+            }
+        }
+
+        function movePromoSlide(direction) {
+            currentPromoSlide += direction;
+            if (currentPromoSlide >= totalPromoSlides) currentPromoSlide = 0;
+            else if (currentPromoSlide < 0) currentPromoSlide = totalPromoSlides - 1;
+
+            updatePromoCarousel();
+            resetPromoAutoPlay();
+        }
+
+        function goToPromoSlide(index) {
+            currentPromoSlide = index;
+            updatePromoCarousel();
+            resetPromoAutoPlay();
+        }
+
+        function startPromoAutoPlay() {
+            promoTimer = setInterval(() => {
+                movePromoSlide(1);
+            }, promoIntervalTime);
+        }
+
+        function resetPromoAutoPlay() {
+            clearInterval(promoTimer);
+            startPromoAutoPlay();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            startPromoAutoPlay();
+            window.addEventListener('resize', updatePromoCarousel);
+        });
+    </script>
+@endpush

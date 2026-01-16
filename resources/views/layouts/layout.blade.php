@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'สหกรณ์ออมทรัพย์ษะกอฟะฮ') }}@hasSection('title')
             | @yield('title')
@@ -32,7 +33,7 @@
     <meta name="twitter:image" content="@yield('og_image', asset('images/default-og-image.jpg'))" />
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y7M3HX122N"></script>
     <script>
         window.dataLayer = window.dataLayer || [];

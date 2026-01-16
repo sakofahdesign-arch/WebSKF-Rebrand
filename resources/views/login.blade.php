@@ -1,106 +1,124 @@
-{{-- This page extends the main layout --}}
 @extends('layouts.layout')
 
-{{-- Set the title for this page --}}
 @section('title', 'เข้าสู่ระบบสำหรับเจ้าหน้าที่')
 
-{{-- Main content section --}}
 @section('content')
 
-<div class="min-h-[calc(100vh-128px)] flex bg-gray-50"> {{-- 128px is approx height of header + footer --}}
-    <div class="flex flex-col md:flex-row w-full">
+<div class="min-h-screen bg-white flex items-center justify-center p-4">
 
-        <!-- Left Side: Image and Welcome Text -->
-        <div class="relative hidden md:flex md:w-1/2 items-center justify-center bg-green-800 text-white p-12">
-            <div class="absolute inset-0 bg-cover bg-center opacity-20" style="background-image: url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=1911&auto=format&fit=crop');"></div>
+    <div class="card w-full max-w-5xl bg-white shadow-2xl border border-gray-100 overflow-hidden grid md:grid-cols-2 rounded-2xl">
+
+        <div class="relative hidden md:flex flex-col items-center justify-center bg-green-900 text-white p-12 overflow-hidden">
+            <div class="absolute inset-0 z-0">
+                <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1632&q=80"
+                     alt="Office Background"
+                     class="w-full h-full object-cover opacity-10 mix-blend-overlay">
+            </div>
+
             <div class="relative z-10 text-center">
-                <a href="/" class="inline-block mb-8">
-                     <img class="mx-auto h-16 w-auto" src="{{ asset('images/sakofah-logo.png') }}" alt="Logo" onerror="this.onerror=null;this.src='https://placehold.co/120x120/FFFFFF/FFFFFF?text=S';">
-                </a>
-                <h1 class="text-4xl font-bold mb-3">ยินดีต้อนรับสู่ระบบจัดการ</h1>
-                <p class="text-green-200 text-lg">สหกรณ์อิสลามษะกอฟะฮ จำกัด</p>
-                <p class="mt-6 border-t border-green-700 pt-6 text-green-300">
-                    กรุณาเข้าสู่ระบบเพื่อเข้าถึงแดชบอร์ดและจัดการข้อมูลของสหกรณ์
-                </p>
+                <div class="mb-6 inline-block bg-white p-4 rounded-full shadow-lg">
+                    <img src="{{ asset('images/sakofah-logo.png') }}" alt="Sakofah Logo" class="h-20 w-auto">
+                </div>
+
+                <h1 class="text-2xl font-bold mb-2 tracking-wide">ระบบสารสนเทศเพื่อการบริหาร</h1>
+                <p class="text-green-100 text-base font-light mb-6">สหกรณ์อิสลามษะกอฟะฮ จำกัด</p>
+
+                <div class="border-t border-green-700/50 pt-6 w-full max-w-xs mx-auto">
+                    <p class="text-sm text-green-200 leading-relaxed opacity-90">
+                        ระบบสำหรับการปฏิบัติงานของเจ้าหน้าที่ เพื่อการจัดการข้อมูลสมาชิกและธุรกรรมทางการเงินอย่างมีประสิทธิภาพและปลอดภัย
+                    </p>
+                </div>
             </div>
         </div>
 
-        <!-- Right Side: Login Form -->
-        <div class="w-full md:w-1/2 flex items-center justify-center p-6 sm:p-12">
-            <div class="w-full max-w-md">
-                <div class="text-center md:hidden mb-8">
-                     <img class="mx-auto h-12 w-auto" src="{{ asset('images/sakofah-logo.png') }}" alt="Logo" onerror="this.onerror=null;this.src='https://placehold.co/100x100/34D399/FFFFFF?text=S';">
-                </div>
-                <h2 class="text-3xl font-bold text-gray-800 text-center">
-                    เข้าสู่ระบบเจ้าหน้าที่
-                </h2>
-                 <p class="mt-2 text-center text-sm text-gray-600 mb-8">
-                    หากคุณไม่ใช่เจ้าหน้าที่ <a href="/" class="font-medium text-green-600 hover:text-green-500">กลับสู่หน้าหลัก</a>
-                </p>
+        <div class="p-8 sm:p-12 lg:p-16 flex flex-col justify-center bg-white">
 
-                {{-- Display Validation Errors --}}
-                @if ($errors->any())
-                    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6" role="alert">
-                        <p class="font-bold">เกิดข้อผิดพลาด</p>
-                        <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
+            <div class="mb-8 text-center md:text-left">
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">ลงชื่อเข้าใช้งาน</h2>
+                <p class="text-gray-500 text-sm">กรุณาระบุบัญชีผู้ใช้และรหัสผ่านเพื่อยืนยันตัวตน</p>
+            </div>
+
+            {{-- ส่วนแสดง Error --}}
+            @if ($errors->any())
+                <div class="alert alert-error bg-red-50 text-red-800 border-red-100 mb-6 flex gap-3 text-sm rounded-lg">
+                    <i class="fas fa-exclamation-triangle mt-0.5 text-red-600"></i>
+                    <div>
+                        <span class="font-bold block">การเข้าสู่ระบบไม่สำเร็จ</span>
+                        <ul class="list-disc list-inside mt-1 text-xs opacity-90">
+                             @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
                         </ul>
                     </div>
-                @endif
+                </div>
+            @endif
 
-                <form action="{{ route('login') }}" method="POST" class="space-y-6">
-                    @csrf
-                    
-                    <!-- Email Input -->
-                    <div>
-                        <label for="user_id" class="block text-sm font-medium text-gray-700">ชื่อผู้ใช้</label>
-                        <div class="mt-1 relative rounded-md shadow-sm">
-                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i class="fas fa-envelope text-gray-400"></i>
-                            </div>
-                            <input type="text" name="user_id" id="user_id" class="focus:ring-green-500 focus:border-green-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2" placeholder="you@example.com" value="" required >
-                        </div>
+            <form action="{{ route('login') }}" method="POST" class="space-y-6">
+                @csrf
+
+                <div class="form-control w-full">
+                    <label class="label pb-1">
+                        <span class="label-text font-bold text-gray-700 text-xs uppercase tracking-wider">บัญชีผู้ใช้ / รหัสพนักงาน</span>
+                    </label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 z-10">
+                            <i class="fas fa-user-circle"></i>
+                        </span>
+                        <input type="text" name="user_id"
+                               placeholder="กรอกบัญชีผู้ใช้"
+                               class="input input-bordered w-full pl-10 bg-white text-gray-800 border-gray-300 focus:border-green-600 focus:ring-1 focus:ring-green-600 transition-all"
+                               required autofocus>
                     </div>
+                </div>
 
-                    <!-- Password Input -->
-                    <div>
-                        <label for="password" class="block text-sm font-medium text-gray-700">รหัสผ่าน</label>
-                        <div class="mt-1 relative rounded-md shadow-sm">
-                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i class="fas fa-lock text-gray-400"></i>
-                            </div>
-                            <input type="password" name="password" id="password" class="focus:ring-green-500 focus:border-green-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2" placeholder="••••••••" required autocomplete="current-password">
-                        </div>
-                    </div>
+                <div class="form-control w-full">
+                    <label class="label pb-1">
+                        <span class="label-text font-bold text-gray-700 text-xs uppercase tracking-wider">รหัสผ่าน</span>
+                    </label>
+                    <div class="relative" x-data="{ show: false }">
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 z-10">
+                            <i class="fas fa-key"></i>
+                        </span>
 
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center">
-                            <input id="remember_me" name="remember" type="checkbox" class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
-                            <label for="remember_me" class="ml-2 block text-sm text-gray-900">จดจำฉันไว้</label>
-                        </div>
+                        <input :type="show ? 'text' : 'password'"
+                               name="password"
+                               class="input input-bordered w-full pl-10 pr-10 bg-white text-gray-800 border-gray-300 focus:border-green-600 focus:ring-1 focus:ring-green-600 transition-all"
+                               placeholder="กรอกรหัสผ่านเพื่อเข้าใช้งาน"
+                               required>
 
-                        <div class="text-sm">
-                            @if (Route::has('password.request'))
-                                <a href="{{ route('password.request') }}" class="font-medium text-green-600 hover:text-green-500">
-                                    ลืมรหัสผ่าน?
-                                </a>
-                            @endif
-                        </div>
-                    </div>
-
-                    <!-- Submit Button -->
-                    <div>
-                        <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors">
-                            เข้าสู่ระบบ
+                        <button type="button" @click="show = !show" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-green-700 cursor-pointer focus:outline-none z-10 transition-colors" tabindex="-1">
+                             <i class="fas" :class="show ? 'fa-eye-slash' : 'fa-eye'"></i>
                         </button>
                     </div>
-                </form>
+
+                    @if (Route::has('password.request'))
+                        <label class="label justify-end pt-1">
+                            <a href="{{ route('password.request') }}" class="label-text-alt link link-hover text-green-700 font-medium text-xs">ลืมรหัสผ่าน?</a>
+                        </label>
+                    @endif
+                </div>
+
+                <div class="form-control">
+                    <label class="label cursor-pointer justify-start gap-3 p-0">
+                        <input type="checkbox" name="remember" class="checkbox checkbox-xs checkbox-success rounded bg-white border-gray-400" />
+                        <span class="label-text text-gray-600 text-sm">จำการเข้าสู่ระบบไว้ในเครื่องนี้</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn w-full bg-green-700 hover:bg-green-800 border-none text-white text-base font-bold shadow-md hover:shadow-lg transition-all h-12 rounded-lg tracking-wide">
+                    <i class="fas fa-sign-in-alt mr-2"></i> เข้าสู่ระบบ
+                </button>
+
+            </form>
+
+            <div class="mt-8 text-center border-t border-gray-100 pt-6">
+                <p class="text-xs text-gray-400 mb-2">&copy; {{ date('Y') }} สหกรณ์อิสลามษะกอฟะฮ จำกัด. สงวนลิขสิทธิ์.</p>
+                <a href="/" class="inline-flex items-center text-sm font-medium text-green-700 hover:text-green-900 transition-colors">
+                    <i class="fas fa-arrow-left mr-2 text-xs"></i> กลับสู่หน้าเว็บไซต์หลัก
+                </a>
             </div>
         </div>
     </div>
 </div>
 
 @endsection
-

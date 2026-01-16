@@ -2,134 +2,177 @@
 
 @section('title', 'เพิ่มสินทรัพย์ใหม่')
 
-@section('content')
-    <div class="p-4 md:p-8 bg-gray-100 min-h-screen">
-
-        <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-800">เพิ่มสินทรัพย์ใหม่</h1>
-            <p class="text-gray-500 mt-1">กรอกข้อมูลและอัปโหลดรูปภาพสำหรับสินทรัพย์ใหม่</p>
+@section('header')
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+            <h2 class="text-2xl font-bold text-gray-800 flex items-center gap-2">
+                <i class="fas fa-plus-circle text-emerald-600"></i> เพิ่มสินทรัพย์ใหม่
+            </h2>
+            <nav class="flex text-sm text-gray-500 mt-1" aria-label="Breadcrumb">
+                <ol class="inline-flex items-center space-x-1 md:space-x-2">
+                    <li class="inline-flex items-center">
+                        <a href="{{ route('asset.index') }}" class="hover:text-emerald-600">จัดการสินทรัพย์</a>
+                    </li>
+                    <li><i class="fas fa-chevron-right text-xs"></i></li>
+                    <li class="text-gray-400" aria-current="page">เพิ่มข้อมูล</li>
+                </ol>
+            </nav>
         </div>
+    </div>
+@endsection
 
-        <form action="{{ route('asset.store') }}" method="post" enctype="multipart/form-data"
-            class="bg-white rounded-2xl shadow-xl p-6 md:p-8">
-            @csrf
+@section('content')
+    <div class="container mx-auto max-w-5xl">
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="card bg-white shadow-lg border border-gray-100 overflow-hidden">
+            <div class="h-2 bg-gradient-to-r from-emerald-500 to-teal-400"></div>
 
-                <div class="space-y-6">
-                    <div>
-                        <label for="title" class="block mb-2 text-sm font-medium text-gray-700">หัวข้อสินทรัพย์</label>
-                        <input type="text" id="title" name="title"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                            placeholder="เช่น บ้านเดี่ยวสไตล์โมเดิร์น" required>
+            <div class="p-8 md:p-10">
+                <div class="text-center mb-10">
+                    <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl shadow-sm">
+                        <i class="fas fa-home"></i>
                     </div>
-                    <div>
-                        <label for="description1" class="block mb-2 text-sm font-medium text-gray-700">รายละเอียด 1</label>
-                        <textarea id="description1" name="description1" rows="3"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                            placeholder="เช่น ขนาดพื้นที่, จำนวนห้องนอน/ห้องน้ำ..." required></textarea>
-                    </div>
-                    <div>
-                        <label for="description2" class="block mb-2 text-sm font-medium text-gray-700">รายละเอียด 2</label>
-                        <textarea id="description2" name="description2" rows="3"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                            placeholder="เช่น สถานที่ใกล้เคียง, จุดเด่นเพิ่มเติม..." required></textarea>
-                    </div>
-                    <div>
-                        <label for="contact" class="block mb-2 text-sm font-medium text-gray-700">ข้อมูลติดต่อ</label>
-                        <input type="text" id="contact" name="contact"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                            placeholder="เช่น เบอร์โทร, Line ID" required>
-                    </div>
-                    <div>
-                        <label for="asset_type" class="block mb-2 text-sm font-medium text-gray-700">ประเภทสินทรัพย์</label>
-                        <select id="asset_type" name="asset_type"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                            required>
-                            <option value="" disabled selected>-- เลือกประเภท --</option>
-                            <option value="1">บ้านพร้อมที่ดิน</option>
-                            <option value="2">ที่ดินเปล่า</option>
-                            <option value="3">คอนโด</option>
-                        </select>
-                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800">ข้อมูลสินทรัพย์</h3>
+                    <p class="text-gray-500 mt-1">กรุณากรอกรายละเอียดและอัปโหลดรูปภาพให้ครบถ้วน</p>
                 </div>
 
-                <div class="space-y-6">
-                    <div x-data="{ coverPreview: null }">
-                        <label class="block mb-2 text-sm font-medium text-gray-700">ภาพหน้าปก</label>
-                        <div
-                            class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
-                            <div class="space-y-1 text-center">
-                                <template x-if="coverPreview">
-                                    <img :src="coverPreview" class="mx-auto max-h-40 rounded-md shadow-sm">
-                                </template>
-                                <template x-if="!coverPreview">
-                                    <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none"
-                                        viewBox="0 0 48 48" aria-hidden="true">
-                                        <path
-                                            d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                    </svg>
-                                </template>
-                                <div class="flex text-sm text-gray-600">
-                                    <label for="coverImage"
-                                        class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
-                                        <span>อัปโหลดไฟล์</span>
-                                        <input id="coverImage" name="coverImage" type="file" class="sr-only"
-                                            @change="coverPreview = URL.createObjectURL($event.target.files[0])" required>
-                                    </label>
-                                    <p class="pl-1">หรือลากและวาง</p>
-                                </div>
-                                <p class="text-xs text-gray-500">PNG, JPG, GIF ไม่เกิน 10MB</p>
-                            </div>
-                        </div>
-                    </div>
+                <form action="{{ route('asset.store') }}" method="post" enctype="multipart/form-data" class="space-y-8">
+                    @csrf
 
-                    <div x-data="{ galleryPreviews: [] }">
-                        <label class="block mb-2 text-sm font-medium text-gray-700">รูปภาพเพิ่มเติม
-                            (เลือกได้หลายรูป)</label>
-                        <div
-                            class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
-                            <div class="space-y-1 text-center">
-                                <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none"
-                                    viewBox="0 0 48 48" aria-hidden="true">
-                                    <path
-                                        d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                </svg>
-                                <div class="flex text-sm text-gray-600">
-                                    <label for="galleryImages"
-                                        class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500">
-                                        <span>อัปโหลดไฟล์</span>
-                                        <input id="galleryImages" name="Images[]" type="file" multiple class="sr-only"
-                                            @change="galleryPreviews = Array.from($event.target.files).map(file => ({ url: URL.createObjectURL(file), name: file.name }))">
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"
-                            x-show="galleryPreviews.length > 0">
-                            <template x-for="(file, index) in galleryPreviews" :key="index">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+
+                        <div class="space-y-6">
+                            <div class="form-control w-full">
+                                <label for="title" class="label">
+                                    <span class="label-text font-bold text-gray-700">หัวข้อสินทรัพย์ <span class="text-red-500">*</span></span>
+                                </label>
                                 <div class="relative">
-                                    <img :src="file.url" class="w-full h-24 object-cover rounded-lg shadow-md">
-                                    <p x-text="file.name" class="text-xs text-center truncate mt-1"></p>
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-heading text-gray-400"></i>
+                                    </div>
+                                    <input type="text" id="title" name="title"
+                                        class="input input-bordered w-full pl-10 focus:input-emerald-500 bg-gray-50 focus:bg-white transition-colors"
+                                        placeholder="เช่น บ้านเดี่ยวสไตล์โมเดิร์น" required>
                                 </div>
-                            </template>
+                            </div>
+
+                            <div class="form-control w-full">
+                                <label for="description1" class="label">
+                                    <span class="label-text font-bold text-gray-700">รายละเอียดหลัก <span class="text-red-500">*</span></span>
+                                </label>
+                                <textarea id="description1" name="description1" rows="3"
+                                    class="textarea textarea-bordered w-full focus:textarea-emerald-500 bg-gray-50 focus:bg-white transition-colors"
+                                    placeholder="เช่น ขนาดพื้นที่, จำนวนห้องนอน/ห้องน้ำ..." required></textarea>
+                            </div>
+
+                            <div class="form-control w-full">
+                                <label for="description2" class="label">
+                                    <span class="label-text font-bold text-gray-700">รายละเอียดเพิ่มเติม <span class="text-red-500">*</span></span>
+                                </label>
+                                <textarea id="description2" name="description2" rows="3"
+                                    class="textarea textarea-bordered w-full focus:textarea-emerald-500 bg-gray-50 focus:bg-white transition-colors"
+                                    placeholder="เช่น สถานที่ใกล้เคียง, จุดเด่นเพิ่มเติม..." required></textarea>
+                            </div>
+
+                            <div class="form-control w-full">
+                                <label for="contact" class="label">
+                                    <span class="label-text font-bold text-gray-700">ข้อมูลติดต่อ <span class="text-red-500">*</span></span>
+                                </label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-phone-alt text-gray-400"></i>
+                                    </div>
+                                    <input type="text" id="contact" name="contact"
+                                        class="input input-bordered w-full pl-10 focus:input-emerald-500 bg-gray-50 focus:bg-white transition-colors"
+                                        placeholder="เช่น เบอร์โทร, Line ID" required>
+                                </div>
+                            </div>
+
+                            <div class="form-control w-full">
+                                <label for="asset_type" class="label">
+                                    <span class="label-text font-bold text-gray-700">ประเภทสินทรัพย์ <span class="text-red-500">*</span></span>
+                                </label>
+                                <select id="asset_type" name="asset_type"
+                                    class="select select-bordered w-full focus:select-emerald-500 bg-gray-50 focus:bg-white transition-colors"
+                                    required>
+                                    <option value="" disabled selected>-- เลือกประเภท --</option>
+                                    <option value="1">บ้านพร้อมที่ดิน</option>
+                                    <option value="2">ที่ดินเปล่า</option>
+                                    <option value="3">คอนโด</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="space-y-6">
+                            
+                            <div class="form-control w-full" x-data="{ coverPreview: null }">
+                                <label class="label">
+                                    <span class="label-text font-bold text-gray-700">ภาพหน้าปก <span class="text-red-500">*</span></span>
+                                    <span class="label-text-alt text-gray-400">ภาพหลัก (1 รูป)</span>
+                                </label>
+                                
+                                <label class="flex flex-col items-center justify-center w-full h-56 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-400 transition-all bg-gray-50 relative overflow-hidden group">
+                                    
+                                    <div x-show="coverPreview" class="absolute inset-0 w-full h-full flex items-center justify-center bg-gray-100">
+                                        <img :src="coverPreview" class="w-full h-full object-cover">
+                                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <p class="text-white font-medium"><i class="fas fa-edit mr-2"></i>เปลี่ยนรูปภาพ</p>
+                                        </div>
+                                    </div>
+
+                                    <div x-show="!coverPreview" class="flex flex-col items-center justify-center pt-5 pb-6 text-center px-4">
+                                        <i class="far fa-image text-4xl text-gray-400 mb-3 group-hover:text-emerald-500 transition-colors"></i>
+                                        <p class="mb-1 text-sm text-gray-500"><span class="font-semibold text-emerald-600">คลิกเพื่ออัปโหลด</span> หรือลากไฟล์มาวาง</p>
+                                        <p class="text-xs text-gray-400">PNG, JPG, GIF (Max 10MB)</p>
+                                    </div>
+
+                                    <input id="coverImage" name="coverImage" type="file" class="hidden" accept="image/*"
+                                        @change="coverPreview = URL.createObjectURL($event.target.files[0])" required>
+                                </label>
+                            </div>
+
+                            <div class="form-control w-full" x-data="{ fileCount: 0 }">
+                                <label class="label">
+                                    <span class="label-text font-bold text-gray-700">รูปภาพเพิ่มเติม</span>
+                                    <span class="label-text-alt text-gray-400">เลือกได้หลายรูป</span>
+                                </label>
+                                
+                                <label class="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition-all bg-gray-50">
+                                    <div class="flex flex-col items-center justify-center pt-5 pb-6 text-center">
+                                        
+                                        <div x-show="fileCount === 0">
+                                            <i class="fas fa-images text-3xl text-gray-400 mb-3 group-hover:text-blue-500 transition-colors"></i>
+                                            <p class="text-sm text-gray-500">เพิ่มรูปภาพแกลเลอรี</p>
+                                        </div>
+
+                                        <div x-show="fileCount > 0" style="display: none;">
+                                            <div class="badge badge-lg badge-info gap-2 p-4 mb-2">
+                                                <i class="fas fa-check-circle"></i>
+                                                เลือกแล้ว <span x-text="fileCount" class="font-bold"></span> ไฟล์
+                                            </div>
+                                            <p class="text-xs text-gray-500">คลิกเพื่อเลือกใหม่</p>
+                                        </div>
+
+                                    </div>
+                                    <input id="galleryImages" name="Images[]" type="file" multiple class="hidden" accept="image/*"
+                                        @change="fileCount = $event.target.files.length">
+                                </label>
+                            </div>
+
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <div class="mt-8 pt-6 border-t border-gray-200 flex justify-end gap-3">
-                <button type="reset"
-                    class="px-5 py-2.5 bg-gray-200 text-gray-700 font-semibold rounded-lg hover:bg-gray-300 transition-colors">
-                    ยกเลิก
-                </button>
-                <button type="submit"
-                    class="px-5 py-2.5 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 transition-colors">
-                    <i class="fas fa-upload mr-2"></i> อัปโหลดสินทรัพย์
-                </button>
+                    <div class="flex items-center justify-end gap-3 pt-8 border-t border-gray-100">
+                        <a href="{{ route('asset.index') }}" class="btn btn-ghost text-gray-500 hover:bg-gray-100">
+                            ยกเลิก
+                        </a>
+                        <button type="submit" class="btn bg-emerald-600 hover:bg-emerald-700 text-white border-none shadow-md gap-2 px-8">
+                            <i class="fas fa-save"></i> บันทึกข้อมูล
+                        </button>
+                    </div>
+
+                </form>
             </div>
-        </form>
+        </div>
     </div>
 @endsection

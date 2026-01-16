@@ -2,108 +2,160 @@
 
 @section('title', 'รายละเอียดสินเชื่อ ' . ($loan_select->LCONT_ID ?? ''))
 
-@section('content')
-<div class="bg-gray-100 min-h-screen">
-    <div class="container mx-auto px-4 py-12 space-y-8">
-
-        <div class="flex flex-col sm:flex-row justify-between items-start">
-            <div>
-                <h1 class="text-3xl md:text-4xl font-bold text-gray-800">
-                    รายละเอียดสินเชื่อ
-                </h1>
-                <p class="text-lg text-gray-500 mt-1">
-                    <span class="font-semibold text-gray-700">{{ $loan_select->LSUB_NAME ?? 'N/A' }}</span>
-                    <span class="font-mono text-sm">({{ $loan_select->LCONT_ID ?? 'N/A' }})</span>
-                </p>
-            </div>
-            <a href="{{ url()->previous() }}" class="mt-4 sm:mt-0 inline-flex items-center px-4 py-2 bg-white text-gray-700 font-bold rounded-lg hover:bg-gray-200 transition duration-300 border shadow-sm">
-                <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
-                กลับ
-            </a>
+@section('header')
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+            <h2 class="text-2xl font-bold text-gray-800 flex items-center gap-2">
+                <i class="fas fa-file-invoice-dollar text-emerald-600"></i> รายละเอียดสินเชื่อ
+            </h2>
+            <nav class="flex text-sm text-gray-500 mt-1" aria-label="Breadcrumb">
+                <ol class="inline-flex items-center space-x-1 md:space-x-2">
+                    <li class="inline-flex items-center">
+                        <a href="#" onclick="window.history.back();" class="hover:text-emerald-600">ข้อมูลสมาชิก</a>
+                    </li>
+                    <li><i class="fas fa-chevron-right text-xs"></i></li>
+                    <li class="text-gray-400" aria-current="page">{{ $loan_select->LCONT_ID ?? 'N/A' }}</li>
+                </ol>
+            </nav>
         </div>
         
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div class="bg-white p-6 rounded-2xl shadow-lg border">
-                <div class="flex items-center">
-                    <div class="w-12 h-12 flex items-center justify-center bg-blue-100 rounded-full mr-4 text-blue-600">
-                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-500">ยอดอนุมัติ</p>
-                        <p class="text-2xl font-bold text-gray-800">{{ number_format($loan_select->LCONT_APPROVE_SAL, 2) }}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-white p-6 rounded-2xl shadow-lg border">
-                 <div class="flex items-center">
-                    <div class="w-12 h-12 flex items-center justify-center bg-red-100 rounded-full mr-4 text-red-600">
-                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-500">ยอดคงเหลือ</p>
-                        <p class="text-2xl font-bold text-red-600">{{ number_format($loan_select->LCONT_AMOUNT_SAL, 2) }}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-white p-6 rounded-2xl shadow-lg border">
-                 <div class="flex items-center">
-                    <div class="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full mr-4 text-gray-600">
-                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0h18" /></svg>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-500">วันที่ทำสัญญา</p>
-                        <p class="text-lg font-semibold text-gray-800">{{ $loan_select->LCONT_DATE ? thaidate('j M Y', strtotime($loan_select->LCONT_DATE)) : '-' }}</p>
+        <a href="#" onclick="window.history.back();"
+           class="btn btn-sm btn-outline text-gray-600 hover:bg-gray-100 hover:text-gray-800 border-gray-300 font-normal gap-2">
+            <i class="fas fa-arrow-left"></i> ย้อนกลับ
+        </a>
+    </div>
+@endsection
+
+@section('content')
+    <div class="container mx-auto max-w-7xl space-y-6">
+
+        <div class="card bg-white shadow-lg border border-gray-100 overflow-hidden">
+            <div class="h-2 bg-gradient-to-r from-emerald-500 to-teal-400"></div>
+            
+            <div class="card-body p-6 md:p-8">
+                <div class="flex flex-col md:flex-row justify-between items-start gap-6 mb-6">
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-2xl bg-emerald-100 flex items-center justify-center text-emerald-600 shadow-sm">
+                            <i class="fas fa-hand-holding-usd text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl md:text-2xl font-bold text-gray-800">{{ $loan_select->LSUB_NAME ?? 'ไม่ระบุประเภท' }}</h3>
+                            <div class="flex items-center gap-2 mt-1">
+                                <span class="badge badge-lg bg-gray-100 text-gray-600 font-mono border-gray-200">
+                                    {{ $loan_select->LCONT_ID ?? 'N/A' }}
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="bg-white p-6 rounded-2xl shadow-lg border">
-                 <div class="flex items-center">
-                    <div class="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full mr-4 text-gray-600">
-                         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" /></svg>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    
+                    <div class="stat bg-blue-50/50 rounded-xl border border-blue-100 p-4">
+                        <div class="stat-figure text-blue-500">
+                            <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                        </div>
+                        <div class="stat-title text-xs font-bold text-blue-600 uppercase tracking-wide">ยอดอนุมัติ</div>
+                        <div class="stat-value text-xl font-bold text-blue-700 mt-1">
+                            {{ number_format($loan_select->LCONT_APPROVE_SAL, 2) }}
+                        </div>
                     </div>
-                    <div>
-                        <p class="text-sm text-gray-500">วันที่หมดสัญญา</p>
-                        <p class="text-lg font-semibold text-gray-800">{{ $loan_select->END_PAYDEPT ? thaidate('j M Y', strtotime($loan_select->END_PAYDEPT)) : '-' }}</p>
+
+                    <div class="stat bg-rose-50/50 rounded-xl border border-rose-100 p-4">
+                        <div class="stat-figure text-rose-500">
+                            <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </div>
+                        </div>
+                        <div class="stat-title text-xs font-bold text-rose-600 uppercase tracking-wide">ยอดคงเหลือ</div>
+                        <div class="stat-value text-xl font-bold text-rose-700 mt-1">
+                            {{ number_format($loan_select->LCONT_AMOUNT_SAL, 2) }}
+                        </div>
                     </div>
+
+                    <div class="stat bg-gray-50/50 rounded-xl border border-gray-200 p-4">
+                        <div class="stat-figure text-gray-400">
+                            <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm">
+                                <i class="far fa-calendar-alt"></i>
+                            </div>
+                        </div>
+                        <div class="stat-title text-xs font-bold text-gray-500 uppercase tracking-wide">วันที่ทำสัญญา</div>
+                        <div class="stat-value text-lg font-semibold text-gray-700 mt-1">
+                            {{ $loan_select->LCONT_DATE ? thaidate('j M Y', strtotime($loan_select->LCONT_DATE)) : '-' }}
+                        </div>
+                    </div>
+
+                    <div class="stat bg-gray-50/50 rounded-xl border border-gray-200 p-4">
+                        <div class="stat-figure text-gray-400">
+                            <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm">
+                                <i class="far fa-calendar-check"></i>
+                            </div>
+                        </div>
+                        <div class="stat-title text-xs font-bold text-gray-500 uppercase tracking-wide">วันที่หมดสัญญา</div>
+                        <div class="stat-value text-lg font-semibold text-gray-700 mt-1">
+                            {{ $loan_select->END_PAYDEPT ? thaidate('j M Y', strtotime($loan_select->END_PAYDEPT)) : '-' }}
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
 
-        <div class="bg-white rounded-2xl shadow-xl border border-gray-200/80">
-            <div class="p-6 border-b border-gray-200">
-                <h3 class="text-xl font-bold text-slate-800">ประวัติการชำระ</h3>
+        <div class="card bg-white shadow-lg border border-gray-100 overflow-hidden">
+            <div class="p-6 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
+                <h4 class="text-lg font-bold text-gray-700 flex items-center gap-2">
+                    <i class="fas fa-history text-emerald-500"></i> ประวัติการชำระ
+                </h4>
             </div>
-            <div class="p-6">
+
+            <div class="p-0">
                 <div class="overflow-x-auto">
-                    <table class="datatable-init w-full text-sm">
-                        <thead class="bg-slate-50">
+                    <table id="loanTable" class="w-full text-sm">
+                        <thead class="bg-gray-50 text-gray-500 font-bold border-b border-gray-200">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">วันที่</th>
-                                <th class="px-6 py-3 text-center text-xs font-semibold text-slate-500 uppercase tracking-wider">งวดที่</th>
-                                <th class="px-6 py-3 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">ยอดชำระ (บาท)</th>
-                                <th class="px-6 py-3 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">ยอดคงเหลือ (บาท)</th>
+                                <th class="py-4 px-6 text-left w-32">วันที่</th>
+                                <th class="py-4 px-6 text-center w-24">งวดที่</th>
+                                <th class="py-4 px-6 text-right w-40">ยอดชำระ (บาท)</th>
+                                <th class="py-4 px-6 text-right w-40">คงเหลือ (บาท)</th>
                             </tr>
                         </thead>
-                        <tbody class="text-slate-700">
+                        <tbody class="text-gray-700 divide-y divide-gray-100">
                             @forelse ($loan_detail as $item)
-                            <tr class="border-b border-slate-200 last:border-b-0 hover:bg-slate-50">
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $item->LPD_DATE ? thaidate('j M Y', strtotime($item->LPD_DATE)) : '-' }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-center">
-                                    <span class="px-3 py-1 text-xs font-semibold leading-tight text-slate-700 bg-slate-100 rounded-full">{{ $item->LPD_NUM_INST }}</span>
+                            <tr class="hover:bg-emerald-50/30 transition-colors">
+                                <td class="py-4 px-6 whitespace-nowrap">
+                                    <div class="flex items-center gap-2">
+                                        <i class="far fa-clock text-gray-400 text-xs"></i>
+                                        {{ $item->LPD_DATE ? thaidate('j M Y', strtotime($item->LPD_DATE)) : '-' }}
+                                    </div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right font-semibold text-green-600">
-                                    {{ number_format($item->SUM_SAL, 2) }}
+
+                                <td class="py-4 px-6 text-center">
+                                    <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 text-gray-600 text-xs font-bold border border-gray-200">
+                                        {{ $item->LPD_NUM_INST }}
+                                    </span>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right font-bold text-slate-900">
-                                    {{ number_format($item->LCONT_BAL_AMOUNT, 2) }}
+
+                                <td class="py-4 px-6 text-right">
+                                    <span class="font-bold text-emerald-600">+{{ number_format($item->SUM_SAL, 2) }}</span>
+                                </td>
+
+                                <td class="py-4 px-6 text-right">
+                                    <span class="font-bold text-gray-800 bg-gray-50 px-2 py-1 rounded-md border border-gray-100">
+                                        {{ number_format($item->LCONT_BAL_AMOUNT, 2) }}
+                                    </span>
                                 </td>
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="4" class="text-center py-16 text-gray-500">
-                                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" /></svg>
-                                    <h3 class="mt-2 text-lg font-medium text-gray-800">ไม่พบประวัติการชำระ</h3>
-                                    <p class="mt-1 text-sm">ยังไม่มีประวัติการชำระสำหรับสินเชื่อนี้</p>
+                                <td colspan="4" class="py-16 text-center text-gray-400">
+                                    <div class="flex flex-col items-center justify-center">
+                                        <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-3">
+                                            <i class="fas fa-file-invoice text-2xl opacity-30"></i>
+                                        </div>
+                                        <p>ยังไม่มีประวัติการชำระ</p>
+                                    </div>
                                 </td>
                             </tr>
                             @endforelse
@@ -114,27 +166,71 @@
         </div>
 
     </div>
-</div>
 @endsection
+
 @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" />
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const allTables = document.querySelectorAll(".datatable-init");
-            if (allTables.length > 0 && typeof simpleDatatables.DataTable !== 'undefined') {
-                allTables.forEach(table => {
-                    new simpleDatatables.DataTable(table, {
-                        searchable: false,
-                        perPageSelect: false,
-                        labels: {
-                            placeholder: "ค้นหา...",
-                            perPage: "{select} รายการต่อหน้า",
-                            noRows: "ไม่พบข้อมูล",
-                            info: "แสดง {start} ถึง {end} จาก {rows} รายการ",
-                        }
-                    });
-                });
-            }
+        $(document).ready(function() {
+            $('#loanTable').DataTable({
+                "pageLength": 20,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": false,
+                "info": true,
+                "language": {
+                    "paginate": {
+                        "previous": "<i class='fas fa-chevron-left'></i>",
+                        "next": "<i class='fas fa-chevron-right'></i>"
+                    },
+                    "info": "แสดง _START_ ถึง _END_ จาก _TOTAL_ รายการ",
+                    "infoEmpty": "ไม่มีข้อมูล",
+                    "emptyTable": "ไม่พบข้อมูลในตาราง"
+                }
+            });
         });
     </script>
+@endpush
+
+@push('styles')
+    <style>
+        /* CSS ปรับแต่ง Datatable ให้สวยงามแบบ Tailwind */
+        .dataTables_wrapper .dataTables_paginate {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.25rem;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            padding-right: 1.5rem;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            border-radius: 0.5rem;
+            padding: 0.375rem 0.75rem;
+            font-size: 0.875rem;
+            color: #4B5563;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover:not(.disabled) {
+            background: #ECFDF5;
+            color: #047857;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background: #10B981;
+            color: white;
+            font-weight: 600;
+        }
+
+        .dataTables_wrapper .dataTables_info {
+            padding-top: 1.25rem;
+            padding-left: 1.5rem;
+            font-size: 0.875rem;
+            color: #6B7280;
+        }
+    </style>
 @endpush

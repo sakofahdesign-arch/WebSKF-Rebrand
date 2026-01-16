@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
@@ -278,7 +279,7 @@ class HomeController extends Controller
 
     public function activity()
     {
-        $news = DB::table('news')->orderByDesc('dateupload')->paginate(21);
+        $news = DB::table('news')->orderByDesc('dateupload')->paginate(20);
         return view('main.news.activity', compact('news'));
     }
 

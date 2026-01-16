@@ -1,85 +1,114 @@
-@extends('layouts.layout') {{-- Use the main layout --}}
-
-@section('title', 'สวัสดิการเสียชีวิต') {{-- Page title --}}
+@extends('layouts.layout')
+@section('title', 'สวัสดิการเสียชีวิต')
 
 @section('content')
-    <div class="container mx-auto px-4 py-12">
-        <h1 class="text-4xl font-extrabold text-center text-blue-700 mb-10">สวัสดิการเสียชีวิต</h1>
+<div class="bg-gray-50 min-h-screen text-gray-800 font-sans" data-theme="light" x-data="{ loaded: false }" x-init="() => { setTimeout(() => loaded = true, 50) }">
 
-        <p class="text-lg text-gray-700 text-center mb-12 max-w-3xl mx-auto">
-            สหกรณ์ออมทรัพย์ษะกอฟะฮ จำกัด มอบสวัสดิการช่วยเหลือครอบครัวสมาชิกในกรณีเสียชีวิต เพื่อแบ่งเบาภาระและเป็นขวัญกำลังใจ
-        </p>
+    <div class="container mx-auto px-4 py-16 max-w-5xl">
 
-        {{-- Section: การขอรับสวัสดิการและเอกสารที่เกี่ยวข้อง (Applying for Welfare and Required Documents) --}}
-        <section class="bg-white rounded-lg shadow-lg p-8 mb-12 border-t-4 border-green-500">
-            <h2 class="text-3xl font-bold text-center text-green-700 mb-8 flex items-center justify-center">
-                <svg class="h-8 w-8 text-green-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                การขอรับสวัสดิการและเอกสาร
-            </h2>
-            <div class="flex flex-col md:flex-row items-center justify-center gap-8 mb-8"> {{-- Added mb-8 for spacing before documents list --}}
-                <div class="md:w-1/2 text-center md:text-left">
-                    <p class="text-xl text-gray-700 leading-relaxed mb-4">
-                        สหกรณ์ฯ ให้สวัสดิการช่วยเหลือ ตั้งแต่ <strong class="text-green-600">10,000 - 20,000 บาท</strong>
-                        <br>ขึ้นอยู่กับระดับอายุของสมาชิก
-                    </p>
-                    <p class="text-lg text-gray-700 leading-relaxed mb-4">
-                        เงินฝากและเงินสมทบที่มีอยู่ จะคืนให้ทายาทหรือผู้รับผลประโยชน์ที่ได้ระบุไว้
-                    </p>
-                    <p class="text-lg text-gray-700 leading-relaxed font-bold">
-                        ยื่นคำร้องขอรับสวัสดิการภายในระยะเวลาที่กำหนด (ตามวิธีการคำนวณเงินสมทบสมาชิก)
-                    </p>
-                </div>
-                <div class="md:w-1/2 flex justify-center">
-                    <img src="{{asset('images/welfare/สวัสดิการเสียชีวิต.jpg')}}" alt="" class="w-full max-w-md rounded-lg shadow-md border border-gray-200" loading="lazy">
-                </div>
-            </div>
-
-            {{-- Sub-section: เอกสารที่ใช้ในการขอรับสวัสดิการ (Required Documents) --}}
-            <h3 class="text-2xl font-bold text-center text-blue-700 mb-6 flex items-center justify-center">
-                <svg class="h-7 w-7 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                เอกสารที่ใช้ในการขอรับสวัสดิการ
-            </h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-lg text-gray-700">
-                <div class="flex items-start">
-                    <svg class="h-6 w-6 text-green-500 mr-3 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                    <span>ใบมรณบัตร</span>
-                </div>
-                <div class="flex items-start">
-                    <svg class="h-6 w-6 text-green-500 mr-3 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                    <span>บัตรประชาชน (ผู้เสียชีวิต)</span>
-                </div>
-                <div class="flex items-start">
-                    <svg class="h-6 w-6 text-green-500 mr-3 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                    <span>บัตรประชาชน (ทายาท)</span>
-                </div>
-            </div>
-        </section>
-
-        {{-- Section: เงื่อนไข (Conditions) --}}
-        <section class="bg-white rounded-lg shadow-lg p-8 mb-12 border-t-4 border-yellow-500">
-            <h2 class="text-3xl font-bold text-center text-yellow-700 mb-8 flex items-center justify-center">
-                <svg class="h-8 w-8 text-yellow-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                เงื่อนไข
-            </h2>
-            <ul class="list-decimal list-inside text-lg text-gray-700 leading-relaxed space-y-3">
-                <li>เป็นสมาชิก สหกรณ์ออมทรัพย์ษะกอฟะฮ จำกัด และเป็นสมาชิกกองทุนสวัสดิการสมาชิก (กองทุนตะกาฟุล)</li>
-                <li>ไม่ขาดการชำระทุนเกิน <strong class="text-red-600">3 เดือน</strong> ย้อนหลังปฏิทิน</li>
-                <li>ต้องมีการชำระทุนเข้ามาไม่น้อยกว่า <strong class="text-blue-600">1,000 บาท</strong> ก่อนรับสวัสดิการ</li>
-                <li>ยื่นคำร้องขอรับสวัสดิการภายในระยะเวลาที่กำหนดวิธีการคำนวณเงินสมทบสมาชิกให้คำนวณจ่ายตามระดับสมาชิก</li>
-            </ul>
-        </section>
-
-        {{-- Call to Action Section --}}
-        <section class="bg-blue-700 text-white rounded-lg shadow-lg p-8 text-center mt-12">
-            <h2 class="text-3xl font-bold mb-4">มีข้อสงสัยเกี่ยวกับสวัสดิการ?</h2>
-            <p class="text-lg mb-6">
-                ติดต่อสอบถามเจ้าหน้าที่สหกรณ์เพื่อข้อมูลเพิ่มเติมและเงื่อนไขการขอรับสิทธิ์
+        <div class="text-center mb-12 transition-all duration-700 ease-out"
+             :class="loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6">สวัสดิการเสียชีวิต</h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                สหกรณ์ออมทรัพย์ษะกอฟะฮ จำกัด มอบสวัสดิการเพื่อแบ่งเบาภาระและเป็นขวัญกำลังใจแก่ครอบครัวสมาชิก
             </p>
-            <a href="#" class="bg-white text-blue-700 hover:bg-gray-200 font-bold py-3 px-8 rounded-full text-xl shadow-lg transition duration-300 inline-flex items-center">
-                <svg class="h-6 w-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v4a1 1 0 001 1h2m-2 0h4m-4 0h.01M12 16l-4-4m4 4l4-4m-4 4v4m0-4h.01M12 3c-1.105 0-2 .895-2 2v1h4V5c0-1.105-.895-2-2-2zM4 9h16a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V10a1 1 0 011-1z"></path></svg>
-                ติดต่อเจ้าหน้าที่
-            </a>
-        </section>
+        </div>
+
+        <div class="card bg-white shadow-xl border border-gray-100 overflow-hidden mb-12 transition-all duration-700 delay-100"
+             :class="loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'">
+
+            <div class="h-2 bg-gradient-to-r from-gray-400 to-slate-500 w-full"></div>
+
+            <div class="card-body p-8 lg:p-12">
+
+                <h2 class="text-2xl font-bold text-gray-800 mb-10 flex items-center justify-center md:justify-start gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center text-gray-600">
+                        <i class="fas fa-praying-hands"></i>
+                    </div>
+                    รายละเอียดการรับสวัสดิการ
+                </h2>
+
+                <div class="flex flex-col md:flex-row items-center gap-12 mb-10">
+
+                    <div class="w-full md:w-1/2 flex flex-col justify-center space-y-8">
+
+                        <div class="bg-gray-50 p-6 rounded-3xl border border-gray-100 relative overflow-hidden">
+                            <p class="text-gray-700 text-lg mb-2 font-medium relative z-10">เงินช่วยเหลือค่าจัดการศพ</p>
+                            <div class="text-3xl font-extrabold text-slate-700 mb-2 relative z-10">
+                                10,000 - 20,000 <span class="text-xl text-gray-600 font-medium">บาท</span>
+                            </div>
+                            <p class="text-sm text-gray-500 relative z-10">*ขึ้นอยู่กับระดับอายุของสมาชิก</p>
+                        </div>
+
+                        <div class="flex items-start gap-4 px-2">
+                            <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 shrink-0 mt-1">
+                                <i class="fas fa-hand-holding-usd"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 text-lg">การคืนเงินสะสม</h4>
+                                <p class="text-gray-600 text-sm leading-relaxed">
+                                    เงินฝากและเงินสมทบทั้งหมด จะถูกส่งคืนให้แก่ทายาทหรือผู้รับผลประโยชน์ที่ระบุไว้
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-1/2 flex justify-center">
+                        <div class="relative group w-full max-w-sm">
+                            <div class="absolute -inset-2 bg-gradient-to-r from-gray-200 to-slate-300 rounded-2xl blur opacity-40 group-hover:opacity-60 transition duration-300"></div>
+                            <img src="{{ asset('images/welfare/สวัสดิการเสียชีวิต.jpg') }}"
+                                 alt="สวัสดิการเสียชีวิต"
+                                 class="relative rounded-xl shadow-lg w-full h-auto object-cover border-4 border-white transform transition duration-500 group-hover:scale-[1.01] grayscale hover:grayscale-0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="divider my-8"></div>
+
+                <div class="mb-10">
+                    <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                        <i class="fas fa-file-contract text-gray-400"></i> เอกสารที่ใช้ประกอบ
+                    </h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div class="alert bg-white border border-gray-200 shadow-sm flex justify-start hover:border-slate-300 transition-colors">
+                            <div class="p-1 bg-green-100 rounded-full text-green-600"><i class="fas fa-check text-xs"></i></div>
+                            <span class="font-medium text-gray-700">ใบมรณบัตร</span>
+                        </div>
+                        <div class="alert bg-white border border-gray-200 shadow-sm flex justify-start hover:border-slate-300 transition-colors">
+                            <div class="p-1 bg-green-100 rounded-full text-green-600"><i class="fas fa-check text-xs"></i></div>
+                            <span class="font-medium text-gray-700">บัตรประชาชน (ผู้เสียชีวิต)</span>
+                        </div>
+                        <div class="alert bg-white border border-gray-200 shadow-sm flex justify-start md:col-span-2 hover:border-slate-300 transition-colors">
+                            <div class="p-1 bg-green-100 rounded-full text-green-600"><i class="fas fa-check text-xs"></i></div>
+                            <span class="font-medium text-gray-700">บัตรประชาชน (ทายาทผู้รับผลประโยชน์)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-yellow-50 rounded-2xl p-6 border border-yellow-100">
+                    <h3 class="text-lg font-bold text-yellow-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-exclamation-circle"></i> เงื่อนไขการรับสวัสดิการ
+                    </h3>
+                    <ul class="space-y-3 text-sm text-yellow-900">
+                        <li class="flex items-start gap-2">
+                            <i class="fas fa-circle text-[6px] mt-2 text-yellow-500"></i>
+                            ต้องเป็นสมาชิกสหกรณ์และกองทุนสวัสดิการ (ตะกาฟุล)
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fas fa-circle text-[6px] mt-2 text-yellow-500"></i>
+                            ไม่ขาดการชำระทุนเกิน <span class="font-bold text-red-600 mx-1">3 เดือน</span> ย้อนหลัง
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fas fa-circle text-[6px] mt-2 text-yellow-500"></i>
+                            มีเงินชำระทุนสะสมไม่น้อยกว่า <span class="font-bold text-blue-600 mx-1">1,000 บาท</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
 
     </div>
+</div>
 @endsection

@@ -1,112 +1,189 @@
 @extends('layouts.admin-layout')
 
 @section('title', 'Admin จัดการสินทรัพย์')
-@section('content')
-    <div class="p-4 md:p-8 bg-gray-100 min-h-screen">
 
-        <div class="flex flex-col md:flex-row justify-between items-center mb-6">
-            <div>
-                <h1 class="text-3xl font-bold text-gray-800">จัดการสินทรัพย์</h1>
-                <p class="text-gray-500 mt-1">ดูแลและจัดการข้อมูลสินทรัพย์ทั้งหมดในระบบ</p>
-            </div>
-            <a href="{{ route('asset.create') }}"
-                class="w-full md:w-auto mt-4 md:mt-0 px-5 py-2.5 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-colors flex items-center justify-center">
-                <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                    stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                </svg>
-                เพิ่มสินทรัพย์ใหม่
-            </a>
+@section('header')
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+            <h2 class="text-2xl font-bold text-gray-800 flex items-center gap-2">
+                <i class="fas fa-boxes text-emerald-600"></i> จัดการสินทรัพย์
+            </h2>
+            <nav class="flex text-sm text-gray-500 mt-1" aria-label="Breadcrumb">
+                <ol class="inline-flex items-center space-x-1 md:space-x-2">
+                    <li class="inline-flex items-center">
+                        <a href="#" class="hover:text-emerald-600">Admin</a>
+                    </li>
+                    <li><i class="fas fa-chevron-right text-xs"></i></li>
+                    <li class="text-gray-400" aria-current="page">รายการสินทรัพย์</li>
+                </ol>
+            </nav>
         </div>
+        
+        <a href="{{ route('asset.create') }}" 
+           class="btn bg-emerald-600 hover:bg-emerald-700 text-white border-none shadow-md gap-2">
+            <i class="fas fa-plus"></i> เพิ่มสินทรัพย์ใหม่
+        </a>
+    </div>
+@endsection
 
-        <div class="bg-white rounded-2xl shadow-xl border border-gray-200/80">
-            <div class="p-4 border-b border-gray-200">
-                <form action="{{ route('asset.index') }}" method="GET">
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                            </svg>
+@section('content')
+    <div class="container mx-auto max-w-7xl">
+
+        <div class="card bg-white shadow-lg border border-gray-100 overflow-hidden">
+            <div class="h-2 bg-gradient-to-r from-emerald-500 to-teal-400"></div>
+
+            <div class="p-6 md:p-8">
+                
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-600 shadow-sm">
+                            <i class="fas fa-search text-lg"></i>
                         </div>
-                        <input name="search" type="text" value="{{ request('search') }}"
-                            placeholder="ค้นหาจากชื่อ หรือ ประเภท..."
-                            class="w-full md:w-1/3 pl-10 px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                        <h3 class="text-xl font-bold text-gray-800">ค้นหารายการ</h3>
                     </div>
-                </form>
-            </div>
 
-            <div class="overflow-x-auto">
-                <table class="w-full text-sm text-left text-gray-600">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-100">
-                        <tr>
-                            <th scope="col" class="px-6 py-4">ID</th>
-                            <th scope="col" class="px-6 py-4">ภาพปก</th>
-                            <th scope="col" class="px-6 py-4">หัวข้อ / ประเภท</th>
-                            <th scope="col" class="px-6 py-4">รายละเอียด</th>
-                            <th scope="col" class="px-6 py-4">วันที่</th>
-                            <th scope="col" class="px-6 py-4">จัดการ</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($assets as $item)
-                            <tr class="bg-white border-b hover:bg-gray-50">
-                                <td class="px-6 py-4 font-semibold">{{ $item->id }}</td>
-                                <td class="px-6 py-4">
-                                    @if($item->picture_name)
-                                        <img src="{{ asset('assets/' . $item->picture_name) }}"
-                                            class="w-24 h-16 object-cover rounded-md shadow-sm" alt="{{ $item->title }}" loading="lazy">
-                                    @else
-                                        <div
-                                            class="w-24 h-16 bg-gray-200 rounded-md flex items-center justify-center text-xs text-gray-400">
-                                            No Image</div>
-                                    @endif
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="font-semibold text-gray-900">{{ $item->title }}</div>
-                                    <span
-                                        class="px-2 py-1 text-xs font-semibold text-green-800 bg-green-100 rounded-full">{{ $item->asset_name ?? 'N/A' }}</span>
-                                </td>
-                                <td class="px-6 py-4 max-w-xs truncate">{{ Str::limit($item->description1, 80) }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ thaidate('j M Y', strtotime($item->date)) }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="flex items-center gap-4">
-                                        <a href="{{ route('asset.edit', $item->id) }}"
-                                            class="font-medium text-blue-600 hover:underline">แก้ไข</a>
-                                        <form action="{{ route('asset.destroy', $item->id) }}" method="POST"
-                                            onsubmit="return confirm('คุณแน่ใจหรือไม่ที่จะลบสินทรัพย์นี้และรูปภาพทั้งหมด?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="font-medium text-red-600 hover:underline">ลบ</button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="6" class="text-center py-16 text-gray-500">
-                                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor">
-                                        <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-                                    </svg>
-                                    <h3 class="mt-2 text-lg font-medium text-gray-800">ไม่พบข้อมูลสินทรัพย์</h3>
-                                    <p class="mt-1 text-sm">ลองค้นหาด้วยคำอื่น หรือเพิ่มสินทรัพย์ใหม่</p>
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-
-            @if ($assets->hasPages())
-                <div class="p-4 bg-white border-t">
-                    {{ $assets->appends(request()->input())->links() }}
+                    <form action="{{ route('asset.index') }}" method="GET" class="w-full md:w-auto">
+                        <div class="relative">
+                            <input type="text" name="search" value="{{ request('search') }}" 
+                                placeholder="ค้นหาจากชื่อ หรือ ประเภท..." 
+                                class="input input-bordered w-full md:w-80 pl-10 focus:input-emerald-500 focus:outline-none bg-gray-50 focus:bg-white transition-colors">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-search text-gray-400"></i>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            @endif
+
+                <div class="rounded-lg border border-gray-100 overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="table w-full">
+                            <thead class="bg-gray-50 text-gray-500 font-bold text-sm">
+                                <tr>
+                                    <th class="py-4 px-6 text-center w-20">ID</th>
+                                    <th class="py-4 px-6 text-center w-32">ภาพตัวอย่าง</th>
+                                    <th class="py-4 px-6 text-left">รายละเอียดสินทรัพย์</th>
+                                    <th class="py-4 px-6 text-left">คำอธิบาย</th>
+                                    <th class="py-4 px-6 text-center w-40">วันที่บันทึก</th>
+                                    <th class="py-4 px-6 text-center w-32">จัดการ</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-700">
+                                @forelse ($assets as $item)
+                                    <tr class="hover:bg-emerald-50/40 transition-colors border-b border-gray-100 last:border-none group">
+                                        <td class="py-4 px-6 text-center font-mono text-gray-500">
+                                            #{{ $item->id }}
+                                        </td>
+
+                                        <td class="py-4 px-6 text-center">
+                                            <div class="avatar">
+                                                <div class="w-20 h-14 rounded-lg shadow-sm border border-gray-100 bg-gray-50">
+                                                    @if($item->picture_name)
+                                                        <img src="{{ asset('assets/' . $item->picture_name) }}" alt="{{ $item->title }}" class="object-cover" loading="lazy" />
+                                                    @else
+                                                        <div class="flex items-center justify-center h-full text-gray-300">
+                                                            <i class="fas fa-image text-2xl"></i>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td class="py-4 px-6 align-top">
+                                            <div class="font-bold text-gray-800 text-base mb-1 group-hover:text-emerald-700 transition-colors">
+                                                {{ $item->title }}
+                                            </div>
+                                            <span class="badge badge-sm badge-ghost bg-emerald-50 text-emerald-700 border-emerald-100">
+                                                {{ $item->asset_name ?? 'N/A' }}
+                                            </span>
+                                        </td>
+
+                                        <td class="py-4 px-6 align-top text-sm text-gray-500 max-w-xs truncate">
+                                            {{ Str::limit($item->description1, 60) }}
+                                        </td>
+
+                                        <td class="py-4 px-6 text-center whitespace-nowrap text-sm">
+                                            <div class="inline-flex items-center gap-2 text-gray-500">
+                                                <i class="far fa-calendar-alt text-emerald-500"></i>
+                                                {{ thaidate('j M Y', strtotime($item->date)) }}
+                                            </div>
+                                        </td>
+
+                                        <td class="py-4 px-6 text-center">
+                                            <div class="flex items-center justify-center gap-2">
+                                                <a href="{{ route('asset.edit', $item->id) }}" 
+                                                   class="btn btn-sm btn-circle btn-ghost text-amber-500 hover:bg-amber-100 tooltip tooltip-top" 
+                                                   data-tip="แก้ไข">
+                                                    <i class="fas fa-pen"></i>
+                                                </a>
+
+                                                <form id="delete-form-{{ $item->id }}" 
+                                                      action="{{ route('asset.destroy', $item->id) }}" 
+                                                      method="POST" class="inline-block">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button" 
+                                                            onclick="confirmDelete('{{ $item->id }}')"
+                                                            class="btn btn-sm btn-circle btn-ghost text-rose-500 hover:bg-rose-100 tooltip tooltip-top" 
+                                                            data-tip="ลบ">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="6" class="py-16 text-center text-gray-400">
+                                            <div class="flex flex-col items-center justify-center">
+                                                <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-4">
+                                                    <i class="fas fa-boxes text-3xl opacity-30"></i>
+                                                </div>
+                                                <h3 class="text-lg font-medium text-gray-600">ไม่พบข้อมูลสินทรัพย์</h3>
+                                                <p class="text-sm text-gray-400 mt-1">ลองเปลี่ยนคำค้นหา หรือเพิ่มรายการใหม่</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                @if ($assets->hasPages())
+                    <div class="mt-6 border-t border-gray-100 pt-4 flex justify-end">
+                        {{ $assets->appends(request()->input())->links('vendor.pagination.daisyui') }}
+                    </div>
+                @endif
+
+            </div>
         </div>
     </div>
 @endsection
 
+@push('scripts')
+    {{-- SweetAlert2 Script --}}
+    <script>
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'ยืนยันการลบ?',
+                text: "ข้อมูลสินทรัพย์และรูปภาพทั้งหมดจะถูกลบถาวร!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'ใช่, ลบเลย!',
+                cancelButtonText: 'ยกเลิก',
+                background: '#fff',
+                customClass: {
+                    popup: 'rounded-xl shadow-xl border border-gray-100',
+                    confirmButton: 'btn btn-error text-white px-6',
+                    cancelButton: 'btn btn-ghost text-gray-500 px-6'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + id).submit();
+                }
+            })
+        }
+    </script>
+@endpush

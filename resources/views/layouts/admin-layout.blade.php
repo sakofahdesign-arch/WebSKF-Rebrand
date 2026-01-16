@@ -8,45 +8,68 @@
     <title>Dashboard เจ้าหน้าที่ - {{ config('app.name', 'สหกรณ์ออมทรัพย์ษะกอฟะฮ') }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" href="{{ url('images/sakofah-logo.png') }}" type="image/x-icon">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+
+        body {
+            font-family: 'Kanit', sans-serif;
+        }
+    </style>
     @stack('styles')
 </head>
 
-<body class="font-sans antialiased bg-gray-100">
-    <div x-data="{ sidebarOpen: window.innerWidth >= 1024 }" @resize.window="sidebarOpen = window.innerWidth >= 1024"
-        class="flex h-screen bg-gray-100">
+<body class="font-sans antialiased bg-gray-50 text-gray-900">
+    <div x-data="{ sidebarOpen: false }" class="flex h-screen overflow-hidden bg-gray-100">
+
         @include('components.admin-sidebar')
-        <div class="flex-1 flex flex-col overflow-hidden">
+
+        <div class="flex-1 flex flex-col overflow-hidden relative transition-all duration-300">
+
             @include('components.admin-header')
-            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-4 md:p-6">
-                @yield('content')
+
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 p-4 md:p-8 scroll-smooth">
+                <div class="mb-6 fade-in">
+                    @yield('header')
+                </div>
+
+                <div class="w-full">
+                    @yield('content')
+                </div>
             </main>
         </div>
     </div>
+
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     @if (session('success'))
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
+            document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
                     title: "สำเร็จ!",
                     text: "{{ session('success') }}",
                     icon: "success",
-                    confirmButtonColor: '#34D399'
+                    confirmButtonColor: '#10B981', // Emerald-500
+                    confirmButtonText: 'ตกลง'
                 });
             });
         </script>
     @endif
     @if (session('error'))
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
+            document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
-                    title: "Error!",
+                    title: "ข้อผิดพลาด!",
                     text: "{{ session('error') }}",
                     icon: "error",
-                    confirmButtonColor: '##ff0000'
+                    confirmButtonColor: '#EF4444', // Red-500
+                    confirmButtonText: 'ตกลง'
                 });
             });
         </script>
