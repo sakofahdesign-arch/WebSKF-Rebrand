@@ -116,6 +116,11 @@
                         <i class="fas fa-credit-card w-5 h-5"></i>
                         <span class="ml-3">จัดการรายการสินเชื่อ</span>
                     </a>
+                    <a href="{{ route('admin.logs') }}"
+                        class="flex items-center px-4 py-2.5 rounded-xl transition-all duration-200 group text-emerald-100 hover:bg-emerald-800 hover:text-white">
+                        <i class="fas fa-terminal w-5 h-5"></i>
+                        <span class="ml-3">บันทึกระบบ</span>
+                    </a>
                 </div>
             </div>
         @endif

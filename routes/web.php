@@ -9,6 +9,7 @@ use App\Http\Controllers\OfficerController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PerformanceController;
 use App\Http\Controllers\PublishController;
+use App\Http\Controllers\LogController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -93,4 +94,8 @@ Route::middleware(['check.session'])->group(function () {
     // Asset
     Route::resource('manage-assets', AssetController::class)->names('asset');
     Route::resource('announcements', PublishController::class)->names('announcements');
+
+    Route::get('/system-logs', [LogController::class, 'index'])->name('admin.logs');
+    Route::get('/system-logs/download', [LogController::class, 'download'])->name('admin.logs.download');
+    Route::post('/system-logs/delete', [LogController::class, 'delete'])->name('admin.logs.delete');
 });
