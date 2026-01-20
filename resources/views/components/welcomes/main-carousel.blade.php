@@ -1,107 +1,146 @@
-<section class="relative w-full group">
-    <div id="hero-carousel"
-        class="carousel w-full h-[300px] md:h-[500px] relative overflow-hidden rounded-none md:rounded-b-2xl shadow-lg">
 
-        <div id="slide1" class="carousel-item relative w-full duration-700 ease-in-out">
-            <img src="{{ asset('images/267-1.jpg') }}" class="w-full h-full object-cover" alt="Banner 1" />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+
+
+<section class="relative w-full max-w-[1920px] mx-auto mt-6 group">
+    
+    <div id="hero-carousel"
+        class="carousel flex w-full overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar shadow-lg border-b border-gray-100">
+
+        <div class="carousel-item relative w-full flex-shrink-0 snap-center">
+            <img src="{{ asset('images/267-1.jpg') }}" class="w-full h-auto object-contain" alt="Banner 1" />
         </div>
 
-        <div id="slide2" class="carousel-item relative w-full duration-700 ease-in-out">
-            <img src="{{ asset('images/values.jpg') }}" class="w-full h-full object-cover" alt="Banner 2" />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+        <div class="carousel-item relative w-full flex-shrink-0 snap-center">
+            <img src="{{ asset('images/values.jpg') }}" class="w-full h-auto object-contain" alt="Banner 2" />
         </div>
 
     </div>
 
-    <div
-        class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2 z-30 pointer-events-none">
+    <div class="absolute flex justify-between transform -translate-y-1/2 left-0 right-0 top-1/2 z-30 pointer-events-none w-full px-4">
         <button onclick="moveSlide(-1)"
-            class="btn btn-circle btn-sm md:btn-md bg-white/30 hover:bg-white border-none text-white hover:text-green-700 backdrop-blur-sm pointer-events-auto transition-all shadow-md">
-            ❮
+            class="btn btn-circle btn-md md:btn-lg bg-black/30 hover:bg-emerald-600 border-none text-white backdrop-blur-md pointer-events-auto transition-all shadow-lg hover:scale-110">
+            <i class="fas fa-chevron-left text-lg md:text-xl"></i>
         </button>
         <button onclick="moveSlide(1)"
-            class="btn btn-circle btn-sm md:btn-md bg-white/30 hover:bg-white border-none text-white hover:text-green-700 backdrop-blur-sm pointer-events-auto transition-all shadow-md">
-            ❯
+            class="btn btn-circle btn-md md:btn-lg bg-black/30 hover:bg-emerald-600 border-none text-white backdrop-blur-md pointer-events-auto transition-all shadow-lg hover:scale-110">
+            <i class="fas fa-chevron-right text-lg md:text-xl"></i>
         </button>
     </div>
 
-    <div class="absolute flex justify-center w-full py-2 gap-2 bottom-5 z-30">
-        <button onclick="goToSlide(0)" id="dot-0"
-            class="w-3 h-3 rounded-full bg-white transition-all duration-300 scale-125 shadow"></button>
-        <button onclick="goToSlide(1)" id="dot-1"
-            class="w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-all duration-300 shadow"></button>
-    </div>
+    <div id="carousel-dots" class="absolute flex justify-center w-full py-4 gap-2 bottom-0 z-30">
+        </div>
 </section>
 
+
 @push('scripts')
-    <script>
-        let currentSlide = 0;
+<script>
+    // --- ส่วนจัดการ Popup ---
+    function initPopup() {
+        const popup = document.getElementById('promo-popup');
+        const content = document.getElementById('popup-content');
+        
+        // เช็คว่าเคยปิดไปหรือยัง (ใช้ sessionStorage = ปิดแล้วเปิดใหม่จะขึ้นอีก / localStorage = ปิดแล้วจำตลอดไป)
+        // แนะนำ sessionStorage สำหรับประกาศทั่วไป
+        const hasSeenPopup = sessionStorage.getItem('hasSeenPopup');
+
+        if (!hasSeenPopup) {
+            // ถ้ายังไม่เคยดู ให้แสดง Popup
+            popup.classList.remove('hidden');
+            // ทำ Animation Fade In
+            setTimeout(() => {
+                popup.classList.remove('opacity-0');
+                content.classList.remove('scale-90');
+                content.classList.add('scale-100');
+            }, 100);
+        }
+    }
+
+    function closePopup() {
+        const popup = document.getElementById('promo-popup');
+        const content = document.getElementById('popup-content');
+        
+        // Animation ออก
+        popup.classList.add('opacity-0');
+        content.classList.remove('scale-100');
+        content.classList.add('scale-90');
+
+        setTimeout(() => {
+            popup.classList.add('hidden');
+        }, 300);
+
+        // บันทึกว่าดูแล้ว
+        sessionStorage.setItem('hasSeenPopup', 'true');
+    }
+
+    // --- ส่วนจัดการ Carousel (เหมือนเดิมแต่ปรับให้รองรับรูปน้อยลง) ---
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. เริ่มทำงาน Popup
+        initPopup();
+
+        // 2. เริ่มทำงาน Carousel
         const carousel = document.getElementById('hero-carousel');
-        const totalSlides = carousel.children.length; // จำนวน Slide ทั้งหมด
-        const autoPlayInterval = 5000; // เวลาในการเปลี่ยนรูป (5 วินาที)
-        let autoPlayTimer;
+        const dotsContainer = document.getElementById('carousel-dots');
+        const slides = carousel.querySelectorAll('.carousel-item');
+        const totalSlides = slides.length;
+        let currentSlide = 0;
+        let autoPlayInterval;
 
-        function updateCarousel() {
-            // คำนวณตำแหน่งที่จะเลื่อนไป
-            const slideWidth = carousel.clientWidth;
-            carousel.scrollTo({
-                left: currentSlide * slideWidth,
-                behavior: 'smooth'
-            });
+        // สร้าง Dots
+        slides.forEach((_, index) => {
+            const dot = document.createElement('button');
+            dot.className = `h-2 md:h-2.5 rounded-full transition-all duration-500 shadow-sm border border-white/50 backdrop-blur-sm ${index === 0 ? 'bg-emerald-500 w-6 md:w-8' : 'bg-white/70 hover:bg-white w-2 md:w-2.5'}`;
+            dot.onclick = () => goToSlide(index);
+            dotsContainer.appendChild(dot);
+        });
+        
+        const dots = dotsContainer.querySelectorAll('button');
 
-            // Update Dots styling
-            for (let i = 0; i < totalSlides; i++) {
-                const dot = document.getElementById(`dot-${i}`);
-                if (dot) {
-                    if (i === currentSlide) {
-                        dot.classList.remove('bg-white/50');
-                        dot.classList.add('bg-white', 'scale-125');
-                    } else {
-                        dot.classList.add('bg-white/50');
-                        dot.classList.remove('bg-white', 'scale-125');
-                    }
+        function updateDots(index) {
+            dots.forEach((dot, i) => {
+                if (i === index) {
+                    dot.className = 'h-2 md:h-2.5 w-6 md:w-8 rounded-full bg-emerald-500 transition-all duration-500 shadow-md border-transparent';
+                } else {
+                    dot.className = 'h-2 md:h-2.5 w-2 md:w-2.5 rounded-full bg-white/70 hover:bg-white transition-all duration-500 shadow-sm border border-white/50';
                 }
-            }
+            });
         }
 
-        function moveSlide(direction) {
-            currentSlide += direction;
-
-            // Loop กลับไปมา
-            if (currentSlide >= totalSlides) {
-                currentSlide = 0;
-            } else if (currentSlide < 0) {
-                currentSlide = totalSlides - 1;
-            }
-
-            updateCarousel();
-            resetAutoPlay();
-        }
-
-        function goToSlide(index) {
+        window.goToSlide = (index) => {
             currentSlide = index;
-            updateCarousel();
+            const slideWidth = carousel.clientWidth;
+            carousel.scrollTo({ left: slideWidth * index, behavior: 'smooth' });
+            updateDots(index);
             resetAutoPlay();
+        }
+
+        window.moveSlide = (direction) => {
+            let newIndex = currentSlide + direction;
+            if (newIndex >= totalSlides) newIndex = 0;
+            if (newIndex < 0) newIndex = totalSlides - 1;
+            goToSlide(newIndex);
         }
 
         function startAutoPlay() {
-            autoPlayTimer = setInterval(() => {
-                moveSlide(1);
-            }, autoPlayInterval);
+            autoPlayInterval = setInterval(() => { moveSlide(1); }, 6000);
         }
 
         function resetAutoPlay() {
-            clearInterval(autoPlayTimer);
+            clearInterval(autoPlayInterval);
             startAutoPlay();
         }
 
-        // เริ่มทำงานเมื่อโหลดเสร็จ
-        document.addEventListener('DOMContentLoaded', () => {
-            startAutoPlay();
-
-            // ปรับขนาดเมื่อ Resize หน้าจอเพื่อให้ตำแหน่งถูกต้องเสมอ
-            window.addEventListener('resize', updateCarousel);
+        carousel.addEventListener('scroll', () => {
+            const slideWidth = carousel.clientWidth;
+            const scrollPos = carousel.scrollLeft;
+            const index = Math.round(scrollPos / slideWidth);
+            if (index !== currentSlide && index >= 0 && index < totalSlides) {
+                currentSlide = index;
+                updateDots(index);
+            }
         });
-    </script>
+
+        startAutoPlay();
+        window.addEventListener('resize', () => { goToSlide(currentSlide); });
+    });
+</script>
 @endpush

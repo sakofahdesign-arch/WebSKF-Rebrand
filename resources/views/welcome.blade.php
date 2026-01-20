@@ -7,4 +7,5 @@
     @include('components.welcomes.news')
     @include('components.welcomes.journals-public')
     @include('components.welcomes.partners-agencies')
+    @include('components.welcomes.popup')
 @endsection
