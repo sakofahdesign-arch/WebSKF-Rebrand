@@ -51,7 +51,27 @@
         gtag('js', new Date());
         gtag('config', 'G-Y7M3HX122N');
     </script>
+<style>
+        @keyframes fire-flicker {
 
+            0%,
+            100% {
+                color: #ef4444;
+                text-shadow: 0px -1px 3px #f97316;
+            }
+
+            50% {
+                color: #f97316;
+                text-shadow: 0px -2px 6px #eab308;
+            }
+        }
+
+        .fire-text {
+            animation: fire-flicker 0.8s ease-in-out infinite;
+            font-weight: 600;
+            display: inline-block;
+        }
+    </style>
     @stack('styles')
 </head>
 
