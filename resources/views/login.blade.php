@@ -93,7 +93,7 @@
 
                     @if (Route::has('password.request'))
                         <label class="label justify-end pt-1">
-                            <a href="{{ route('password.request') }}" class="label-text-alt link link-hover text-green-700 font-medium text-xs">ลืมรหัสผ่าน?</a>
+                            <a href="#" class="label-text-alt link link-hover text-green-700 font-medium text-xs">ลืมรหัสผ่าน?</a>
                         </label>
                     @endif
                 </div>

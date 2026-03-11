@@ -5,8 +5,6 @@
             'slide_image' => 'images/banners/69-01-36.jpg',
             'modal_type' => 'image',
             'modal_content' => 'images/banners/69-01-31.jpg',
-            'title' => 'โปรโมชันพิเศษ', // สมมติว่ามี
-            'subtitle' => 'ลดแลกแจกแถม', // สมมติว่ามี
         ],
         [
             'id' => 2,
@@ -34,12 +32,6 @@
         ],
         [
             'id' => 6,
-            'slide_image' => 'images/banners/450.jpg',
-            'modal_type' => 'video',
-            'modal_content' => 'https://www.youtube.com/embed/Wjw0Eovdgg0',
-        ],
-        [
-            'id' => 7,
             'slide_image' => 'images/banners/345-1.jpg',
             'modal_type' => 'image',
             'modal_content' => 'images/banners/345.jpg',
