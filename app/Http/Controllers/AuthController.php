@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
@@ -17,10 +18,11 @@ class AuthController extends Controller
         $userAgent = $request->header('User-Agent');
         $agent     = new Agent();
         $agent->setUserAgent($userAgent);
-        $request->validate([
-            'user_id'  => 'required',
-            'password' => 'required',
-        ],
+        $request->validate(
+            [
+                'user_id'  => 'required',
+                'password' => 'required',
+            ],
             [
                 'user_id.required'  => 'กรุณาใส่ชื่อผู้ใช้',
                 'password.required' => 'กรุณาใส่รหัสผ่าน',
