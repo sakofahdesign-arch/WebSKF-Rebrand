@@ -66,6 +66,31 @@ export function JournalCompleteShelf({ journals }: JournalCompleteShelfProps) {
         let scene: THREE.Scene | null = null;
         let renderer: THREE.WebGLRenderer | null = null;
         let animationFrame = 0;
+        let cleanedUp = false;
+        let handleResize: () => void = () => {};
+        let handleKeyDown: (event: KeyboardEvent) => void = () => {};
+        let handleWheel: (event: WheelEvent) => void = () => {};
+        let handlePointerDown: (event: PointerEvent) => void = () => {};
+
+        const cleanup = () => {
+            if (cleanedUp) {
+                return;
+            }
+
+            cleanedUp = true;
+            cancelAnimationFrame(animationFrame);
+            window.removeEventListener("resize", handleResize);
+            window.removeEventListener("keydown", handleKeyDown);
+            stage.removeEventListener("wheel", handleWheel);
+            stage.removeEventListener("pointerdown", handlePointerDown);
+
+            if (scene && renderer) {
+                disposeScene(scene, renderer);
+            } else if (renderer) {
+                renderer.dispose();
+                renderer.domElement.remove();
+            }
+        };
 
         try {
             scene = new THREE.Scene();
@@ -108,7 +133,7 @@ export function JournalCompleteShelf({ journals }: JournalCompleteShelfProps) {
                 return null;
             };
 
-            const handleResize = () => {
+            handleResize = () => {
                 const width = Math.max(stage.clientWidth, 1);
                 const height = Math.max(stage.clientHeight, 1);
 
@@ -117,7 +142,11 @@ export function JournalCompleteShelf({ journals }: JournalCompleteShelfProps) {
                 renderer?.setSize(width, height);
             };
 
-            const handleKeyDown = (event: KeyboardEvent) => {
+            handleKeyDown = (event: KeyboardEvent) => {
+                if (modeRef.current === "reader") {
+                    return;
+                }
+
                 if (event.key === "ArrowLeft") {
                     goToIndex(activeIndexRef.current - 1);
                 }
@@ -131,7 +160,7 @@ export function JournalCompleteShelf({ journals }: JournalCompleteShelfProps) {
                 }
             };
 
-            const handleWheel = (event: WheelEvent) => {
+            handleWheel = (event: WheelEvent) => {
                 event.preventDefault();
 
                 if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
@@ -139,7 +168,7 @@ export function JournalCompleteShelf({ journals }: JournalCompleteShelfProps) {
                 }
             };
 
-            const handlePointerDown = (event: PointerEvent) => {
+            handlePointerDown = (event: PointerEvent) => {
                 const bounds = stage.getBoundingClientRect();
                 pointer.x = ((event.clientX - bounds.left) / bounds.width) * 2 - 1;
                 pointer.y = -((event.clientY - bounds.top) / bounds.height) * 2 + 1;
@@ -197,26 +226,9 @@ export function JournalCompleteShelf({ journals }: JournalCompleteShelfProps) {
             stage.addEventListener("pointerdown", handlePointerDown);
             animate();
 
-            return () => {
-                cancelAnimationFrame(animationFrame);
-                window.removeEventListener("resize", handleResize);
-                window.removeEventListener("keydown", handleKeyDown);
-                stage.removeEventListener("wheel", handleWheel);
-                stage.removeEventListener("pointerdown", handlePointerDown);
-
-                if (scene && renderer) {
-                    disposeScene(scene, renderer);
-                }
-            };
+            return cleanup;
         } catch {
-            if (renderer?.domElement.parentElement === stage) {
-                stage.removeChild(renderer.domElement);
-            }
-
-            if (scene && renderer) {
-                disposeScene(scene, renderer);
-            }
-
+            cleanup();
             setWebglUnavailable(true);
         }
     }, [journals, webglUnavailable]);

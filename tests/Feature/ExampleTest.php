@@ -190,7 +190,10 @@ test('journal complete shelf uses threejs for animated hardbound volumes', funct
         ->toContain('window.addEventListener("resize", handleResize)')
         ->toContain('window.addEventListener("keydown", handleKeyDown)')
         ->toContain('stage.addEventListener("wheel", handleWheel')
-        ->toContain('stage.addEventListener("pointerdown", handlePointerDown');
+        ->toContain('stage.addEventListener("pointerdown", handlePointerDown')
+        ->toContain('modeRef.current === "reader"')
+        ->toContain('const cleanup = () =>')
+        ->toMatch('/catch \{\s+cleanup\(\);/');
 });
 
 test('homepage uses the wave grid background behind all landing sections', function () {
