@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import * as THREE from "three";
 
 export interface JournalShelfItem {
     id: string;
@@ -22,6 +23,12 @@ export function JournalCompleteShelf({ journals }: JournalCompleteShelfProps) {
     const [activeIndex, setActiveIndex] = useState(0);
     const [mode, setMode] = useState<ShelfMode>("shelf");
     const [webglUnavailable, setWebglUnavailable] = useState(false);
+    const stageRef = useRef<HTMLDivElement | null>(null);
+    const activeIndexRef = useRef(activeIndex);
+    const modeRef = useRef(mode);
+
+    activeIndexRef.current = activeIndex;
+    modeRef.current = mode;
 
     const selectedJournal = journals[activeIndex] ?? journals[0];
     const readerUrl = selectedJournal?.downloadUrl ?? selectedJournal?.href ?? "#";
@@ -49,6 +56,171 @@ export function JournalCompleteShelf({ journals }: JournalCompleteShelfProps) {
         setMode("shelf");
     };
 
+    useEffect(() => {
+        const stage = stageRef.current;
+
+        if (!stage || webglUnavailable) {
+            return;
+        }
+
+        let scene: THREE.Scene | null = null;
+        let renderer: THREE.WebGLRenderer | null = null;
+        let animationFrame = 0;
+
+        try {
+            scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(42, stage.clientWidth / stage.clientHeight, 0.1, 100);
+            camera.position.set(0, 0.15, 6.4);
+
+            renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.setSize(stage.clientWidth, stage.clientHeight);
+            renderer.outputColorSpace = THREE.SRGBColorSpace;
+            stage.appendChild(renderer.domElement);
+
+            scene.add(new THREE.AmbientLight(0xffffff, 1.4));
+
+            const keyLight = new THREE.DirectionalLight(0xffffff, 2.2);
+            keyLight.position.set(3, 5, 5);
+            scene.add(keyLight);
+
+            const rimLight = new THREE.DirectionalLight(0xfff4cf, 1.1);
+            rimLight.position.set(-4, 1, 2);
+            scene.add(rimLight);
+
+            const books = journals.map((journal, index) => createJournalBook(journal, index));
+            books.forEach((book) => scene?.add(book));
+
+            const raycaster = new THREE.Raycaster();
+            const pointer = new THREE.Vector2();
+
+            const getBookIndex = (object: THREE.Object3D) => {
+                let current: THREE.Object3D | null = object;
+
+                while (current) {
+                    if (typeof current.userData.bookIndex === "number") {
+                        return current.userData.bookIndex as number;
+                    }
+
+                    current = current.parent;
+                }
+
+                return null;
+            };
+
+            const handleResize = () => {
+                const width = Math.max(stage.clientWidth, 1);
+                const height = Math.max(stage.clientHeight, 1);
+
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+                renderer?.setSize(width, height);
+            };
+
+            const handleKeyDown = (event: KeyboardEvent) => {
+                if (event.key === "ArrowLeft") {
+                    goToIndex(activeIndexRef.current - 1);
+                }
+
+                if (event.key === "ArrowRight") {
+                    goToIndex(activeIndexRef.current + 1);
+                }
+
+                if (event.key === "Enter" && modeRef.current === "shelf") {
+                    setMode("detail");
+                }
+            };
+
+            const handleWheel = (event: WheelEvent) => {
+                event.preventDefault();
+
+                if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
+                    goToIndex(activeIndexRef.current + (event.deltaY > 0 ? 1 : -1));
+                }
+            };
+
+            const handlePointerDown = (event: PointerEvent) => {
+                const bounds = stage.getBoundingClientRect();
+                pointer.x = ((event.clientX - bounds.left) / bounds.width) * 2 - 1;
+                pointer.y = -((event.clientY - bounds.top) / bounds.height) * 2 + 1;
+                raycaster.setFromCamera(pointer, camera);
+
+                const hit = raycaster.intersectObjects(books, true)[0];
+                const bookIndex = hit ? getBookIndex(hit.object) : null;
+
+                if (bookIndex === null) {
+                    return;
+                }
+
+                if (bookIndex === activeIndexRef.current) {
+                    setMode("detail");
+                    return;
+                }
+
+                setActiveIndex(bookIndex);
+                setMode("shelf");
+            };
+
+            const animate = () => {
+                const selectedIndex = activeIndexRef.current;
+                const showingDetail = modeRef.current === "detail";
+
+                books.forEach((book, index) => {
+                    let offset = index - selectedIndex;
+
+                    if (offset > journals.length / 2) offset -= journals.length;
+                    if (offset < -journals.length / 2) offset += journals.length;
+
+                    const isSelected = index === selectedIndex;
+                    const targetX = offset * 1.28;
+                    const targetY = isSelected ? (showingDetail ? 0.35 : 0.14) : -0.08 - Math.min(Math.abs(offset) * 0.04, 0.18);
+                    const targetZ = isSelected ? (showingDetail ? 1.45 : 0.45) : -Math.abs(offset) * 0.35;
+                    const targetRotation = isSelected ? (showingDetail ? -0.32 : -0.08) : offset * -0.12;
+                    const targetScale = isSelected ? (showingDetail ? 1.2 : 1.08) : Math.max(0.76, 0.98 - Math.abs(offset) * 0.04);
+
+                    book.position.x = THREE.MathUtils.lerp(book.position.x, targetX, 0.1);
+                    book.position.y = THREE.MathUtils.lerp(book.position.y, targetY, 0.1);
+                    book.position.z = THREE.MathUtils.lerp(book.position.z, targetZ, 0.1);
+                    book.rotation.y = THREE.MathUtils.lerp(book.rotation.y, targetRotation, 0.1);
+                    book.rotation.z = THREE.MathUtils.lerp(book.rotation.z, isSelected ? 0 : offset * 0.025, 0.1);
+                    book.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.1);
+                });
+
+                renderer?.render(scene as THREE.Scene, camera);
+                animationFrame = requestAnimationFrame(animate);
+            };
+
+            handleResize();
+            window.addEventListener("resize", handleResize);
+            window.addEventListener("keydown", handleKeyDown);
+            stage.addEventListener("wheel", handleWheel, { passive: false });
+            stage.addEventListener("pointerdown", handlePointerDown);
+            animate();
+
+            return () => {
+                cancelAnimationFrame(animationFrame);
+                window.removeEventListener("resize", handleResize);
+                window.removeEventListener("keydown", handleKeyDown);
+                stage.removeEventListener("wheel", handleWheel);
+                stage.removeEventListener("pointerdown", handlePointerDown);
+
+                if (scene && renderer) {
+                    disposeScene(scene, renderer);
+                }
+            };
+        } catch {
+            if (renderer?.domElement.parentElement === stage) {
+                stage.removeChild(renderer.domElement);
+            }
+
+            if (scene && renderer) {
+                disposeScene(scene, renderer);
+            }
+
+            setWebglUnavailable(true);
+        }
+    }, [journals, webglUnavailable]);
+
     return (
         <div
             className="relative h-full min-h-[680px] overflow-hidden bg-[var(--journal-theme)] text-white transition-colors duration-700"
@@ -65,7 +237,7 @@ export function JournalCompleteShelf({ journals }: JournalCompleteShelfProps) {
                     }}
                 />
             ) : (
-                <div data-journal-three-stage className="absolute inset-0" />
+                <div ref={stageRef} data-journal-three-stage className="absolute inset-0 cursor-grab active:cursor-grabbing" />
             )}
 
             <div className="absolute inset-x-6 bottom-6 z-20 grid gap-4 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:items-end">
@@ -150,6 +322,90 @@ export function JournalCompleteShelf({ journals }: JournalCompleteShelfProps) {
             </button>
         </div>
     );
+}
+
+function createCoverTexture(journal: JournalShelfItem): THREE.CanvasTexture {
+    const canvas = document.createElement("canvas");
+    canvas.width = 512;
+    canvas.height = 720;
+    const context = canvas.getContext("2d");
+
+    if (!context) {
+        throw new Error("Canvas 2D context is unavailable");
+    }
+
+    context.fillStyle = journal.themeColor;
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    context.strokeStyle = journal.foilColor;
+    context.lineWidth = 18;
+    context.strokeRect(42, 42, canvas.width - 84, canvas.height - 84);
+    context.fillStyle = journal.foilColor;
+    context.fillRect(76, 108, canvas.width - 152, 6);
+    context.font = "700 28px sans-serif";
+    context.textAlign = "center";
+    context.fillText(journal.year ?? "SAKOFAH", canvas.width / 2, 166);
+    context.font = "800 42px sans-serif";
+
+    const titleLines = journal.title.match(/.{1,16}(?:\s|$)/g) ?? [journal.title];
+    titleLines.slice(0, 4).forEach((line, index) => {
+        context.fillText(line.trim(), canvas.width / 2, 292 + index * 58);
+    });
+
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.colorSpace = THREE.SRGBColorSpace;
+    return texture;
+}
+
+function createJournalBook(journal: JournalShelfItem, index: number): THREE.Group {
+    const book = new THREE.Group();
+    book.userData.bookIndex = index;
+
+    const coverTexture = createCoverTexture(journal);
+    const coverGeometry = new THREE.BoxGeometry(1.08, 1.56, 0.2);
+    const coverMaterial = new THREE.MeshStandardMaterial({ color: journal.themeColor, roughness: 0.38, metalness: 0.08 });
+    const frontMaterial = new THREE.MeshStandardMaterial({ map: coverTexture, roughness: 0.42, metalness: 0.04 });
+    const cover = new THREE.Mesh(coverGeometry, [coverMaterial, coverMaterial, coverMaterial, coverMaterial, frontMaterial, coverMaterial]);
+    cover.castShadow = true;
+    cover.receiveShadow = true;
+    book.add(cover);
+
+    const pages = new THREE.Mesh(
+        new THREE.BoxGeometry(0.98, 1.46, 0.16),
+        new THREE.MeshStandardMaterial({ color: "#fff9e9", roughness: 0.82 }),
+    );
+    pages.position.z = -0.025;
+    book.add(pages);
+
+    const foil = new THREE.Mesh(
+        new THREE.BoxGeometry(0.04, 1.5, 0.215),
+        new THREE.MeshStandardMaterial({ color: journal.foilColor, roughness: 0.28, metalness: 0.62 }),
+    );
+    foil.position.x = -0.54;
+    book.add(foil);
+
+    return book;
+}
+
+function disposeScene(scene: THREE.Scene, renderer: THREE.WebGLRenderer): void {
+    scene.traverse((object) => {
+        const mesh = object as THREE.Mesh;
+
+        mesh.geometry?.dispose();
+
+        const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+        materials.filter(Boolean).forEach((material) => {
+            Object.values(material).forEach((value) => {
+                if (value instanceof THREE.Texture) {
+                    value.dispose();
+                }
+            });
+            material.dispose();
+        });
+    });
+
+    renderer.dispose();
+    renderer.forceContextLoss();
+    renderer.domElement.remove();
 }
 
 function FallbackShelf({

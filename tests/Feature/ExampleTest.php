@@ -173,6 +173,26 @@ test('journal complete shelf component exposes shelf detail reader and fallback 
         ->toContain('aria-live="polite"');
 });
 
+test('journal complete shelf uses threejs for animated hardbound volumes', function () {
+    $component = file_get_contents(base_path('components/ui/journal-complete-shelf.tsx'));
+
+    expect($component)
+        ->toContain('import * as THREE from "three"')
+        ->toContain('new THREE.WebGLRenderer')
+        ->toContain('renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))')
+        ->toContain('new THREE.PerspectiveCamera')
+        ->toContain('new THREE.BoxGeometry')
+        ->toContain('createCoverTexture')
+        ->toContain('createJournalBook')
+        ->toContain('requestAnimationFrame')
+        ->toContain('disposeScene')
+        ->toContain('setWebglUnavailable(true)')
+        ->toContain('window.addEventListener("resize", handleResize)')
+        ->toContain('window.addEventListener("keydown", handleKeyDown)')
+        ->toContain('stage.addEventListener("wheel", handleWheel')
+        ->toContain('stage.addEventListener("pointerdown", handlePointerDown');
+});
+
 test('homepage uses the wave grid background behind all landing sections', function () {
     $html = view('welcome', [
         'information' => collect(),
