@@ -132,6 +132,20 @@ test('journals section exposes complete shelf journal data', function () {
         ->not->toContain('$foilColors');
 });
 
+test('journal complete shelf mount is wired into the app bundle', function () {
+    $mount = file_exists(base_path('resources/js/journal-complete-shelf-mount.tsx'))
+        ? file_get_contents(base_path('resources/js/journal-complete-shelf-mount.tsx'))
+        : '';
+    $app = file_get_contents(base_path('resources/js/app.js'));
+
+    expect($app)
+        ->toContain('./journal-complete-shelf-mount')
+        ->and($mount)->toContain('[data-journal-complete-shelf]')
+        ->and($mount)->toContain('JSON.parse(mount.dataset.journals ?? "[]")')
+        ->and($mount)->toContain('createRoot(mount).render')
+        ->and($mount)->toContain('<JournalCompleteShelf journals={journals} />');
+});
+
 test('homepage uses the wave grid background behind all landing sections', function () {
     $html = view('welcome', [
         'information' => collect(),

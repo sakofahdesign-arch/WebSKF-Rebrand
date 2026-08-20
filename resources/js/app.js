@@ -1,1 +1,11 @@
 import './bootstrap';
+import './cylinder-carousel-mount';
+import './morph-text-mount';
+import './notch-navbar-mount';
+import './promotion-news-showcase-mount';
+import './perspective-services-mount';
+import './staggered-news-mount';
+import './books-showcase-mount';
+import './journal-complete-shelf-mount';
+import './branch-network-map-mount';
+import './homepage-wave-grid-background-mount';
