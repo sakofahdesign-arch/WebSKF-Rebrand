@@ -19,6 +19,11 @@ interface JournalCompleteShelfProps {
     journals: JournalShelfItem[];
 }
 
+function mixColor(color: string, amount: number): string {
+    const parsed = new THREE.Color(color);
+    return `#${parsed.lerp(new THREE.Color("#ffffff"), amount).getHexString()}`;
+}
+
 export function JournalCompleteShelf({ journals }: JournalCompleteShelfProps) {
     const [activeIndex, setActiveIndex] = useState(0);
     const [mode, setMode] = useState<ShelfMode>("shelf");
@@ -38,6 +43,7 @@ export function JournalCompleteShelf({ journals }: JournalCompleteShelfProps) {
             ({
                 "--journal-theme": selectedJournal ? selectedJournal.themeColor : "#022c22",
                 "--journal-foil": selectedJournal ? selectedJournal.foilColor : "#facc15",
+                "--journal-highlight": selectedJournal ? mixColor(selectedJournal.themeColor, 0.08) : "#163f36",
             }) as React.CSSProperties,
         [selectedJournal],
     );
@@ -193,6 +199,7 @@ export function JournalCompleteShelf({ journals }: JournalCompleteShelfProps) {
             const animate = () => {
                 const selectedIndex = activeIndexRef.current;
                 const showingDetail = modeRef.current === "detail";
+                const activeBook = books[selectedIndex];
 
                 books.forEach((book, index) => {
                     let offset = index - selectedIndex;
@@ -202,18 +209,22 @@ export function JournalCompleteShelf({ journals }: JournalCompleteShelfProps) {
 
                     const isSelected = index === selectedIndex;
                     const targetX = offset * 1.28;
-                    const targetY = isSelected ? (showingDetail ? 0.35 : 0.14) : -0.08 - Math.min(Math.abs(offset) * 0.04, 0.18);
-                    const targetZ = isSelected ? (showingDetail ? 1.45 : 0.45) : -Math.abs(offset) * 0.35;
-                    const targetRotation = isSelected ? (showingDetail ? -0.32 : -0.08) : offset * -0.12;
-                    const targetScale = isSelected ? (showingDetail ? 1.2 : 1.08) : Math.max(0.76, 0.98 - Math.abs(offset) * 0.04);
+                    const targetY = isSelected ? 0.14 : -0.08 - Math.min(Math.abs(offset) * 0.04, 0.18);
+                    const targetZ = isSelected ? 0.45 : -Math.abs(offset) * 0.35;
+                    const targetRotation = isSelected ? -0.08 : offset * -0.12;
+                    const targetScale = isSelected ? 1.08 : Math.max(0.76, 0.98 - Math.abs(offset) * 0.04);
 
-                    book.position.x = THREE.MathUtils.lerp(book.position.x, targetX, 0.1);
-                    book.position.y = THREE.MathUtils.lerp(book.position.y, targetY, 0.1);
-                    book.position.z = THREE.MathUtils.lerp(book.position.z, targetZ, 0.1);
+                    book.position.lerp(new THREE.Vector3(targetX, targetY, targetZ), 0.1);
                     book.rotation.y = THREE.MathUtils.lerp(book.rotation.y, targetRotation, 0.1);
                     book.rotation.z = THREE.MathUtils.lerp(book.rotation.z, isSelected ? 0 : offset * 0.025, 0.1);
                     book.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.1);
                 });
+
+                if (activeBook && showingDetail) {
+                    activeBook.position.lerp(new THREE.Vector3(0, 0.35, 1.45), 0.12);
+                    activeBook.rotation.y = THREE.MathUtils.lerp(activeBook.rotation.y, -0.32, 0.12);
+                    activeBook.scale.lerp(new THREE.Vector3(1.2, 1.2, 1.2), 0.12);
+                }
 
                 renderer?.render(scene as THREE.Scene, camera);
                 animationFrame = requestAnimationFrame(animate);
@@ -238,6 +249,7 @@ export function JournalCompleteShelf({ journals }: JournalCompleteShelfProps) {
             className="relative h-full min-h-[680px] overflow-hidden bg-[var(--journal-theme)] text-white transition-colors duration-700"
             style={themeStyle}
         >
+            <div className="absolute inset-0 bg-[var(--journal-highlight)] opacity-25 transition-colors duration-700" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(255,255,255,0.24),transparent_42%)]" />
 
             {webglUnavailable ? (

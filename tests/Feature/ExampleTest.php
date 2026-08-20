@@ -196,6 +196,28 @@ test('journal complete shelf uses threejs for animated hardbound volumes', funct
         ->toMatch('/catch \{\s+cleanup\(\);/');
 });
 
+test('journals complete shelf replaces the old books showcase mount', function () {
+    $app = file_get_contents(base_path('resources/js/app.js'));
+    $section = file_get_contents(base_path('resources/views/components/welcomes/journals-public.blade.php'));
+    $component = file_get_contents(base_path('components/ui/journal-complete-shelf.tsx'));
+
+    expect($app)
+        ->toContain('./journal-complete-shelf-mount')
+        ->not->toContain('./books-showcase-mount')
+        ->and($section)
+        ->toContain('data-journal-complete-shelf')
+        ->toContain('h-[760px] min-h-[680px]')
+        ->not->toContain('data-books-showcase')
+        ->and($component)
+        ->toContain('mixColor')
+        ->toContain('activeBook.position.lerp')
+        ->toContain('activeBook.rotation.y')
+        ->toContain('modeRef.current === "detail"')
+        ->toContain('bg-[var(--journal-theme)]')
+        ->toContain('transition-colors duration-700')
+        ->toContain('cursor-grab');
+});
+
 test('homepage uses the wave grid background behind all landing sections', function () {
     $html = view('welcome', [
         'information' => collect(),
