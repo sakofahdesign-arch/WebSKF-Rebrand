@@ -136,6 +136,8 @@ test('journal complete shelf mount is wired into the app bundle', function () {
     $mount = file_exists(base_path('resources/js/journal-complete-shelf-mount.tsx'))
         ? file_get_contents(base_path('resources/js/journal-complete-shelf-mount.tsx'))
         : '';
+    $componentPath = base_path('components/ui/journal-complete-shelf.tsx');
+    $component = file_exists($componentPath) ? file_get_contents($componentPath) : '';
     $app = file_get_contents(base_path('resources/js/app.js'));
 
     expect($app)
@@ -143,7 +145,10 @@ test('journal complete shelf mount is wired into the app bundle', function () {
         ->and($mount)->toContain('[data-journal-complete-shelf]')
         ->and($mount)->toContain('JSON.parse(mount.dataset.journals ?? "[]")')
         ->and($mount)->toContain('createRoot(mount).render')
-        ->and($mount)->toContain('<JournalCompleteShelf journals={journals} />');
+        ->and($mount)->toContain('<JournalCompleteShelf journals={journals} />')
+        ->and(file_exists($componentPath))->toBeTrue()
+        ->and($component)->toContain('export interface JournalShelfItem')
+        ->and($component)->toContain('export function JournalCompleteShelf');
 });
 
 test('homepage uses the wave grid background behind all landing sections', function () {
