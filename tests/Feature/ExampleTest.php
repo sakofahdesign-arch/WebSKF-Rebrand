@@ -151,6 +151,28 @@ test('journal complete shelf mount is wired into the app bundle', function () {
         ->and($component)->toContain('export function JournalCompleteShelf');
 });
 
+test('journal complete shelf component exposes shelf detail reader and fallback states', function () {
+    $component = file_exists(base_path('components/ui/journal-complete-shelf.tsx'))
+        ? file_get_contents(base_path('components/ui/journal-complete-shelf.tsx'))
+        : '';
+
+    expect($component)
+        ->toContain('export interface JournalShelfItem')
+        ->toContain('export function JournalCompleteShelf')
+        ->toContain('type ShelfMode = "shelf" | "detail" | "reader"')
+        ->toContain('const [mode, setMode] = useState<ShelfMode>("shelf")')
+        ->toContain('setMode("detail")')
+        ->toContain('setMode("reader")')
+        ->toContain('setMode("shelf")')
+        ->toContain('selectedJournal.themeColor')
+        ->toContain('เปิดอ่าน')
+        ->toContain('กลับไปชั้นวารสาร')
+        ->toContain('<iframe')
+        ->toContain('เปิดในแท็บใหม่')
+        ->toContain('WebGL ไม่พร้อมใช้งาน')
+        ->toContain('aria-live="polite"');
+});
+
 test('homepage uses the wave grid background behind all landing sections', function () {
     $html = view('welcome', [
         'information' => collect(),
