@@ -99,6 +99,7 @@ test('journals section uses the shared homepage heading style without a logo', f
 
 test('journals section exposes complete shelf journal data', function () {
     $html = view('components.welcomes.journals-public')->render();
+    $template = file_get_contents(base_path('resources/views/components/welcomes/journals-public.blade.php'));
 
     preg_match("/data-journals='([^']+)'/", $html, $matches);
     $journals = json_decode(html_entity_decode($matches[1], ENT_QUOTES, 'UTF-8'), true);
@@ -122,7 +123,13 @@ test('journals section exposes complete shelf journal data', function () {
         ->and($journals[0]['themeColor'])->toStartWith('#')
         ->and($journals[0]['foilColor'])->toStartWith('#')
         ->and($journals[0]['cover'])->toContain('/images/ebooks/')
-        ->and($journals[0]['downloadUrl'])->toContain('online.anyflip.com');
+        ->and($journals[0]['downloadUrl'])->toContain('online.anyflip.com')
+        ->and($html)
+        ->not->toContain('วิดีโอ')
+        ->not->toContain('youtube.com')
+        ->and($template)
+        ->not->toContain('$themeColors')
+        ->not->toContain('$foilColors');
 });
 
 test('homepage uses the wave grid background behind all landing sections', function () {

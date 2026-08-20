@@ -2,6 +2,8 @@
     $ebooks = [
         [
             'id' => 'annual-report-2560',
+            'themeColor' => '#0f766e',
+            'foilColor' => '#5eead4',
             'title' => 'รายงานกิจการ 2560',
             'author' => 'SAKOFAH',
             'year' => '2560',
@@ -22,6 +24,8 @@
         ],
         [
             'id' => 'annual-report-2561',
+            'themeColor' => '#166534',
+            'foilColor' => '#86efac',
             'title' => 'รายงานกิจการ 2561',
             'author' => 'SAKOFAH',
             'year' => '2561',
@@ -42,6 +46,8 @@
         ],
         [
             'id' => 'annual-report-2562',
+            'themeColor' => '#365314',
+            'foilColor' => '#bef264',
             'title' => 'รายงานกิจการ 2562',
             'author' => 'SAKOFAH',
             'year' => '2562',
@@ -62,6 +68,8 @@
         ],
         [
             'id' => 'annual-report-2563',
+            'themeColor' => '#854d0e',
+            'foilColor' => '#fde047',
             'title' => 'รายงานกิจการ 2563',
             'author' => 'SAKOFAH',
             'year' => '2563',
@@ -82,6 +90,8 @@
         ],
         [
             'id' => 'annual-report-2564',
+            'themeColor' => '#9a3412',
+            'foilColor' => '#fdba74',
             'title' => 'รายงานกิจการ 2564',
             'author' => 'SAKOFAH',
             'year' => '2564',
@@ -102,6 +112,8 @@
         ],
         [
             'id' => 'annual-report-2565',
+            'themeColor' => '#9f1239',
+            'foilColor' => '#fda4af',
             'title' => 'รายงานกิจการ 2565',
             'author' => 'SAKOFAH',
             'year' => '2565',
@@ -122,6 +134,8 @@
         ],
         [
             'id' => 'annual-report-2566',
+            'themeColor' => '#6b21a8',
+            'foilColor' => '#d8b4fe',
             'title' => 'รายงานกิจการ 2566',
             'author' => 'SAKOFAH',
             'year' => '2566',
@@ -142,6 +156,8 @@
         ],
         [
             'id' => 'annual-report-2567',
+            'themeColor' => '#1d4ed8',
+            'foilColor' => '#93c5fd',
             'title' => 'รายงานกิจการ 2567',
             'author' => 'SAKOFAH',
             'year' => '2567',
@@ -162,6 +178,8 @@
         ],
         [
             'id' => 'annual-report-2568',
+            'themeColor' => '#0f4c5c',
+            'foilColor' => '#67e8f9',
             'title' => 'รายงานกิจการ 2568',
             'author' => 'SAKOFAH',
             'year' => '2568',
@@ -181,9 +199,7 @@
             ],
         ],
     ];
-    $themeColors = ['#0f766e', '#166534', '#365314', '#854d0e', '#9a3412', '#9f1239', '#6b21a8', '#1d4ed8', '#0f4c5c'];
-    $foilColors = ['#5eead4', '#86efac', '#bef264', '#fde047', '#fdba74', '#fda4af', '#d8b4fe', '#93c5fd', '#67e8f9'];
-    $journals = array_map(function (array $ebook, int $index) use ($themeColors, $foilColors): array {
+    $journals = array_map(function (array $ebook): array {
         return [
             'id' => $ebook['id'],
             'title' => $ebook['title'],
@@ -192,10 +208,10 @@
             'href' => $ebook['href'],
             'downloadUrl' => $ebook['downloadUrl'],
             'cover' => $ebook['images']['front'],
-            'themeColor' => $themeColors[$index],
-            'foilColor' => $foilColors[$index],
+            'themeColor' => $ebook['themeColor'],
+            'foilColor' => $ebook['foilColor'],
         ];
-    }, $ebooks, array_keys($ebooks));
+    }, $ebooks);
 @endphp
 
 <section id="journals" data-section="journals-public" class="relative isolate overflow-visible bg-transparent py-16 lg:py-20">
@@ -208,7 +224,7 @@
             </h2>
             <div class="mt-3 h-1 w-20 bg-green-500 mx-auto rounded-full"></div>
             <p class="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-gray-600">
-                เลือกชม E-book ทีละเล่ม พร้อมติดตามข่าวสารและวิดีโอจากช่องทางหลักของสหกรณ์
+                Select and read Sakofah E-books and online journals.
             </p>
         </div>
 
