@@ -50,11 +50,30 @@
 
 .homepage-heading-spotlight {
     background:
-        radial-gradient(ellipse at 50% 36%, rgb(16 185 129 / 0.18), transparent 36%),
-        radial-gradient(ellipse at 50% 18%, rgb(255 255 255 / 0.82), transparent 58%),
-        linear-gradient(180deg, rgb(236 253 245 / 0.72), transparent 78%);
-    mask-image: linear-gradient(180deg, #000 0%, #000 62%, transparent 100%);
-    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 62%, transparent 100%);
+        radial-gradient(ellipse 34rem 9rem at 50% 34%, rgb(16 185 129 / 0.15), transparent 72%),
+        radial-gradient(ellipse 48rem 12rem at 50% 18%, rgb(255 255 255 / 0.76), transparent 78%),
+        linear-gradient(180deg, rgb(236 253 245 / 0.34), rgb(236 253 245 / 0.12) 52%, transparent 100%);
+    mask-image:
+        linear-gradient(90deg, transparent 0%, #000 30%, #000 70%, transparent 100%),
+        linear-gradient(180deg, transparent 0%, #000 14%, #000 50%, transparent 100%);
+    mask-composite: intersect;
+    -webkit-mask-image:
+        linear-gradient(90deg, transparent 0%, #000 30%, #000 70%, transparent 100%),
+        linear-gradient(180deg, transparent 0%, #000 14%, #000 50%, transparent 100%);
+    -webkit-mask-composite: source-in;
+}
+
+.vision-hero-bottom-fade {
+    background:
+        linear-gradient(
+            180deg,
+            transparent 0%,
+            rgb(236 253 245 / 0.08) 18%,
+            rgb(209 250 229 / 0.16) 34%,
+            rgb(255 255 255 / 0.36) 56%,
+            rgb(255 255 255 / 0.74) 78%,
+            #fff 100%
+        );
 }
 
 .stacked-logos:hover .stacked-logos__glow,

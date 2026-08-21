@@ -105,8 +105,7 @@
         <div class="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.08)_0_1px,transparent_1px_22px)] opacity-70"></div>
         <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_24%,rgba(16,185,129,0.46),transparent_34rem),linear-gradient(180deg,rgba(2,44,34,0)_0%,rgba(2,44,34,0.36)_100%)]"></div>
         <div class="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[#022c22] to-transparent"></div>
-        <div class="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-white via-white/82 to-transparent"></div>
-        <div class="absolute inset-x-0 bottom-0 h-64 bg-[linear-gradient(180deg,transparent_0%,transparent_28%,rgba(255,255,255,0.16)_52%,rgba(255,255,255,0.86)_82%,#fff_100%)]"></div>
+        <div class="vision-hero-bottom-fade absolute inset-x-0 bottom-0 h-80"></div>
 
         <div class="hero-content text-center pb-36 pt-16 relative z-10">
             <div class="max-w-4xl">

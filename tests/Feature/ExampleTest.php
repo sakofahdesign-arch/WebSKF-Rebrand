@@ -20,7 +20,9 @@ test('homepage renders the organization cylinder hero', function () {
         ->toContain('organization-hero-logo')
         ->toContain('content/hero/sakofah-hero-logo.png')
         ->toContain('h-24 w-24')
-        ->toContain('-mt-8')
+        ->toContain('-mt-20')
+        ->toContain('sm:-mt-24')
+        ->toContain('lg:-mt-28')
         ->toContain('h-[62vh] min-h-[560px] max-h-[720px] w-full')
         ->toContain('min-h-[calc(100dvh-2.5rem)]')
         ->not->toContain('id="hero-carousel"');
@@ -314,7 +316,8 @@ test('homepage section shells are transparent and use a compact heading spotligh
         ->and($hero)->not->toContain('org-hero bg-white')
         ->and($hero)->not->toContain('overflow-hidden bg-white py-6')
         ->and($css)->toContain('.homepage-heading-spotlight')
-        ->and($css)->toContain('linear-gradient(180deg, rgb(236 253 245 / 0.72), transparent 78%)')
+        ->and($css)->toContain('radial-gradient(ellipse 34rem 9rem at 50% 34%, rgb(16 185 129 / 0.15), transparent 72%)')
+        ->and($css)->toContain('linear-gradient(90deg, transparent 0%, #000 30%, #000 70%, transparent 100%)')
         ->and($css)->toContain('background: transparent;')
         ->and($css)->not->toContain('background-color: rgb(255 255 255 / 0.82)');
 });
@@ -357,7 +360,7 @@ test('homepage shows the branch service network after journals with mapped branc
             'id' => 'nuea_khlong',
             'latitude' => 8.021063,
             'longitude' => 98.995649,
-            'markerLogo' => asset('images/sakofah-logo.png'),
+            'markerLogo' => asset('content/logos/sakofah-logo.png'),
             'markerKind' => 'branch',
             'group' => 'branch',
         ])
@@ -375,8 +378,8 @@ test('homepage shows the branch service network after journals with mapped branc
             'latitude' => 8.0761628,
             'longitude' => 98.8971632,
             'group' => 'business',
-            'image' => asset('images/logos/crop-1588051633262.jpg'),
-            'markerLogo' => asset('images/logos/crop-1588051633262.jpg'),
+            'image' => asset('content/branches/sakofah-school.jpg'),
+            'markerLogo' => asset('content/logos/sakofah-school.jpg'),
             'mapLink' => 'https://www.google.com/maps/search/?api=1&query=8.0761628,98.8971632',
         ])
         ->and($branches[10])->toMatchArray([
@@ -384,22 +387,22 @@ test('homepage shows the branch service network after journals with mapped branc
             'latitude' => 7.8105798,
             'longitude' => 99.0902488,
             'group' => 'business',
-            'image' => asset('images/logos/crop-1588051777775.jpg'),
-            'markerLogo' => asset('images/logos/crop-1588051777775.jpg'),
+            'image' => asset('content/branches/skf-stadium.jpg'),
+            'markerLogo' => asset('content/logos/skf-stadium.jpg'),
         ])
         ->and($branches[11])->toMatchArray([
             'id' => 'sakofah_foundation',
             'latitude' => 7.810533,
             'longitude' => 99.090014,
             'group' => 'business',
-            'image' => asset('images/logos/crop-1588051648982.jpg'),
-            'markerLogo' => asset('images/logos/crop-1588051648982.jpg'),
+            'image' => asset('content/branches/sakofah-foundation.jpg'),
+            'markerLogo' => asset('content/logos/sakofah-foundation.jpg'),
         ])
         ->and($branches[13])->toMatchArray([
             'id' => 'southern_coffee_khlong_yang',
             'latitude' => 7.811498,
             'longitude' => 99.091009,
-            'markerLogo' => asset('images/logos/SOUTHERN-COFFEE-LOGO.png'),
+            'markerLogo' => asset('content/logos/southern-coffee-logo.png'),
             'group' => 'business',
         ])
         ->and($branches[6])->toMatchArray([
@@ -517,7 +520,9 @@ test('office page uses the branch network map in fullscreen mode', function () {
         ->and($component)->toContain('variant?: "section" | "fullscreen"')
         ->and($component)->toContain('h-[100dvh] min-h-[704px]')
         ->and($html)->toContain('h-[100dvh] min-h-[704px]')
-        ->and($header)->toContain("request()->routeIs('office') || request()->routeIs('vision') ? 'h-0 bg-transparent' : 'h-16 bg-white'");
+        ->and($header)->toContain("request()->routeIs('office') || request()->routeIs('vision')")
+        ->toContain("'h-0 bg-transparent'")
+        ->toContain("'h-16 bg-white'");
 });
 
 test('history and vision pages use the shared Noto Sans Thai presentation rhythm', function () {
@@ -532,8 +537,9 @@ test('history and vision pages use the shared Noto Sans Thai presentation rhythm
         ->toContain('bg-[#022c22] pt-20')
         ->toContain('สหกรณ์ที่ก้าวหน้า มั่นคง และมีธรรมาภิบาล')
         ->toContain('เป็นที่ยอมรับและเป็นส่วนหนึ่งของวิถีชีวิตสมาชิก')
-        ->toContain('h-44 bg-gradient-to-t from-white via-white/82 to-transparent')
-        ->toContain('h-64 bg-[linear-gradient(180deg,transparent_0%,transparent_28%,rgba(255,255,255,0.16)_52%,rgba(255,255,255,0.86)_82%,#fff_100%)]')
+        ->toContain('vision-hero-bottom-fade absolute inset-x-0 bottom-0 h-80')
+        ->not->toContain('h-44 bg-gradient-to-t from-white via-white/82 to-transparent')
+        ->not->toContain('h-64 bg-[linear-gradient(180deg,transparent_0%,transparent_28%,rgba(255,255,255,0.16)_52%,rgba(255,255,255,0.86)_82%,#fff_100%)]')
         ->and($header)
         ->toContain("request()->routeIs('office') || request()->routeIs('vision')");
 });
