@@ -2,6 +2,10 @@
 @section('title', 'รายงานกิจการ')
 
 @section('content')
+@php
+    $reports = config('site-content.downloads.reports');
+@endphp
+
 <div class="bg-gray-50 min-h-screen text-gray-800 font-sans" data-theme="light" x-data="{ loaded: false }" x-init="() => { setTimeout(() => loaded = true, 50) }">
 
     <div class="relative bg-gradient-to-r from-emerald-700 to-teal-600 text-white py-20 shadow-lg overflow-hidden">
@@ -24,15 +28,7 @@
     <div class="container mx-auto px-4 py-16 max-w-7xl relative z-20 -mt-10">
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            @foreach ([
-                ["year" => "2563", "name" => "รายงานกิจการ 2563 (ฉบับสมบูรณ์)", "path" => "file/report/รายงานกิจการ_2563_(สมบูรณ์_online2).pdf"],
-                ["year" => "2562", "name" => "รายงานกิจการ 2562", "path" => "file/report/รายงานกิจการ_2562.pdf"],
-                ["year" => "2561", "name" => "รายงานกิจการ 2561", "path" => "file/report/รายงานกิจการ_2561.pdf"],
-                ["year" => "2560", "name" => "รายงานกิจการ 2560", "path" => "file/report/รายงานกิจการ_2560.pdf"],
-                ["year" => "2559", "name" => "รายงานกิจการ 2559", "path" => "file/report/รายงานกิจการ_2559.pdf"],
-                ["year" => "2558", "name" => "รายงานกิจการ 2558", "path" => "file/report/รายงานกิจการ_2558.pdf"],
-                ["year" => "2557", "name" => "รายงานกิจการ 2557", "path" => "file/report/รายงานกิจการ_2557.pdf"]
-            ] as $index => $report)
+            @foreach ($reports as $index => $report)
 
                 <a href="{{ url($report['path']) }}" target="_blank" rel="noopener noreferrer"
                    class="group h-full block transform transition-all duration-300 hover:-translate-y-2">

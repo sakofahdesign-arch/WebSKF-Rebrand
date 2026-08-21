@@ -35,7 +35,7 @@
                             <div class="card-body p-6">
                                 <div class="flex flex-col md:items-end">
                                     <span class="badge badge-success badge-outline gap-2 font-bold mb-2">จุดเริ่มต้น</span>
-                                    <time class="font-mono text-3xl font-black text-green-700">พ.ศ. 2535</time>
+                                    <time class="font-sans text-3xl font-extrabold tracking-wide text-green-700">พ.ศ. 2535</time>
                                 </div>
                                 <h3 class="text-xl font-bold text-gray-800 mt-2">กำเนิด "กองทุนออมทรัพย์ษะกอฟะฮ"</h3>
                                 <p class="text-gray-600 text-base leading-relaxed mt-3 text-justify">
@@ -61,7 +61,7 @@
                             <div class="card-body p-6">
                                 <div class="flex flex-col md:items-start">
                                     <span class="badge badge-primary badge-outline gap-2 font-bold mb-2">จดทะเบียนนิติบุคคล</span>
-                                    <time class="font-mono text-3xl font-black text-green-700">พ.ศ. 2538</time>
+                                    <time class="font-sans text-3xl font-extrabold tracking-wide text-green-700">พ.ศ. 2538</time>
                                 </div>
                                 <h3 class="text-xl font-bold text-gray-800 mt-2">ยกระดับสู่ "สหกรณ์ออมทรัพย์"</h3>
                                 <p class="text-gray-600 text-base leading-relaxed mt-3 text-justify">
@@ -88,7 +88,7 @@
                             <div class="card-body p-6">
                                 <div class="flex flex-col md:items-end">
                                     <span class="badge badge-info badge-outline gap-2 font-bold mb-2">ขยายสาขา</span>
-                                    <time class="font-mono text-3xl font-black text-green-700">พ.ศ. 2542</time>
+                                    <time class="font-sans text-3xl font-extrabold tracking-wide text-green-700">พ.ศ. 2542</time>
                                 </div>
                                 <h3 class="text-xl font-bold text-gray-800 mt-2">เปิดประตูสู่เมืองกระบี่</h3>
                                 <p class="text-gray-600 text-base leading-relaxed mt-3 text-justify">
@@ -114,7 +114,7 @@
                             <div class="card-body p-6">
                                 <div class="flex flex-col md:items-start">
                                     <span class="badge badge-warning badge-outline gap-2 font-bold mb-2">ย้ายสำนักงานใหญ่</span>
-                                    <time class="font-mono text-3xl font-black text-green-700">พ.ศ. 2552</time>
+                                    <time class="font-sans text-3xl font-extrabold tracking-wide text-green-700">พ.ศ. 2552</time>
                                 </div>
                                 <h3 class="text-xl font-bold text-gray-800 mt-2">รากฐานที่มั่นคง ณ ถนนกระบี่</h3>
                                 <p class="text-gray-600 text-base leading-relaxed mt-3 text-justify">
@@ -141,7 +141,7 @@
                             <div class="card-body p-8">
                                 <div class="flex flex-col md:items-end">
                                     <span class="badge badge-error badge-outline gap-2 font-bold mb-2">ยุคปัจจุบัน</span>
-                                    <time class="font-mono text-3xl font-black text-green-800">ปัจจุบัน</time>
+                                    <time class="font-sans text-3xl font-extrabold tracking-wide text-green-800">ปัจจุบัน</time>
                                 </div>
                                 <h3 class="text-2xl font-bold text-gray-800 mt-2">สู่องค์กรการเงินระดับแนวหน้า</h3>
                                 <p class="text-gray-600 text-base leading-relaxed mt-3 text-justify">

@@ -101,26 +101,29 @@
 
 @section('content')
 
-    <div class="hero min-h-[400px] bg-gradient-to-br from-green-800 to-green-600 text-white relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10">
-            <svg class="h-full w-full" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="hero-pattern" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M0 40L40 0H20L0 20M40 40V20L20 40" stroke="currentColor" stroke-width="2" fill="none"/></pattern></defs><rect width="100%" height="100%" fill="url(#hero-pattern)"/></svg>
-        </div>
+    <div class="hero min-h-[520px] bg-[#022c22] pt-20 text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.08)_0_1px,transparent_1px_22px)] opacity-70"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_24%,rgba(16,185,129,0.46),transparent_34rem),linear-gradient(180deg,rgba(2,44,34,0)_0%,rgba(2,44,34,0.36)_100%)]"></div>
+        <div class="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[#022c22] to-transparent"></div>
+        <div class="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-white via-white/82 to-transparent"></div>
+        <div class="absolute inset-x-0 bottom-0 h-64 bg-[linear-gradient(180deg,transparent_0%,transparent_28%,rgba(255,255,255,0.16)_52%,rgba(255,255,255,0.86)_82%,#fff_100%)]"></div>
 
-        <div class="hero-content text-center py-16 relative z-10">
+        <div class="hero-content text-center pb-36 pt-16 relative z-10">
             <div class="max-w-4xl">
-                <div class="badge badge-outline text-white border-white/50 mb-4 p-4 text-sm font-bold tracking-widest">VISION</div>
-                <h1 class="mb-5 text-4xl md:text-5xl font-extrabold leading-tight drop-shadow-lg">
-                    "{{ $vision['full_text'] }}"
+                <div class="mb-5 text-sm font-extrabold uppercase tracking-[0.24em] text-emerald-100/90">Vision</div>
+                <h1 class="mx-auto mb-6 max-w-4xl text-balance text-4xl font-extrabold leading-tight text-white drop-shadow-lg md:text-5xl lg:text-6xl">
+                    สหกรณ์ที่ก้าวหน้า มั่นคง และมีธรรมาภิบาล
                 </h1>
-                <p class="mb-5 text-xl text-green-100 font-light">
-                    {{ $vision['subtitle'] }}
+                <p class="mx-auto max-w-3xl text-pretty text-xl font-semibold leading-relaxed text-emerald-50 md:text-2xl">
+                    เป็นที่ยอมรับและเป็นส่วนหนึ่งของวิถีชีวิตสมาชิก
+                    ด้วยบริการการเงินตามหลักอิสลามที่โปร่งใสและยั่งยืน
                 </p>
-                <div class="h-1 w-24 bg-white/30 mx-auto rounded-full mt-6"></div>
+                <div class="mx-auto mt-8 h-1 w-24 rounded-full bg-emerald-300/70"></div>
             </div>
         </div>
     </div>
 
-    <div class="bg-white min-h-screen">
+    <div class="bg-white min-h-screen -mt-1">
         <div class="container mx-auto px-4 py-16">
 
             <div class="grid lg:grid-cols-2 gap-12 items-stretch mb-24">

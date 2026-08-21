@@ -42,7 +42,7 @@
                     </div>
                 </div>
 
-                <form action="{{ route('asset.update', $asset->id) }}" method="post" class="space-y-6">
+                <form action="{{ route('asset.update', $asset->id) }}" method="post" enctype="multipart/form-data" class="space-y-6">
                     @csrf
                     @method('PUT')
 
@@ -66,6 +66,28 @@
                                 <option value="2" @selected($asset->asset_type == 2)>ที่ดินเปล่า</option>
                                 <option value="3" @selected($asset->asset_type == 3)>คอนโด</option>
                             </select>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:col-span-2">
+                            <div class="form-control w-full">
+                                <label for="latitude" class="label">
+                                    <span class="label-text font-bold text-gray-700">ละติจูด GPS <span class="text-red-500">*</span></span>
+                                </label>
+                                <input type="number" step="any" id="latitude" name="latitude"
+                                    value="{{ old('latitude', $asset->latitude ?? '') }}"
+                                    class="input input-bordered w-full focus:input-emerald-500 bg-gray-50 focus:bg-white transition-colors"
+                                    placeholder="7.810533" required>
+                            </div>
+
+                            <div class="form-control w-full">
+                                <label for="longitude" class="label">
+                                    <span class="label-text font-bold text-gray-700">ลองจิจูด GPS <span class="text-red-500">*</span></span>
+                                </label>
+                                <input type="number" step="any" id="longitude" name="longitude"
+                                    value="{{ old('longitude', $asset->longitude ?? '') }}"
+                                    class="input input-bordered w-full focus:input-emerald-500 bg-gray-50 focus:bg-white transition-colors"
+                                    placeholder="99.090014" required>
+                            </div>
                         </div>
 
                         <div class="form-control w-full">
@@ -97,6 +119,21 @@
                                 class="textarea textarea-bordered w-full focus:textarea-emerald-500 bg-gray-50 focus:bg-white transition-colors" required>{{ old('description2', $asset->description2) }}</textarea>
                         </div>
 
+                    </div>
+
+                    <div class="rounded-xl border border-emerald-100 bg-emerald-50/50 p-5">
+                        <label for="deedFile" class="block text-sm font-bold text-gray-700">
+                            ไฟล์โฉนดที่ดิน / เอกสารแนบ
+                        </label>
+                        @if (!empty($asset->deed_file))
+                            <a href="{{ asset('assets/deeds/' . $asset->deed_file) }}" target="_blank"
+                                class="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 hover:text-emerald-900">
+                                <i class="fas fa-file-contract"></i> เปิดไฟล์แนบปัจจุบัน
+                            </a>
+                        @endif
+                        <input id="deedFile" name="deedFile" type="file" accept=".pdf,image/*"
+                            class="file-input file-input-bordered w-full mt-3 bg-white">
+                        <p class="mt-2 text-xs text-gray-500">เลือกไฟล์ใหม่เฉพาะเมื่อต้องการเปลี่ยนเอกสาร</p>
                     </div>
 
                     <div class="flex flex-col-reverse sm:flex-row justify-between items-center gap-4 pt-8 border-t border-gray-100 mt-8">

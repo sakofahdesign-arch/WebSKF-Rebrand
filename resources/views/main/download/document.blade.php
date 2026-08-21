@@ -2,6 +2,10 @@
 @section('title', 'เอกสารสำหรับสมาชิก')
 
 @section('content')
+@php
+    $files = config('site-content.downloads.forms');
+@endphp
+
 <div class="bg-gray-50 min-h-screen text-gray-800 font-sans" data-theme="light" x-data="{ loaded: false }" x-init="() => { setTimeout(() => loaded = true, 50) }">
 
     <div class="relative bg-gradient-to-r from-green-700 to-indigo-600 text-white py-20 shadow-lg overflow-hidden">
@@ -21,20 +25,7 @@
     <div class="container mx-auto px-4 py-16 max-w-7xl relative z-20 -mt-10">
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @foreach ([
-                ['name' => 'ใบคำขอสมัครสมาชิก', 'path' => 'file/form/ใบคำขอสมัครสมาชิก INFORM 68-001.pdf'],
-                ['name' => 'แบบฟอร์มคำขอรับสวัสดิการ', 'path' => 'file/form/คำขอรับสวัสดิการสมาชิก.pdf'],
-                ['name' => 'แบบฟอร์มคำร้องทั่วไป', 'path' => 'file/form/แบบฟอร์มคำร้องทั่วไป.pdf'],
-                ['name' => 'แบบฟอร์มคำขอรับสวัสดิการเสียชีวิต', 'path' => 'file/form/คำรับสวัสดิการกรณีเสียชีวิต.pdf'],
-                ['name' => 'แบบฟอร์มคำขอลาออกสมาชิกเสียชีวิต', 'path' => 'file/form/แบบฟอร์มคำขอลาออกสมาชิกเสียชีวิต.pdf'],
-                ['name' => 'แบบฟอร์มยินยอมหักผ่านบัญชี', 'path' => 'file/form/แบบฟอร์มคำขอชำระผ่านการหัก.pdf'],
-                ['name' => 'แบบฟอร์มคำขอลาออกสมาชิก', 'path' => 'file/form/คำขอลาออกสมาชิก.pdf'],
-                ['name' => 'ใบสมัครเข้าร่วมโครงการ', 'path' => 'file/form/ใบสมัครเข้าร่วมโครงการ.pdf'],
-                ['name' => 'Check list สินเชื่อฮาลาล', 'path' => 'file/form/CHECK LIST.pdf'],
-                ['name' => 'LY-SH-003-69 แบบคำขอไถ่ถอนจากจำนอง', 'path' => 'file/form/LY-SH-003-69 แบบคำขอไถ่ถอนจากจำนอง.pdf'],
-                ['name' => 'LY-SH-002-69 แบบคำขออนุมัติใช้หลักทรัพย์ระหว่างจำนอง', 'path' => 'file/form/LY-SH-002-69 แบบคำขออนุมัติใช้หลักทรัพย์ระหว่างจำนอง.pdf'],
-                ['name' => 'LY-SH-001-69 แบบคำขอปลอด หรือ เปลี่ยนแปลงหลักทรัพย์', 'path' => 'file/form/LY-SH-001-69 แบบคำขอปลอด หรือ เปลี่ยนแปลงหลักทรัพย์.pdf'],
-            ] as $index => $file)
+            @foreach ($files as $index => $file)
                 
                 <a href="{{ url($file['path']) }}" target="_blank" rel="noopener noreferrer" 
                    class="group h-full block transform transition-all duration-300 hover:-translate-y-2">

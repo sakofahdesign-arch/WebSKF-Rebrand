@@ -27,7 +27,34 @@
 @endsection
 
 @section('content')
+    @php
+        $assetMapItems = isset($mapAssets) ? $mapAssets : collect();
+    @endphp
+
     <div class="container mx-auto max-w-7xl">
+        <div class="card bg-white shadow-lg border border-gray-100 overflow-hidden mb-8">
+            <div class="flex flex-col gap-2 border-b border-gray-100 px-6 py-5 md:flex-row md:items-center md:justify-between">
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+                        <i class="fas fa-map-location-dot text-emerald-600"></i> ภาพรวมตำแหน่งทรัพย์สิน
+                    </h3>
+                    <p class="text-sm text-gray-500 mt-1">กดหมุดหรือเลือกรายการเพื่อดูรูป รายละเอียด และนำทางด้วย GPS</p>
+                </div>
+                <span class="badge badge-lg bg-emerald-50 text-emerald-700 border-emerald-100">
+                    {{ $assetMapItems->count() }} รายการมีพิกัด
+                </span>
+            </div>
+
+            <div
+                data-asset-sales-map
+                data-assets='@json($assetMapItems)'
+                class="h-[560px] min-h-[480px] w-full"
+            >
+                <div class="grid h-full place-items-center bg-slate-950 text-sm font-semibold text-white/70">
+                    กำลังโหลดแผนที่ขายทรัพย์สิน
+                </div>
+            </div>
+        </div>
 
         <div class="card bg-white shadow-lg border border-gray-100 overflow-hidden">
             <div class="h-2 bg-gradient-to-r from-emerald-500 to-teal-400"></div>
@@ -95,6 +122,18 @@
                                             <span class="badge badge-sm badge-ghost bg-emerald-50 text-emerald-700 border-emerald-100">
                                                 {{ $item->asset_name ?? 'N/A' }}
                                             </span>
+                                            @if (!empty($item->latitude) && !empty($item->longitude))
+                                                <div class="mt-2 inline-flex items-center gap-1.5 rounded-full bg-slate-50 px-2.5 py-1 text-xs font-semibold text-slate-500">
+                                                    <i class="fas fa-location-dot text-emerald-500"></i>
+                                                    {{ $item->latitude }}, {{ $item->longitude }}
+                                                </div>
+                                            @endif
+                                            @if (!empty($item->deed_file))
+                                                <a href="{{ asset('assets/deeds/' . $item->deed_file) }}" target="_blank"
+                                                    class="mt-2 inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-700 hover:bg-amber-100">
+                                                    <i class="fas fa-file-contract"></i> โฉนดที่ดิน
+                                                </a>
+                                            @endif
                                         </td>
 
                                         <td class="py-4 px-6 align-top text-sm text-gray-500 max-w-xs truncate">

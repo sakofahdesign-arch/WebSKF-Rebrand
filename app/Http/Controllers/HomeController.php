@@ -6,16 +6,63 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Jenssegers\Agent\Agent;
+use Throwable;
 
 class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        $information = DB::table('news')->orderByDesc('dateupload')->where('news_typeid', 1)->limit(8)->get();
-        $welfare     = DB::table('news')->orderByDesc('dateupload')->where('news_typeid', 2)->limit(8)->get();
-        $credit      = DB::table('news')->orderByDesc('dateupload')->where('news_typeid', 3)->limit(8)->get();
-        $foundation  = DB::table('news')->orderByDesc('dateupload')->where('news_typeid', 4)->limit(8)->get();
-        return view('welcome', compact('information', 'welfare', 'credit', 'foundation'));
+        if (app()->environment('local') && ! $this->homepageDatabasePortIsOpen()) {
+            $information = collect();
+            $welfare     = collect();
+            $credit      = collect();
+            $foundation  = collect();
+            $showHomepageNewsFallback = true;
+            return view('welcome', compact('information', 'welfare', 'credit', 'foundation', 'showHomepageNewsFallback'));
+        }
+
+        $information = $this->homepageNews(1);
+        $welfare     = $this->homepageNews(2);
+        $credit      = $this->homepageNews(3);
+        $foundation  = $this->homepageNews(4);
+        $showHomepageNewsFallback = false;
+        return view('welcome', compact('information', 'welfare', 'credit', 'foundation', 'showHomepageNewsFallback'));
+    }
+
+    private function homepageNews(int $typeId)
+    {
+        try {
+            return DB::table('news')->orderByDesc('dateupload')->where('news_typeid', $typeId)->limit(8)->get();
+        } catch (Throwable $exception) {
+            report($exception);
+            return collect();
+        }
+    }
+
+    private function homepageDatabasePortIsOpen(): bool
+    {
+        $connection = config('database.default');
+        $config     = config("database.connections.$connection", []);
+
+        if (($config['driver'] ?? null) !== 'mysql') {
+            return true;
+        }
+
+        $host = $config['host'] ?? null;
+        $port = (int) ($config['port'] ?? 3306);
+
+        if (! $host) {
+            return true;
+        }
+
+        $socket = @fsockopen($host, $port, $errorCode, $errorMessage, 0.2);
+
+        if (! $socket) {
+            return false;
+        }
+
+        fclose($socket);
+        return true;
     }
 
     public function acceptCookie(Request $request)

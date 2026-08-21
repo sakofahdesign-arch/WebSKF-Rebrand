@@ -13,15 +13,23 @@ test('homepage renders the organization cylinder hero', function () {
         'credit' => collect(),
         'foundation' => collect(),
     ])->render();
+    $hero = file_get_contents(base_path('resources/views/components/welcomes/organization-cylinder.blade.php'));
 
     expect($html)
         ->toContain('data-section="organization-cylinder-hero"')
         ->toContain('organization-hero-logo')
-        ->toContain('images/sakofah-hero-logo.png')
+        ->toContain('content/hero/sakofah-hero-logo.png')
         ->toContain('h-24 w-24')
+        ->toContain('-mt-8')
+        ->toContain('h-[62vh] min-h-[560px] max-h-[720px] w-full')
+        ->toContain('min-h-[calc(100dvh-2.5rem)]')
         ->not->toContain('id="hero-carousel"');
 
-    expect(file_exists(public_path('images/sakofah-hero-logo.png')))->toBeTrue();
+    expect($hero)
+        ->not->toContain('absolute inset-0 z-0')
+        ->not->toContain('relative z-20');
+
+    expect(file_exists(public_path('content/hero/sakofah-hero-logo.png')))->toBeTrue();
 });
 
 test('homepage news tabs keep empty categories empty like the old system', function () {
@@ -97,6 +105,22 @@ test('journals section uses the shared homepage heading style without a logo', f
         ->toContain('h-1 w-20 bg-green-500 mx-auto rounded-full');
 });
 
+test('journals section uses the books showcase mount for production', function () {
+    $html = view('components.welcomes.journals-public')->render();
+    $app = file_get_contents(base_path('resources/js/app.js'));
+
+    expect($html)
+        ->toContain('data-books-showcase')
+        ->toContain("data-books='")
+        ->toContain('h-[680px] min-h-[560px] w-full')
+        ->not->toContain('data-journal-complete-shelf')
+        ->not->toContain('data-journals=')
+        ->not->toContain('youtube.com')
+        ->and($app)
+        ->toContain('./books-showcase-mount')
+        ->not->toContain('./journal-complete-shelf-mount');
+});
+
 test('journals section exposes complete shelf journal data', function () {
     $html = view('components.welcomes.journals-public')->render();
     $template = file_get_contents(base_path('resources/views/components/welcomes/journals-public.blade.php'));
@@ -122,7 +146,7 @@ test('journals section exposes complete shelf journal data', function () {
         ])
         ->and($journals[0]['themeColor'])->toStartWith('#')
         ->and($journals[0]['foilColor'])->toStartWith('#')
-        ->and($journals[0]['cover'])->toContain('/images/ebooks/')
+        ->and($journals[0]['cover'])->toContain('/content/ebooks/')
         ->and($journals[0]['downloadUrl'])->toContain('online.anyflip.com')
         ->and($html)
         ->not->toContain('วิดีโอ')
@@ -130,7 +154,7 @@ test('journals section exposes complete shelf journal data', function () {
         ->and($template)
         ->not->toContain('$themeColors')
         ->not->toContain('$foilColors');
-});
+})->skip('Complete Shelf paused; production uses BooksShowcase.');
 
 test('journal complete shelf mount is wired into the app bundle', function () {
     $mount = file_exists(base_path('resources/js/journal-complete-shelf-mount.tsx'))
@@ -149,7 +173,7 @@ test('journal complete shelf mount is wired into the app bundle', function () {
         ->and(file_exists($componentPath))->toBeTrue()
         ->and($component)->toContain('export interface JournalShelfItem')
         ->and($component)->toContain('export function JournalCompleteShelf');
-});
+})->skip('Complete Shelf paused; production uses BooksShowcase.');
 
 test('journal complete shelf component exposes shelf detail reader and fallback states', function () {
     $component = file_exists(base_path('components/ui/journal-complete-shelf.tsx'))
@@ -171,7 +195,7 @@ test('journal complete shelf component exposes shelf detail reader and fallback 
         ->toContain('เปิดในแท็บใหม่')
         ->toContain('WebGL ไม่พร้อมใช้งาน')
         ->toContain('aria-live="polite"');
-});
+})->skip('Complete Shelf paused; production uses BooksShowcase.');
 
 test('journal complete shelf uses threejs for animated hardbound volumes', function () {
     $component = file_get_contents(base_path('components/ui/journal-complete-shelf.tsx'));
@@ -194,7 +218,7 @@ test('journal complete shelf uses threejs for animated hardbound volumes', funct
         ->toContain('modeRef.current === "reader"')
         ->toContain('const cleanup = () =>')
         ->toMatch('/catch \{\s+cleanup\(\);/');
-});
+})->skip('Complete Shelf paused; production uses BooksShowcase.');
 
 test('journals complete shelf replaces the old books showcase mount', function () {
     $app = file_get_contents(base_path('resources/js/app.js'));
@@ -216,7 +240,7 @@ test('journals complete shelf replaces the old books showcase mount', function (
         ->toContain('bg-[var(--journal-theme)]')
         ->toContain('transition-colors duration-700')
         ->toContain('cursor-grab');
-});
+})->skip('Complete Shelf paused; production uses BooksShowcase.');
 
 test('homepage uses the wave grid background behind all landing sections', function () {
     $html = view('welcome', [
@@ -245,9 +269,9 @@ test('homepage uses the wave grid background behind all landing sections', funct
         ->and($css)->toContain('[data-homepage-content] > :where(section, div[data-promotion-news-showcase], div[data-staggered-news])');
 });
 
-test('homepage section shells are transparent and share the journals heading wash', function () {
-    $radialWash = 'bg-[radial-gradient(ellipse_at_50%_46%,transparent_0%,transparent_28%,rgba(16,185,129,0.14)_46%,rgba(240,253,244,0.48)_62%,transparent_100%)]';
-    $floatingWash = 'absolute inset-x-0 -top-8 -z-10 h-[28rem]';
+test('homepage section shells are transparent and use a compact heading spotlight', function () {
+    $headingSpotlight = 'homepage-heading-spotlight';
+    $floatingWash = 'pointer-events-none absolute inset-x-0 top-0 -z-10 h-64';
     $headingWrap = 'mx-auto mb-12 max-w-3xl text-center';
 
     $service = file_get_contents(base_path('resources/views/components/welcomes/service-intel.blade.php'));
@@ -261,7 +285,7 @@ test('homepage section shells are transparent and share the journals heading was
 
     foreach ([$service, $journals, $branch, $partners] as $section) {
         expect($section)
-            ->toContain($radialWash)
+            ->toContain($headingSpotlight)
             ->toContain($floatingWash)
             ->toContain($headingWrap)
             ->toContain('bg-transparent')
@@ -271,22 +295,26 @@ test('homepage section shells are transparent and share the journals heading was
             ->not->toContain('bg-gray-50/50')
             ->not->toContain('bg-white py-16')
             ->not->toContain('absolute inset-x-0 top-0 h-72')
+            ->not->toContain('h-[28rem]')
+            ->not->toContain('ellipse_at_50%_46%')
             ->not->toContain('-top-24');
     }
 
     expect($branch)
         ->not->toContain('h-64 bg-emerald-50')
         ->and($partners)->not->toContain('border-t border-gray-100')
-        ->and($promo)->toContain($radialWash)
+        ->and($promo)->toContain($headingSpotlight)
         ->and($promo)->toContain($floatingWash)
         ->and($promo)->toContain('bg-transparent py-14')
         ->and($promo)->toContain('mx-auto mb-12 max-w-3xl text-center')
-        ->and($news)->toContain($radialWash)
+        ->and($news)->toContain($headingSpotlight)
         ->and($news)->toContain($floatingWash)
         ->and($news)->toContain('bg-transparent py-14')
         ->and($news)->toContain('mx-auto mb-12 max-w-3xl text-center')
         ->and($hero)->not->toContain('org-hero bg-white')
         ->and($hero)->not->toContain('overflow-hidden bg-white py-6')
+        ->and($css)->toContain('.homepage-heading-spotlight')
+        ->and($css)->toContain('linear-gradient(180deg, rgb(236 253 245 / 0.72), transparent 78%)')
         ->and($css)->toContain('background: transparent;')
         ->and($css)->not->toContain('background-color: rgb(255 255 255 / 0.82)');
 });
@@ -333,12 +361,12 @@ test('homepage shows the branch service network after journals with mapped branc
             'markerKind' => 'branch',
             'group' => 'branch',
         ])
-        ->and($branches[7]['image'])->toContain('/images/branch/ton_thuai.jpg')
+        ->and($branches[7]['image'])->toContain('/content/branches/ton_thuai.jpg')
         ->and($branches[8])->toMatchArray([
             'id' => 'shell_krabi',
             'latitude' => 7.811404,
             'longitude' => 99.091178,
-            'markerLogo' => asset('images/logos/shell-marker-logo.jpg'),
+            'markerLogo' => asset('content/logos/shell-marker-logo.jpg'),
             'markerKind' => 'fuel',
             'group' => 'business',
         ])
@@ -403,7 +431,7 @@ test('branch network map uses the shared mapcn map component', function () {
         ->toContain('หน่วยธุรกิจ')
         ->toContain('branch.group === "business"')
         ->toContain('const sidebarPositionClass = isFullscreen ? "top-24 md:top-24" : "top-4 md:top-5"')
-        ->toContain('const sidebarHeightClass = isFullscreen ? "max-h-[min(560px,calc(100dvh-8rem))]" : "max-h-[calc(100%-2rem)] md:max-h-[calc(100%-2.5rem)]"')
+        ->toContain('max-h-[min(430px,calc(100%-2rem))] md:max-h-[min(460px,calc(100%-2.5rem))]')
         ->toContain('absolute left-4 z-20')
         ->toContain('sidebarHeightClass')
         ->toContain('h-[min(720px,calc(100dvh-7rem))]')
@@ -489,12 +517,31 @@ test('office page uses the branch network map in fullscreen mode', function () {
         ->and($component)->toContain('variant?: "section" | "fullscreen"')
         ->and($component)->toContain('h-[100dvh] min-h-[704px]')
         ->and($html)->toContain('h-[100dvh] min-h-[704px]')
-        ->and($header)->toContain("request()->routeIs('office') ? 'h-0 bg-transparent' : 'h-16 bg-white'");
+        ->and($header)->toContain("request()->routeIs('office') || request()->routeIs('vision') ? 'h-0 bg-transparent' : 'h-16 bg-white'");
+});
+
+test('history and vision pages use the shared Noto Sans Thai presentation rhythm', function () {
+    $history = file_get_contents(base_path('resources/views/main/about/history.blade.php'));
+    $vision = file_get_contents(base_path('resources/views/main/about/vision.blade.php'));
+    $header = file_get_contents(base_path('resources/views/components/header.blade.php'));
+
+    expect($history)
+        ->not->toContain('font-mono')
+        ->toContain('font-sans text-3xl font-extrabold tracking-wide text-green-700')
+        ->and($vision)
+        ->toContain('bg-[#022c22] pt-20')
+        ->toContain('สหกรณ์ที่ก้าวหน้า มั่นคง และมีธรรมาภิบาล')
+        ->toContain('เป็นที่ยอมรับและเป็นส่วนหนึ่งของวิถีชีวิตสมาชิก')
+        ->toContain('h-44 bg-gradient-to-t from-white via-white/82 to-transparent')
+        ->toContain('h-64 bg-[linear-gradient(180deg,transparent_0%,transparent_28%,rgba(255,255,255,0.16)_52%,rgba(255,255,255,0.86)_82%,#fff_100%)]')
+        ->and($header)
+        ->toContain("request()->routeIs('office') || request()->routeIs('vision')");
 });
 
 test('notch navbar uses Noto Sans Thai and a tighter balanced desktop layout', function () {
     $component = file_get_contents(base_path('components/ui/notch-navbar.tsx'));
     $header = view('components.header')->render();
+    $headerSource = file_get_contents(base_path('resources/views/components/header.blade.php'));
     $layout = file_get_contents(base_path('resources/views/layouts/layout.blade.php'));
     $css = file_get_contents(base_path('resources/css/app.css'));
 
@@ -506,9 +553,65 @@ test('notch navbar uses Noto Sans Thai and a tighter balanced desktop layout', f
         ->toContain('justify-end')
         ->toContain('justify-start')
         ->toContain('text-[13px]')
-        ->and($header)->toContain('<div class="h-16 bg-white" aria-hidden="true"></div>')
+        ->and($headerSource)->toContain("request()->routeIs('index') ? 'h-10 bg-transparent' : 'h-16 bg-white'")
+        ->and($header)->toContain('h-16 bg-white')
         ->and($layout)->toContain('family=Noto+Sans+Thai:wght@300;400;500;600;700;800')
         ->and($css)->toContain("--font-sans: 'Noto Sans Thai'");
+});
+
+test('staff and error layouts use the Noto Sans Thai system font', function () {
+    $admin = file_get_contents(base_path('resources/views/layouts/admin-layout.blade.php'));
+    $error403 = file_get_contents(base_path('resources/views/errors/403.blade.php'));
+    $error404 = file_get_contents(base_path('resources/views/errors/404.blade.php'));
+    $error500 = file_get_contents(base_path('resources/views/errors/500.blade.php'));
+
+    foreach ([$admin, $error403, $error404, $error500] as $template) {
+        expect($template)
+            ->toContain('Noto+Sans+Thai')
+            ->toContain("'Noto Sans Thai'")
+            ->not->toContain('IBM+Plex+Sans+Thai')
+            ->not->toContain('IBM Plex Sans Thai')
+            ->not->toContain('Sarabun');
+    }
+});
+
+test('staff asset sales menu and form support GPS deed uploads and map overview', function () {
+    $sidebar = file_get_contents(base_path('resources/views/components/admin-sidebar.blade.php'));
+    $create = file_get_contents(base_path('resources/views/office/admin/assets/create.blade.php'));
+    $index = file_get_contents(base_path('resources/views/office/admin/assets/index.blade.php'));
+    $controller = file_get_contents(base_path('app/Http/Controllers/AssetController.php'));
+    $app = file_get_contents(base_path('resources/js/app.js'));
+    $mountPath = base_path('resources/js/asset-sales-map-mount.tsx');
+    $componentPath = base_path('components/ui/asset-sales-map.tsx');
+    $migrationPath = base_path('database/migrations/2026_08_20_000000_add_sales_fields_to_asset_table.php');
+
+    expect($sidebar)
+        ->toContain('route(\'asset.index\')')
+        ->toContain('ขายทรัพย์สิน')
+        ->and($create)
+        ->toContain('name="asset_type"')
+        ->toContain('name="latitude"')
+        ->toContain('name="longitude"')
+        ->toContain('name="deedFile"')
+        ->toContain('accept=".pdf,image/*"')
+        ->toContain('placeholder="7.810533"')
+        ->toContain('placeholder="99.090014"')
+        ->and($index)
+        ->toContain('data-asset-sales-map')
+        ->toContain('data-assets=')
+        ->and($controller)
+        ->toContain("'latitude'     => 'required|numeric|between:-90,90'")
+        ->toContain("'longitude'    => 'required|numeric|between:-180,180'")
+        ->toContain("'deedFile'     => 'nullable|file|mimes:pdf,jpg,jpeg,png,webp|max:20480'")
+        ->toContain("'deed_file'    => \$deedFileName")
+        ->toContain("'map_link'")
+        ->toContain('Schema::hasColumn(\'asset\', \'latitude\')')
+        ->toContain('Schema::hasColumn(\'asset\', \'longitude\')')
+        ->and($app)
+        ->toContain('./asset-sales-map-mount')
+        ->and(file_exists($mountPath))->toBeTrue()
+        ->and(file_exists($componentPath))->toBeTrue()
+        ->and(file_exists($migrationPath))->toBeTrue();
 });
 
 test('notch navbar parent dropdown items are buttons instead of links', function () {

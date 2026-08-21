@@ -91,9 +91,9 @@
                         <span class="ml-3">ข่าวสาร/กิจกรรม</span>
                     </a>
                     <a href="{{ route('asset.index') }}"
-                        class="flex items-center px-4 py-2.5 rounded-xl transition-all duration-200 group text-emerald-100 hover:bg-emerald-800 hover:text-white">
-                        <i class="fas fa-building w-5 h-5"></i>
-                        <span class="ml-3">จัดการสินทรัพย์</span>
+                        class="flex items-center px-4 py-2.5 rounded-xl transition-all duration-200 group {{ request()->routeIs('asset.*') ? 'bg-emerald-600 text-white' : 'text-emerald-100 hover:bg-emerald-800 hover:text-white' }}">
+                        <i class="fas fa-sign-hanging w-5 h-5"></i>
+                        <span class="ml-3">ขายทรัพย์สิน</span>
                     </a>
 
                     <a href="{{ route('performance.add') }}"

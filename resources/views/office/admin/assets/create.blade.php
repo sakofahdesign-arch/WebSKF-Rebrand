@@ -50,7 +50,7 @@
                                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                         <i class="fas fa-heading text-gray-400"></i>
                                     </div>
-                                    <input type="text" id="title" name="title"
+                                    <input type="text" id="title" name="title" value="{{ old('title') }}"
                                         class="input input-bordered w-full pl-10 focus:input-emerald-500 bg-gray-50 focus:bg-white transition-colors"
                                         placeholder="เช่น บ้านเดี่ยวสไตล์โมเดิร์น" required>
                                 </div>
@@ -62,7 +62,7 @@
                                 </label>
                                 <textarea id="description1" name="description1" rows="3"
                                     class="textarea textarea-bordered w-full focus:textarea-emerald-500 bg-gray-50 focus:bg-white transition-colors"
-                                    placeholder="เช่น ขนาดพื้นที่, จำนวนห้องนอน/ห้องน้ำ..." required></textarea>
+                                    placeholder="เช่น ขนาดพื้นที่, จำนวนห้องนอน/ห้องน้ำ..." required>{{ old('description1') }}</textarea>
                             </div>
 
                             <div class="form-control w-full">
@@ -71,7 +71,7 @@
                                 </label>
                                 <textarea id="description2" name="description2" rows="3"
                                     class="textarea textarea-bordered w-full focus:textarea-emerald-500 bg-gray-50 focus:bg-white transition-colors"
-                                    placeholder="เช่น สถานที่ใกล้เคียง, จุดเด่นเพิ่มเติม..." required></textarea>
+                                    placeholder="เช่น สถานที่ใกล้เคียง, จุดเด่นเพิ่มเติม...">{{ old('description2') }}</textarea>
                             </div>
 
                             <div class="form-control w-full">
@@ -82,7 +82,7 @@
                                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                         <i class="fas fa-phone-alt text-gray-400"></i>
                                     </div>
-                                    <input type="text" id="contact" name="contact"
+                                    <input type="text" id="contact" name="contact" value="{{ old('contact') }}"
                                         class="input input-bordered w-full pl-10 focus:input-emerald-500 bg-gray-50 focus:bg-white transition-colors"
                                         placeholder="เช่น เบอร์โทร, Line ID" required>
                                 </div>
@@ -96,10 +96,40 @@
                                     class="select select-bordered w-full focus:select-emerald-500 bg-gray-50 focus:bg-white transition-colors"
                                     required>
                                     <option value="" disabled selected>-- เลือกประเภท --</option>
-                                    <option value="1">บ้านพร้อมที่ดิน</option>
-                                    <option value="2">ที่ดินเปล่า</option>
-                                    <option value="3">คอนโด</option>
+                                    <option value="1" @selected(old('asset_type') == 1)>บ้านพร้อมที่ดิน</option>
+                                    <option value="2" @selected(old('asset_type') == 2)>ที่ดินเปล่า</option>
+                                    <option value="3" @selected(old('asset_type') == 3)>คอนโด</option>
                                 </select>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div class="form-control w-full">
+                                    <label for="latitude" class="label">
+                                        <span class="label-text font-bold text-gray-700">ละติจูด GPS <span class="text-red-500">*</span></span>
+                                    </label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <i class="fas fa-location-dot text-gray-400"></i>
+                                        </div>
+                                        <input type="number" step="any" id="latitude" name="latitude" value="{{ old('latitude') }}"
+                                            class="input input-bordered w-full pl-10 focus:input-emerald-500 bg-gray-50 focus:bg-white transition-colors"
+                                            placeholder="7.810533" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-control w-full">
+                                    <label for="longitude" class="label">
+                                        <span class="label-text font-bold text-gray-700">ลองจิจูด GPS <span class="text-red-500">*</span></span>
+                                    </label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <i class="fas fa-map-location-dot text-gray-400"></i>
+                                        </div>
+                                        <input type="number" step="any" id="longitude" name="longitude" value="{{ old('longitude') }}"
+                                            class="input input-bordered w-full pl-10 focus:input-emerald-500 bg-gray-50 focus:bg-white transition-colors"
+                                            placeholder="99.090014" required>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -107,7 +137,7 @@
                             
                             <div class="form-control w-full" x-data="{ coverPreview: null }">
                                 <label class="label">
-                                    <span class="label-text font-bold text-gray-700">ภาพหน้าปก <span class="text-red-500">*</span></span>
+                                    <span class="label-text font-bold text-gray-700">ภาพหน้าปก</span>
                                     <span class="label-text-alt text-gray-400">ภาพหลัก (1 รูป)</span>
                                 </label>
                                 
@@ -127,7 +157,7 @@
                                     </div>
 
                                     <input id="coverImage" name="coverImage" type="file" class="hidden" accept="image/*"
-                                        @change="coverPreview = URL.createObjectURL($event.target.files[0])" required>
+                                        @change="coverPreview = URL.createObjectURL($event.target.files[0])">
                                 </label>
                             </div>
 
@@ -156,6 +186,21 @@
                                     </div>
                                     <input id="galleryImages" name="Images[]" type="file" multiple class="hidden" accept="image/*"
                                         @change="fileCount = $event.target.files.length">
+                                </label>
+                            </div>
+
+                            <div class="form-control w-full" x-data="{ deedName: '' }">
+                                <label class="label">
+                                    <span class="label-text font-bold text-gray-700">ไฟล์โฉนดที่ดิน / เอกสารแนบ</span>
+                                    <span class="label-text-alt text-gray-400">PDF หรือรูปภาพ</span>
+                                </label>
+
+                                <label class="flex flex-col items-center justify-center w-full min-h-32 border-2 border-dashed border-emerald-200 rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-400 transition-all bg-emerald-50/40 px-4 py-6 text-center">
+                                    <i class="fas fa-file-contract text-3xl text-emerald-600 mb-3"></i>
+                                    <p class="text-sm font-semibold text-gray-700" x-text="deedName || 'อัปโหลดโฉนดที่ดิน หรือเอกสารประกอบ'"></p>
+                                    <p class="mt-1 text-xs text-gray-400">รองรับ PDF, JPG, PNG, WEBP</p>
+                                    <input id="deedFile" name="deedFile" type="file" class="hidden" accept=".pdf,image/*"
+                                        @change="deedName = $event.target.files[0]?.name || ''">
                                 </label>
                             </div>
 

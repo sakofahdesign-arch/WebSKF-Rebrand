@@ -65,13 +65,15 @@
     ];
 @endphp
 
-<section class="py-16 bg-white border-t border-gray-100">
-    <div class="container mx-auto px-4">
-        <div class="text-center mb-12">
+<section data-section="partners-agencies" class="relative isolate overflow-visible bg-transparent py-16">
+    <div class="homepage-heading-spotlight pointer-events-none absolute inset-x-0 top-0 -z-10 h-64"></div>
+
+    <div class="relative z-10 container mx-auto px-4">
+        <div class="mx-auto mb-12 max-w-3xl text-center">
             <h2 class="text-3xl md:text-4xl font-extrabold text-green-800 tracking-tight">
                 พันธมิตรและหน่วยงานที่เกี่ยวข้อง</h2>
             <div class="mt-3 h-1 w-20 bg-green-500 mx-auto rounded-full"></div>
-            <p class="mt-4 text-lg text-gray-500">หน่วยงานและองค์กรที่เราทำงานร่วมด้วยและให้การสนับสนุน</p>
+            <p class="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-gray-600">หน่วยงานและองค์กรที่เราทำงานร่วมด้วยและให้การสนับสนุน</p>
         </div>
 
         <div

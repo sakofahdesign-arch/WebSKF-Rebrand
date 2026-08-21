@@ -1,17 +1,49 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Schema;
 
 class AssetController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $assets = DB::table('asset')->join('asset_type', 'asset.asset_type', '=', 'asset_type.asset_type')->paginate(10);
-        return view('office.admin.assets.index', compact('assets'));
+        $query = DB::table('asset')
+            ->leftJoin('asset_type', 'asset.asset_type', '=', 'asset_type.asset_type')
+            ->select('asset.*', 'asset_type.asset_name');
+
+        if ($request->filled('search')) {
+            $search = $request->string('search')->toString();
+
+            $query->where(function ($builder) use ($search) {
+                $builder
+                    ->where('asset.title', 'like', "%{$search}%")
+                    ->orWhere('asset.description1', 'like', "%{$search}%")
+                    ->orWhere('asset.description2', 'like', "%{$search}%")
+                    ->orWhere('asset_type.asset_name', 'like', "%{$search}%");
+            });
+        }
+
+        $assets = (clone $query)
+            ->orderByDesc('asset.date')
+            ->paginate(10);
+
+        $mapAssets = collect();
+
+        if ($this->hasSalesMapColumns()) {
+            $mapAssets = $query
+                ->whereNotNull('asset.latitude')
+                ->whereNotNull('asset.longitude')
+                ->orderByDesc('asset.date')
+                ->get()
+                ->map(fn ($asset) => $this->mapAssetPayload($asset))
+                ->values();
+        }
+
+        return view('office.admin.assets.index', compact('assets', 'mapAssets'));
     }
 
     public function create()
@@ -21,70 +53,53 @@ class AssetController extends Controller
 
     public function store(Request $request)
     {
-        // 1. ตรวจสอบข้อมูลเบื้องต้น
         $request->validate([
-            'title'      => 'required|string|max:255',
-            'asset_type' => 'required|integer',
-            'coverImage' => 'required|image',
-            'Images'     => 'required|array',
-            'Images.*'   => 'image',
+            'title'        => 'required|string|max:255',
+            'asset_type'   => 'required|integer',
+            'description1' => 'required|string',
+            'description2' => 'nullable|string',
+            'contact'      => 'required|string|max:255',
+            'latitude'     => 'required|numeric|between:-90,90',
+            'longitude'    => 'required|numeric|between:-180,180',
+            'coverImage'   => 'nullable|image|max:10240',
+            'Images'       => 'nullable|array',
+            'Images.*'     => 'image|max:10240',
+            'deedFile'     => 'nullable|file|mimes:pdf,jpg,jpeg,png,webp|max:20480',
         ]);
 
-        // 2. บันทึกข้อมูลที่เป็นข้อความลงตาราง asset และเอา ID ที่สร้างใหม่มาใช้
-        // เราจะใส่ picture_name เป็นค่าว่างไว้ก่อน
-        $asset_id = DB::table('asset')->insertGetId([
+        $uploadFolder = 'assets';
+        $deedFolder = 'assets/deeds';
+
+        File::ensureDirectoryExists(public_path($uploadFolder));
+        File::ensureDirectoryExists(public_path($deedFolder));
+
+        $assetId = DB::table('asset')->insertGetId([
             'title'        => $request->title,
-            'description1' => $request->description1 ?? '',
+            'description1' => $request->description1,
             'description2' => $request->description2 ?? '',
-            'contact'      => $request->contact ?? '',
+            'contact'      => $request->contact,
             'asset_type'   => $request->asset_type,
-            'picture_name' => '', 
+            'latitude'     => $request->latitude,
+            'longitude'    => $request->longitude,
+            'picture_name' => '',
+            'deed_file'    => null,
             'date'         => now(),
         ]);
 
-        // 3. กำหนดโฟลเดอร์ที่จะเก็บรูปทั้งหมด
-        $uploadFolder = 'assets';
-        $timestamp    = time(); // ใช้ timestamp เพื่อป้องกันชื่อซ้ำ
+        $timestamp = time();
+        $coverFileName = $this->storeCoverImage($request, $assetId, $timestamp, $uploadFolder);
+        $deedFileName = $this->storeDeedFile($request, $assetId, $timestamp, $deedFolder);
 
-        // 4. จัดการ "ภาพหน้าปก" (Cover Image)
-        if ($request->hasFile('coverImage')) {
-            $coverFile = $request->file('coverImage');
-            $extension = $coverFile->getClientOriginalExtension();
+        DB::table('asset')->where('id', $assetId)->update([
+            'picture_name' => $coverFileName ?? '',
+            'deed_file'    => $deedFileName,
+        ]);
 
-            // สร้างชื่อไฟล์ใหม่ -> asset_[ID]_cover_[timestamp].ext
-            $coverFileName = "{$asset_id}_cover_{$timestamp}.{$extension}";
+        $this->storeGalleryImages($request, $assetId, $timestamp, $uploadFolder);
 
-            // ย้ายไฟล์ไปเก็บ
-            $coverFile->move(public_path($uploadFolder), $coverFileName);
-
-            // อัปเดตชื่อไฟล์ภาพหน้าปกกลับไปที่ตาราง asset
-            DB::table('asset')->where('id', $asset_id)->update(['picture_name' => $coverFileName]);
-        }
-
-        // 5. จัดการ "รูปประกอบ" (Gallery Images)
-        if ($request->hasFile('Images')) {
-            foreach ($request->file('Images') as $index => $galleryFile) {
-                $extension = $galleryFile->getClientOriginalExtension();
-
-                // สร้างชื่อไฟล์ใหม่ -> asset_[ID]_gallery_[timestamp]_[ลำดับ].ext
-                $galleryFileName = "{$asset_id}_gallery_{$timestamp}_" . ($index + 1) . ".{$extension}";
-
-                // ย้ายไฟล์
-                $galleryFile->move(public_path($uploadFolder), $galleryFileName);
-
-                // บันทึกข้อมูลลงตาราง asset_picture
-                DB::table('asset_picture')->insert([
-                    'id'           => $asset_id,
-                    'picture_name' => $galleryFileName,
-                ]);
-            }
-        }
-
-        // 6. เมื่อเสร็จสิ้น ให้ redirect กลับไปพร้อมข้อความแจ้งเตือน
-        return redirect()->route('asset.index')->with('success', 'เพิ่มสินทรัพย์เรียบร้อยแล้ว');
+        return redirect()->route('asset.index')->with('success', 'เพิ่มรายการขายทรัพย์สินเรียบร้อยแล้ว');
     }
 
-    // 1. ฟังก์ชันสำหรับแสดงหน้าแก้ไข
     public function edit($id)
     {
         $asset = DB::table('asset')->where('id', $id)->first();
@@ -93,65 +108,169 @@ class AssetController extends Controller
             return redirect()->route('asset.index')->with('error', 'ไม่พบสินทรัพย์ที่ต้องการแก้ไข');
         }
 
-        // ส่งข้อมูลสินทรัพย์ไปที่หน้า view
         return view('office.admin.assets.edit', compact('asset'));
     }
 
-// 2. ฟังก์ชันสำหรับอัปเดตข้อมูล (รับข้อมูลจากฟอร์ม)
+    public function show($id)
+    {
+        return redirect()->route('asset.edit', $id);
+    }
+
     public function update(Request $request, $id)
     {
+        $asset = DB::table('asset')->where('id', $id)->first();
+
+        if (! $asset) {
+            return redirect()->route('asset.index')->with('error', 'ไม่พบสินทรัพย์ที่ต้องการแก้ไข');
+        }
+
         $request->validate([
             'title'        => 'required|string|max:255',
             'description1' => 'required|string',
-            'description2' => 'required|string',
-            'contact'      => 'required|string',
+            'description2' => 'nullable|string',
+            'contact'      => 'required|string|max:255',
             'asset_type'   => 'required|integer',
+            'latitude'     => 'required|numeric|between:-90,90',
+            'longitude'    => 'required|numeric|between:-180,180',
+            'deedFile'     => 'nullable|file|mimes:pdf,jpg,jpeg,png,webp|max:20480',
         ]);
+
+        $deedFileName = $asset->deed_file ?? null;
+
+        if ($request->hasFile('deedFile')) {
+            $deedFolder = 'assets/deeds';
+            File::ensureDirectoryExists(public_path($deedFolder));
+            $deedFileName = $this->storeDeedFile($request, (int) $id, time(), $deedFolder);
+
+            if (! empty($asset->deed_file)) {
+                File::delete(public_path($deedFolder . '/' . $asset->deed_file));
+            }
+        }
 
         DB::table('asset')->where('id', $id)->update([
             'title'        => $request->title,
             'description1' => $request->description1,
-            'description2' => $request->description2,
+            'description2' => $request->description2 ?? '',
             'contact'      => $request->contact,
             'asset_type'   => $request->asset_type,
+            'latitude'     => $request->latitude,
+            'longitude'    => $request->longitude,
+            'deed_file'    => $deedFileName,
         ]);
 
-        return redirect()->route('asset.index')->with('success', 'แก้ไขข้อมูลสินทรัพย์เรียบร้อยแล้ว');
+        return redirect()->route('asset.index')->with('success', 'แก้ไขข้อมูลขายทรัพย์สินเรียบร้อยแล้ว');
     }
 
-// 3. ฟังก์ชันสำหรับลบข้อมูลและไฟล์ทั้งหมด
     public function destroy($id)
     {
         $asset = DB::table('asset')->where('id', $id)->first();
+
         if (! $asset) {
             return redirect()->route('asset.index')->with('error', 'ไม่พบสินทรัพย์ที่ต้องการลบ');
         }
 
         $uploadFolder = 'assets';
-
-        // ดึงชื่อไฟล์รูปภาพทั้งหมดที่เกี่ยวข้อง
-        $coverImage    = $asset->picture_name;
+        $deedFolder = 'assets/deeds';
+        $coverImage = $asset->picture_name;
+        $deedFile = $asset->deed_file ?? null;
         $galleryImages = DB::table('asset_picture')->where('id', $id)->pluck('picture_name');
 
-        // เริ่มลบข้อมูลในฐานข้อมูล (ใช้ Transaction เพื่อความปลอดภัย)
         try {
             DB::transaction(function () use ($id) {
                 DB::table('asset_picture')->where('id', $id)->delete();
                 DB::table('asset')->where('id', $id)->delete();
             });
 
-            // หากลบข้อมูลสำเร็จ ให้ลบไฟล์รูปภาพออกจาก server
             if ($coverImage) {
                 File::delete(public_path($uploadFolder . '/' . $coverImage));
             }
+
+            if ($deedFile) {
+                File::delete(public_path($deedFolder . '/' . $deedFile));
+            }
+
             foreach ($galleryImages as $image) {
                 File::delete(public_path($uploadFolder . '/' . $image));
             }
 
-            return redirect()->route('asset.index')->with('success', 'ลบสินทรัพย์และรูปภาพทั้งหมดเรียบร้อยแล้ว');
-
+            return redirect()->route('asset.index')->with('success', 'ลบรายการขายทรัพย์สินและไฟล์ทั้งหมดเรียบร้อยแล้ว');
         } catch (\Throwable $e) {
             return redirect()->route('asset.index')->with('error', 'เกิดข้อผิดพลาดในการลบข้อมูล');
         }
+    }
+
+    private function hasSalesMapColumns(): bool
+    {
+        return Schema::hasColumn('asset', 'latitude')
+            && Schema::hasColumn('asset', 'longitude');
+    }
+
+    private function mapAssetPayload(object $asset): array
+    {
+        $latitude = (float) $asset->latitude;
+        $longitude = (float) $asset->longitude;
+
+        return [
+            'id' => (string) $asset->id,
+            'title' => $asset->title,
+            'category' => $asset->asset_name ?? 'ขายทรัพย์สิน',
+            'description1' => $asset->description1 ?? '',
+            'description2' => $asset->description2 ?? '',
+            'contact' => $asset->contact ?? '',
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+            'image' => $asset->picture_name ? asset('assets/' . $asset->picture_name) : asset('images/sakofah-logo.png'),
+            'map_link' => "https://www.google.com/maps/search/?api=1&query={$latitude},{$longitude}",
+            'edit_url' => route('asset.edit', $asset->id),
+        ];
+    }
+
+    private function storeCoverImage(Request $request, int $assetId, int $timestamp, string $uploadFolder): ?string
+    {
+        if (! $request->hasFile('coverImage')) {
+            return null;
+        }
+
+        $coverFile = $request->file('coverImage');
+        $extension = $coverFile->getClientOriginalExtension();
+        $coverFileName = "{$assetId}_cover_{$timestamp}.{$extension}";
+
+        $coverFile->move(public_path($uploadFolder), $coverFileName);
+
+        return $coverFileName;
+    }
+
+    private function storeGalleryImages(Request $request, int $assetId, int $timestamp, string $uploadFolder): void
+    {
+        if (! $request->hasFile('Images')) {
+            return;
+        }
+
+        foreach ($request->file('Images') as $index => $galleryFile) {
+            $extension = $galleryFile->getClientOriginalExtension();
+            $galleryFileName = "{$assetId}_gallery_{$timestamp}_" . ($index + 1) . ".{$extension}";
+
+            $galleryFile->move(public_path($uploadFolder), $galleryFileName);
+
+            DB::table('asset_picture')->insert([
+                'id' => $assetId,
+                'picture_name' => $galleryFileName,
+            ]);
+        }
+    }
+
+    private function storeDeedFile(Request $request, int $assetId, int $timestamp, string $deedFolder): ?string
+    {
+        if (! $request->hasFile('deedFile')) {
+            return null;
+        }
+
+        $deedFile = $request->file('deedFile');
+        $extension = $deedFile->getClientOriginalExtension();
+        $deedFileName = "{$assetId}_deed_{$timestamp}.{$extension}";
+
+        $deedFile->move(public_path($deedFolder), $deedFileName);
+
+        return $deedFileName;
     }
 }
