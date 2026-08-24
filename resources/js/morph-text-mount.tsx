@@ -11,7 +11,7 @@ document.querySelectorAll<HTMLElement>("[data-morph-text]").forEach((mount) => {
             <MorphText
                 words={words.length ? words : undefined}
                 interval={interval}
-                className="text-emerald-900"
+                className="text-emerald-900 dark:text-white"
                 textClassName="leading-none"
             />
         </React.StrictMode>,

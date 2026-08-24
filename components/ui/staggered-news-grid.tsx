@@ -92,11 +92,11 @@ export function StaggeredNewsGrid({ categories }: StaggeredNewsGridProps) {
     }
 
     return (
-        <section className="relative isolate overflow-visible bg-transparent py-14 text-slate-950 md:py-16">
+        <section data-section="staggered-news" className="relative isolate overflow-visible bg-transparent py-14 text-slate-950 md:py-16">
             <div className="homepage-heading-spotlight pointer-events-none absolute inset-x-0 top-0 -z-10 h-64" />
 
             <div className="relative z-20 mx-auto mb-12 max-w-3xl text-center">
-                <div className="inline-flex max-w-full gap-1 overflow-x-auto rounded-full border border-slate-200 bg-white p-1.5 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
+                <div className="inline-flex max-w-full gap-1 overflow-x-auto rounded-full border border-slate-200 bg-white p-1.5 shadow-[0_10px_30px_rgba(15,23,42,0.08)] dark:border-emerald-700/40 dark:bg-emerald-950 dark:shadow-[0_18px_50px_rgba(0,0,0,0.28)]">
                     {categories.map((category) => {
                         const isActive = category.id === activeCategory.id;
 
@@ -104,12 +104,13 @@ export function StaggeredNewsGrid({ categories }: StaggeredNewsGridProps) {
                             <button
                                 key={category.id}
                                 type="button"
+                                aria-pressed={isActive}
                                 onClick={() => setActiveCategoryId(category.id)}
                                 className={cn(
                                     "inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-sm font-bold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 sm:px-5",
                                     isActive
-                                        ? "bg-white text-emerald-700 shadow-sm ring-1 ring-slate-950/5"
-                                        : "text-slate-500 hover:bg-white/80 hover:text-slate-800",
+                                        ? "bg-white text-emerald-700 shadow-sm ring-1 ring-slate-950/5 dark:bg-white dark:text-emerald-800"
+                                        : "text-slate-500 hover:bg-white/80 hover:text-slate-800 dark:text-white/78 dark:hover:bg-emerald-800 dark:hover:text-white",
                                 )}
                             >
                                 {categoryIcons[category.id]}

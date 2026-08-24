@@ -11,16 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('visited_history', function (Blueprint $table) {
-    $table->id();
-    $table->timestamp('login_time')->nullable();
-    $table->string('ip_address')->nullable();
-    $table->string('browser')->nullable();
-    $table->string('version')->nullable();
-    $table->string('platform')->nullable();
-    $table->timestamps();
-});
+        if (Schema::hasTable('visited_history')) {
+            return;
+        }
 
+        Schema::create('visited_history', function (Blueprint $table) {
+            $table->id();
+            $table->timestamp('login_time')->nullable();
+            $table->string('ip_address')->nullable();
+            $table->string('browser')->nullable();
+            $table->string('version')->nullable();
+            $table->string('platform')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**

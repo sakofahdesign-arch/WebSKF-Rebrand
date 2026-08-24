@@ -42,6 +42,20 @@
 
     <meta name="twitter:image" content="@yield('og_image', asset('images/sakofah-logo.png'))" />
 
+    <script>
+        (() => {
+            const storedTheme = localStorage.getItem('sakofah-theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = storedTheme === 'light' || storedTheme === 'dark'
+                ? storedTheme
+                : (prefersDark ? 'dark' : 'light');
+
+            document.documentElement.classList.toggle('dark', theme === 'dark');
+            document.documentElement.dataset.theme = theme;
+            document.documentElement.style.colorScheme = theme;
+        })();
+    </script>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y7M3HX122N"></script>
@@ -79,6 +93,7 @@
 </head>
 
 <body class="bg-gray-50 flex flex-col min-h-screen antialiased">
+    <div data-theme-pullcord></div>
     @include('components.header')
     <main class="flex-grow">
         @yield('content')

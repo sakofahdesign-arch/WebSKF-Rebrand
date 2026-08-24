@@ -15,9 +15,9 @@
 <section id="journals" data-section="journals-public" class="relative isolate overflow-visible bg-transparent py-16 lg:py-20">
     <div class="homepage-heading-spotlight pointer-events-none absolute inset-x-0 top-0 -z-10 h-64"></div>
 
-    <div class="relative z-10 mx-auto max-w-[1480px] px-4 sm:px-6 lg:px-8">
+    <div class="relative z-10 mx-auto max-w-[1560px] px-4 sm:px-6 lg:px-8">
         <div class="mx-auto mb-12 max-w-3xl text-center">
-            <h2 class="text-3xl md:text-4xl font-extrabold text-green-800 tracking-tight">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-black dark:text-white tracking-tight">
                 วารสารและสื่อประชาสัมพันธ์
             </h2>
             <div class="mt-3 h-1 w-20 bg-green-500 mx-auto rounded-full"></div>

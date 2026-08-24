@@ -332,9 +332,18 @@ class HomeController extends Controller
 
     public function article($id)
     {
-        $image_news = DB::table('picture')->where('news_number', $id)->get();
-        $news       = DB::table('news')->where('news_number', $id)->first();
-        $side_news  = DB::table('news')->orderByDesc('dateupload')->where('news_number', '!=', $id)->limit(10)->get();
+        try {
+            $image_news = DB::table('picture')->where('news_number', $id)->get();
+            $news       = DB::table('news')->where('news_number', $id)->first();
+            $side_news  = DB::table('news')->orderByDesc('dateupload')->where('news_number', '!=', $id)->limit(10)->get();
+        } catch (Throwable $exception) {
+            report($exception);
+
+            $image_news = collect();
+            $news       = null;
+            $side_news  = collect();
+        }
+
         return view('main.news.article', compact('image_news', 'news', 'side_news'));
     }
 

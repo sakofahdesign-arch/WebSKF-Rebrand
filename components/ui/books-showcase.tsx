@@ -498,14 +498,7 @@ export function BooksShowcase({
       x.globalAlpha = 1;
     }
 
-    function trimToWidth(x: CanvasRenderingContext2D, text: string, maxW: number) {
-      if (x.measureText(text).width <= maxW) return text;
-      let t = text;
-      while (t.length > 1 && x.measureText(t + '...').width > maxW) t = t.slice(0, -1);
-      return t + '...';
-    }
-
-    function makeIndexPageTex(chapters?: string[]) {
+    function makeIndexPageTex() {
       const w = 1024,
         h = 1536,
         c = mkCanvas(w, h),
@@ -514,35 +507,6 @@ export function BooksShowcase({
       x.fillRect(0, 0, w, h);
       x.fillStyle = 'rgba(130,110,80,0.07)';
       for (let i = 0; i < 1600; i++) x.fillRect(Math.random() * w, Math.random() * h, 1.1, 1.1);
-      x.fillStyle = '#2f2a23';
-      x.textAlign = 'center';
-      x.font = '700 84px Georgia';
-      x.fillText('INDEX', w / 2, 190);
-      x.globalAlpha = 0.26;
-      x.fillRect(220, 225, w - 440, 3);
-      x.globalAlpha = 1;
-
-      const list = chapters && chapters.length
-        ? chapters
-        : ['Introduction', 'Main Ideas', 'Practical Lessons', 'Case Studies', 'Takeaways', 'Final Notes'];
-      x.textAlign = 'left';
-      x.font = '500 46px Georgia';
-      let y = 318;
-      for (let i = 0; i < list.length; i++) {
-        const n = String(i + 1).padStart(2, '0');
-        const pageNo = String(7 + i * 14).padStart(3, ' ');
-        const left = n + '. ' + trimToWidth(x, list[i], 650);
-        x.fillStyle = '#2f2a23';
-        x.fillText(left, 150, y);
-        x.textAlign = 'right';
-        x.fillStyle = '#5d5043';
-        x.fillText(pageNo, w - 150, y);
-        x.textAlign = 'left';
-        x.globalAlpha = 0.22;
-        x.fillRect(150, y + 16, w - 300, 2);
-        x.globalAlpha = 1;
-        y += 112;
-      }
       return tex(c);
     }
 
@@ -621,7 +585,7 @@ export function BooksShowcase({
       root.add(float);
       bookRoot.add(root);
 
-      const indexPageMat = std({ map: makeIndexPageTex(cfg.chapters), roughness: 0.92, envMapIntensity: 0.2, side: THREE.DoubleSide });
+      const indexPageMat = std({ map: makeIndexPageTex(), roughness: 0.92, envMapIntensity: 0.2, side: THREE.DoubleSide });
 
       const edgeColor = cfg.edge ?? '#eee4cf';
       const mEdge = std({ color: edgeColor, bumpMap: laminateBump, bumpScale: 0.0035, roughness: 0.68, envMapIntensity: 0.3 });

@@ -1,4 +1,4 @@
-import { useState, type HTMLAttributes, type ReactNode } from "react";
+import { useMemo, useState, type CSSProperties, type HTMLAttributes, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
     Building2,
@@ -18,6 +18,7 @@ import {
     type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { GooeySearch } from "@/components/ui/gooey-search";
 
 const icons = {
     building: Building2,
@@ -130,14 +131,14 @@ function NavLink({ item }: { item: NotchNavItem }) {
             {hasChildren && (
                 <div
                     role="menu"
-                    className="pointer-events-none absolute left-1/2 top-full z-50 min-w-56 -translate-x-1/2 translate-y-2 rounded-lg border border-emerald-950/10 bg-white p-2 text-emerald-950 opacity-0 shadow-2xl shadow-emerald-950/16 ring-1 ring-black/5 transition duration-200 group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100"
+                    className="pointer-events-none absolute left-1/2 top-full z-50 min-w-56 -translate-x-1/2 translate-y-2 rounded-lg border border-emerald-950/10 bg-white p-2 text-emerald-950 opacity-0 shadow-2xl shadow-emerald-950/16 ring-1 ring-black/5 transition duration-200 group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100 dark:border-white/10 dark:bg-emerald-950 dark:text-white"
                 >
                     {item.children?.map((child) => (
                         <Anchor
                             key={`${item.label}-${child.label}`}
                             href={child.href}
                             external={child.external}
-                            className="block rounded-md px-3 py-2 text-sm font-medium text-emerald-950/78 transition hover:bg-emerald-50 hover:text-emerald-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700"
+                            className="block rounded-md px-3 py-2 text-sm font-medium text-emerald-950/78 transition hover:bg-emerald-50 hover:text-emerald-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700 dark:text-white/82 dark:hover:bg-white dark:hover:text-emerald-950 dark:focus-visible:outline-white"
                         >
                             <span role="menuitem">{child.label}</span>
                         </Anchor>
@@ -214,6 +215,35 @@ export function NotchNavbar({
 }: NotchNavbarProps) {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const allItems = [...leftItems, ...rightItems];
+    const searchEntries = useMemo(() => {
+        const entries: { label: string; href: string; external?: boolean }[] = [];
+
+        allItems.forEach((item) => {
+            entries.push({ label: item.label, href: item.href });
+            item.children?.forEach((child) => entries.push(child));
+        });
+
+        return entries.filter(
+            (entry, index, list) => list.findIndex((candidate) => candidate.label === entry.label) === index,
+        );
+    }, [allItems]);
+
+    const searchTheme = {
+        "--foreground": "rgb(255 255 255)",
+        "--background": "rgb(6 78 59)",
+    } as CSSProperties;
+
+    function handleSearchSelect(label: string) {
+        const entry = searchEntries.find((item) => item.label === label);
+        if (!entry) return;
+
+        if (entry.external) {
+            window.open(entry.href, "_blank", "noreferrer");
+            return;
+        }
+
+        window.location.href = entry.href;
+    }
 
     return (
         <>
@@ -222,7 +252,7 @@ export function NotchNavbar({
                     <div className="absolute inset-x-0 bottom-0 h-px bg-white/8" />
                 </div>
 
-                <div className="relative z-10 -ml-px flex h-16 w-[min(1380px,calc(100vw-3rem))] shrink-0">
+                <div className="relative z-30 -ml-px flex h-16 w-[min(1380px,calc(100vw-3rem))] shrink-0">
                     <div className="relative h-full w-[48px] shrink-0">
                         <div
                             className="absolute inset-0 bg-emerald-950"
@@ -240,7 +270,7 @@ export function NotchNavbar({
                         </svg>
                     </div>
 
-                    <div className="relative -ml-px h-full min-w-0 flex-1 bg-emerald-950">
+                    <div className="relative z-20 -ml-px h-full min-w-0 flex-1 bg-emerald-950">
                         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-white/12" />
 
                         <div className="relative grid h-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-end gap-4 px-3 pb-2.5 lg:px-4">
@@ -272,13 +302,23 @@ export function NotchNavbar({
                                 {rightItems.map((item) => (
                                     <NavLink key={item.label} item={item} />
                                 ))}
+                                <div className="-ml-2 flex h-8 items-center pr-12" style={searchTheme}>
+                                    <GooeySearch
+                                        items={searchEntries.map((entry) => entry.label)}
+                                        buttonLabel="ค้นหา"
+                                        placeholder="ค้นหาเมนู..."
+                                        maxResults={4}
+                                        debounceMs={220}
+                                        onSelect={handleSearchSelect}
+                                    />
+                                </div>
                             </nav>
 
                             <div className="h-9 w-9 xl:hidden" aria-hidden="true" />
                         </div>
                     </div>
 
-                    <div className="relative -ml-px h-full w-[48px] shrink-0">
+                    <div className="relative z-10 -ml-px h-full w-[48px] shrink-0">
                         <div
                             className="absolute inset-0 bg-emerald-950"
                             style={{ clipPath: "path('M0 0 H48 V40 C24 40 24 64 0 64 Z')" }}

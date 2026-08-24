@@ -13,6 +13,19 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" href="{{ url('images/sakofah-logo.png') }}" type="image/x-icon">
+    <script>
+        (() => {
+            const storedTheme = localStorage.getItem('sakofah-theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = storedTheme === 'light' || storedTheme === 'dark'
+                ? storedTheme
+                : (prefersDark ? 'dark' : 'light');
+
+            document.documentElement.classList.toggle('dark', theme === 'dark');
+            document.documentElement.dataset.theme = theme;
+            document.documentElement.style.colorScheme = theme;
+        })();
+    </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         [x-cloak] {
@@ -27,6 +40,7 @@
 </head>
 
 <body class="font-sans antialiased bg-gray-50 text-gray-900">
+    <div data-theme-pullcord></div>
     <div x-data="{ sidebarOpen: false }" class="flex h-screen overflow-hidden bg-gray-100">
 
         @include('components.admin-sidebar')

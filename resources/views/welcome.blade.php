@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 @section('title', 'หน้าแรก')
 @section('content')
-    <div class="relative isolate overflow-hidden bg-white">
+    <div data-homepage-shell class="relative isolate overflow-hidden bg-white">
         <div
             data-wave-grid-homepage-background
             class="pointer-events-none fixed inset-0 z-0 opacity-[0.42]"
@@ -15,6 +15,7 @@
             @include('components.welcomes.service-intel')
             @include('components.welcomes.journals-public')
             @include('components.welcomes.branch-service-network')
+            @include('components.welcomes.financial-status')
             @include('components.welcomes.partners-agencies')
             @include('components.welcomes.popup')
         </div>

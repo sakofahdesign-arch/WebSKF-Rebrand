@@ -86,7 +86,7 @@ export function PromotionNewsShowcase({ promotions, news }: PromotionNewsShowcas
     };
 
     return (
-        <section className="relative isolate overflow-visible bg-transparent py-14 md:py-18">
+        <section data-section="promotion-news-showcase" className="relative isolate overflow-visible bg-transparent py-14 md:py-18">
             <div className="homepage-heading-spotlight pointer-events-none absolute inset-x-0 top-0 -z-10 h-64" />
 
             <div className="relative z-10 mx-auto w-full max-w-6xl px-4">

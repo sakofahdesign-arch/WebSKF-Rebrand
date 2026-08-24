@@ -77,19 +77,19 @@ test('homepage news tabs show separated fallback items when local database is un
         fn ($category) => $category
             ->toMatchArray(['id' => 'information'])
             ->and($category->value['items'])->toHaveCount(8)
-            ->and($category->value['items'][0]['href'])->toBe('https://skf.or.th/article/14825'),
+            ->and($category->value['items'][0]['href'])->toBe(route('article', 14825)),
         fn ($category) => $category
             ->toMatchArray(['id' => 'welfare'])
             ->and($category->value['items'])->toHaveCount(8)
-            ->and($category->value['items'][0]['href'])->toBe('https://skf.or.th/article/61014'),
+            ->and($category->value['items'][0]['href'])->toBe(route('article', 61014)),
         fn ($category) => $category
             ->toMatchArray(['id' => 'foundation'])
             ->and($category->value['items'])->toHaveCount(8)
-            ->and($category->value['items'][0]['href'])->toBe('https://skf.or.th/article/87303'),
+            ->and($category->value['items'][0]['href'])->toBe(route('article', 87303)),
         fn ($category) => $category
             ->toMatchArray(['id' => 'credit'])
             ->and($category->value['items'])->toHaveCount(8)
-            ->and($category->value['items'][0]['href'])->toBe('https://skf.or.th/article/17099'),
+            ->and($category->value['items'][0]['href'])->toBe(route('article', 17099)),
     );
 });
 

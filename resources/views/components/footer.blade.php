@@ -1,6 +1,6 @@
 <footer class="relative z-20 isolate bg-[#022c22] text-white font-sans mt-auto">
     <div class="container mx-auto px-6 py-8">
-        <div class="grid grid-cols-1 gap-8 text-left md:grid-cols-2 lg:grid-cols-[1.1fr_0.9fr_1.1fr_0.9fr]">
+        <div class="grid grid-cols-1 gap-8 text-left md:grid-cols-2 lg:grid-cols-[1.15fr_0.85fr_1.05fr_0.75fr_0.95fr]">
             <div class="flex flex-col items-start gap-3">
                 <div class="rounded-md bg-white p-1.5">
                     <img src="{{ asset('images/sakofah-logo.png') }}" alt="Sakofah Logo"
@@ -48,21 +48,25 @@
                         <i class="fas fa-phone-alt w-5 text-center text-base text-emerald-300"></i>
                         <span class="text-base font-semibold text-white">075-652-525</span>
                     </li>
-                    <li class="footer-social-links flex items-center gap-2 pl-8">
-                        <a href="https://www.facebook.com/Sakofah.Islam.Savings/" target="_blank"
-                            rel="noopener noreferrer"
-                            class="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white hover:text-emerald-900"
-                            aria-label="Facebook">
-                            <i class="fa-brands fa-facebook text-sm"></i>
-                        </a>
-                        <a href="https://www.youtube.com/channel/UCffHrfpeGIw4dlLCs-IEGDg" target="_blank"
-                            rel="noopener noreferrer"
-                            class="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white hover:text-emerald-900"
-                            aria-label="YouTube">
-                            <i class="fa-brands fa-youtube text-sm"></i>
-                        </a>
-                    </li>
                 </ul>
+            </div>
+
+            <div>
+                <h3 class="mb-4 inline-block border-b border-emerald-500/70 pb-1.5 text-lg font-bold text-white">ติดตามเรา</h3>
+                <div class="footer-social-links flex items-center gap-2">
+                    <a href="https://www.facebook.com/Sakofah.Islam.Savings/" target="_blank"
+                        rel="noopener noreferrer"
+                        class="flex h-8 w-8 items-center justify-center rounded-full bg-[#1877F2] text-white shadow-sm transition hover:bg-[#2d88ff] hover:shadow-md"
+                        aria-label="Facebook">
+                        <i class="fa-brands fa-facebook text-sm"></i>
+                    </a>
+                    <a href="https://www.youtube.com/channel/UCffHrfpeGIw4dlLCs-IEGDg" target="_blank"
+                        rel="noopener noreferrer"
+                        class="flex h-8 w-8 items-center justify-center rounded-full bg-[#FF0000] text-white shadow-sm transition hover:bg-[#ff2a2a] hover:shadow-md"
+                        aria-label="YouTube">
+                        <i class="fa-brands fa-youtube text-sm"></i>
+                    </a>
+                </div>
             </div>
 
             <div>
@@ -71,11 +75,11 @@
                 <p class="mb-4 text-sm text-emerald-50/85">
                     ระบบจัดการข้อมูลหลังบ้านสำหรับเจ้าหน้าที่สหกรณ์
                 </p>
-                <a href="{{ route('login') }}"
-                    class="inline-flex min-h-10 items-center justify-center gap-2 rounded-md border border-white/80 px-4 py-2 text-sm font-bold text-white transition hover:bg-white hover:text-emerald-900">
-                    <i class="fas fa-sign-in-alt"></i>
-                    เข้าสู่ระบบ
-                </a>
+                <div
+                    data-footer-login-button
+                    data-href="{{ route('login') }}"
+                    data-label="เข้าสู่ระบบ"
+                ></div>
             </div>
         </div>
     </div>

@@ -3,7 +3,7 @@
 
     <div class="relative z-10 container mx-auto px-4">
         <div class="mx-auto mb-12 max-w-3xl text-center">
-            <h2 class="text-3xl md:text-4xl font-extrabold text-green-800 tracking-tight">บริการและข่าวสาร</h2>
+            <h2 class="text-3xl md:text-4xl font-extrabold text-black dark:text-white tracking-tight">ผลิตภัณฑ์สหกรณ์</h2>
             <div class="mt-3 h-1 w-20 bg-green-500 mx-auto rounded-full"></div>
             <p class="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-gray-600">
                 เข้าถึงบริการต่างๆ ได้อย่างรวดเร็ว และติดตามความเคลื่อนไหวล่าสุดจากเรา

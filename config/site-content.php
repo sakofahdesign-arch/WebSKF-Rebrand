@@ -32,7 +32,7 @@ return [
     'promotions' => [
         [
             'id' => 1,
-            'slide_image' => 'content/banners/69-01-36.jpg',
+            'slide_image' => 'content/banners/dividend-2568-announcement.png',
             'modal_type' => 'image',
             'modal_content' => 'content/banners/69-01-31.jpg',
         ],

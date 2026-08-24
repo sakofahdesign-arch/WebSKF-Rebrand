@@ -405,7 +405,7 @@ export function WaveGridBackground({
         .replace(
           "#include <color_fragment>",
           `#include <color_fragment>
-          float t = clamp( vHeight / uMaxHeight, 0.0, 1.0 );
+          float t = clamp( abs(vHeight) / uMaxHeight, 0.0, 1.0 );
           diffuseColor.rgb = mix( uColorBase, uColorHigh, t );`,
         );
     };

@@ -56,7 +56,17 @@
 
         return $newsItems->isNotEmpty() || ! $useFallbackNews
             ? $newsItems
-            : collect($fallbackItems);
+            : collect($fallbackItems)->map(function ($item) {
+                $legacyArticleId = null;
+
+                if (preg_match('~/article/(\d+)~', $item['href'] ?? '', $matches)) {
+                    $legacyArticleId = $matches[1];
+                }
+
+                $item['href'] = $legacyArticleId ? route('article', $legacyArticleId) : route('activity');
+
+                return $item;
+            });
     };
 
     $newsCategories = collect([

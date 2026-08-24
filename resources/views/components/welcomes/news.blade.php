@@ -1,7 +1,7 @@
 <section class="py-16 bg-white relative">
     <div class="container mx-auto px-4">
         <div class="text-center mb-10">
-            <h2 class="text-3xl md:text-4xl font-extrabold text-green-800">ข่าวสารและกิจกรรม</h2>
+            <h2 class="text-3xl md:text-4xl font-extrabold text-black dark:text-white">ข่าวสารและกิจกรรม</h2>
             <div class="h-1 w-20 bg-green-500 mx-auto rounded-full mt-2"></div>
         </div>
 
