@@ -135,6 +135,7 @@ export function BranchNetworkMap({ branches, variant = "section" }: BranchNetwor
         mapRef.current?.flyTo({
             center: [branch.longitude, branch.latitude],
             zoom: 11.5,
+            offset: showPopup ? [70, 240] : [0, 0],
             duration: 900,
             essential: true,
         });
@@ -201,7 +202,7 @@ export function BranchNetworkMap({ branches, variant = "section" }: BranchNetwor
                                         focusBranch(branch, true);
                                     }}
                                     className={[
-                                        "grid h-11 w-11 place-items-center rounded-full bg-white p-1 transition duration-300",
+                                        "grid h-11 w-11 place-items-center rounded-full bg-white p-1 text-emerald-700 transition duration-300 dark:bg-white",
                                         isActive
                                             ? "scale-110 shadow-[0_0_0_11px_rgba(16,185,129,0.24),0_14px_30px_rgba(0,0,0,0.36)]"
                                             : "shadow-[0_8px_18px_rgba(0,0,0,0.3)] hover:scale-105",
@@ -234,26 +235,34 @@ export function BranchNetworkMap({ branches, variant = "section" }: BranchNetwor
 
                 <aside
                     className={[
-                        "absolute left-4 z-20 flex w-[min(280px,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl bg-white font-sans shadow-[0_22px_55px_rgba(2,6,23,0.30)] [font-family:var(--font-sans)] md:left-5",
+                        "absolute left-4 z-20 flex w-[min(280px,calc(100vw-2rem))] flex-col overflow-hidden rounded-[22px] bg-white font-sans shadow-[0_24px_60px_rgba(2,6,23,0.34)] ring-1 ring-emerald-900/8 [font-family:var(--font-sans)] md:left-5 dark:bg-[#05221c] dark:ring-emerald-300/12",
                         sidebarPositionClass,
                         sidebarHeightClass,
                     ].join(" ")}
                 >
-                    <div className="flex items-center gap-3 bg-emerald-800 px-4 py-4 text-white">
-                        <MapPinned className="h-5 w-5" />
-                        <p className="text-base font-extrabold">เลือกสาขาที่ต้องการ</p>
+                    <div className="relative isolate min-h-[76px] overflow-hidden bg-[linear-gradient(135deg,#065f46,#064e3b_54%,#022c22)] px-4 py-4 text-white">
+                        <div className="absolute inset-y-0 right-0 -z-10 w-32 opacity-22 [background:radial-gradient(circle_at_20%_50%,rgba(255,255,255,.18),transparent_28%),repeating-linear-gradient(90deg,transparent_0_8px,rgba(255,255,255,.12)_8px_9px)]" />
+                        <div className="flex h-full min-h-11 items-center gap-3">
+                            <span data-branch-sidebar-icon className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white text-emerald-700 shadow-sm ring-1 ring-white/80">
+                                <MapPinned className="h-4 w-4" strokeWidth={2.4} />
+                            </span>
+                            <div className="min-w-0">
+                                <p className="text-[15px] font-black leading-[1.2]">เลือกสาขาที่ต้องการ</p>
+                                <p className="mt-1 text-[10px] font-bold leading-[1.2] text-emerald-200">{branches.length} จุดให้บริการ</p>
+                            </div>
+                        </div>
                     </div>
-                    <div className="min-h-0 overflow-y-auto p-2 [font-family:var(--font-sans)]">
+                    <div className="min-h-0 overflow-y-auto bg-[#fbfefd] px-3 py-3 [font-family:var(--font-sans)] dark:bg-[#061c18]">
                         <button
                             type="button"
                             onClick={() => fitBoundsForOverview(false)}
-                            className="mb-2 flex w-full items-center gap-3 rounded-lg border border-emerald-200 bg-emerald-50/70 px-3.5 py-3 text-left text-[13px] font-bold text-emerald-800 transition hover:bg-emerald-100 active:translate-y-px"
+                            className="mb-2.5 flex min-h-10 w-full items-center gap-3 rounded-xl border border-emerald-200 bg-white px-3 py-2.5 text-left text-[13px] font-extrabold text-emerald-900 shadow-[0_8px_24px_rgba(6,78,59,0.06)] transition hover:border-emerald-300 hover:bg-emerald-50 active:translate-y-px dark:border-emerald-400/18 dark:bg-[#0a2d25] dark:text-emerald-50 dark:shadow-none dark:hover:border-emerald-300/34 dark:hover:bg-[#0d3a30]"
                         >
-                            <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-emerald-700 text-white">
+                            <span data-branch-sidebar-icon className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-white text-emerald-700 ring-1 ring-emerald-100 dark:bg-white dark:text-emerald-700 dark:ring-white/30">
                                 <MapPin className="h-3.5 w-3.5" />
                             </span>
                             <span className="min-w-0 flex-1">ภาพรวม</span>
-                            <ChevronRight className="h-4 w-4 shrink-0 text-emerald-500" />
+                            <ChevronRight className="h-4 w-4 shrink-0 text-emerald-700" />
                         </button>
 
                         <SidebarGroup title="สาขา">
@@ -285,8 +294,8 @@ export function BranchNetworkMap({ branches, variant = "section" }: BranchNetwor
 function SidebarGroup({ title, children }: { title: string; children: ReactNode }) {
     return (
         <div className="mt-3 first:mt-0">
-            <p className="px-3.5 pb-1.5 text-[11px] font-extrabold text-slate-400">{title}</p>
-            <div className="space-y-1">{children}</div>
+            <p className="px-2 pb-1.5 text-[11px] font-extrabold text-black dark:text-emerald-200/58">{title}</p>
+            <div className="space-y-2.5">{children}</div>
         </div>
     );
 }
@@ -305,20 +314,28 @@ function SidebarBranchButton({
             type="button"
             onClick={onClick}
             className={[
-                "flex w-full items-center gap-3 rounded-lg border-l-4 border-transparent px-3.5 py-3 text-left text-[13px] font-semibold transition",
+                "flex w-full items-center gap-2.5 rounded-xl border bg-white px-2.5 py-2.5 text-left text-xs font-bold shadow-[0_8px_22px_rgba(15,23,42,0.07)] transition dark:shadow-none",
                 isActive
-                    ? "border-l-4 border-emerald-600 bg-emerald-50 text-emerald-800 ring-1 ring-emerald-200"
-                    : "text-slate-500 hover:bg-slate-50 hover:text-emerald-800",
+                    ? "border-emerald-200 text-emerald-950 shadow-[0_14px_34px_rgba(4,120,87,0.14)] dark:border-emerald-400/35 dark:bg-[#0e3a31] dark:text-white"
+                    : "border-slate-100 text-emerald-950 hover:border-emerald-100 hover:text-emerald-900 dark:border-emerald-300/10 dark:bg-[#0a251f] dark:text-emerald-100/78 dark:hover:border-emerald-300/28 dark:hover:bg-[#0d3028] dark:hover:text-white",
             ].join(" ")}
         >
             <span
+                data-branch-sidebar-icon
                 className={[
-                    "h-2.5 w-2.5 shrink-0 rounded-full",
-                    isActive ? "bg-emerald-600" : "bg-slate-300",
+                    "grid h-8 w-8 shrink-0 place-items-center overflow-hidden rounded-full bg-white p-1 ring-1 dark:bg-white",
+                    isActive ? "ring-emerald-300 dark:ring-emerald-200" : "ring-emerald-100 dark:ring-white/40",
                 ].join(" ")}
-            />
-            <span className="min-w-0 flex-1">{branch.name}</span>
-            {isActive && <ChevronRight className="h-4 w-4 shrink-0 text-emerald-500" />}
+            >
+                <img
+                    src={branch.markerLogo}
+                    alt=""
+                    className="h-full w-full object-contain"
+                    loading="lazy"
+                />
+            </span>
+            <span className="min-w-0 flex-1 leading-snug line-clamp-2">{branch.name}</span>
+            <ChevronRight className={["h-4 w-4 shrink-0", isActive ? "text-emerald-700 dark:text-emerald-200" : "text-slate-300 dark:text-emerald-200/42"].join(" ")} />
         </button>
     );
 }

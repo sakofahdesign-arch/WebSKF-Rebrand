@@ -40,9 +40,6 @@
                 ['label' => 'สวัสดิการเสียชีวิต', 'href' => route('dead')],
             ],
         ],
-    ];
-
-    $rightItems = [
         [
             'label' => 'ข่าวสาร',
             'href' => route('activity'),
@@ -52,16 +49,14 @@
                 ['label' => 'ปฏิทินสหกรณ์', 'href' => route('calender')],
             ],
         ],
+    ];
+
+    $rightItems = [
         [
             'label' => 'ขายสินทรัพย์',
-            'href' => route('homeList'),
+            'href' => route('asset.preview'),
             'icon' => 'flame',
             'highlight' => true,
-            'children' => [
-                ['label' => 'บ้านพร้อมที่ดิน/ทาวน์โฮม', 'href' => route('homeList')],
-                ['label' => 'ที่ดินเปล่า', 'href' => route('vacantList')],
-                ['label' => 'คอนโด', 'href' => route('condoList')],
-            ],
         ],
         [
             'label' => 'ดาวน์โหลด',
@@ -120,7 +115,7 @@
 
 <div
     class="{{
-        request()->routeIs('office') || request()->routeIs('vision')
+        request()->routeIs('office') || request()->routeIs('asset.preview') || request()->routeIs('vision')
             ? 'h-0 bg-transparent'
             : (request()->routeIs('index') ? 'h-10 bg-transparent' : 'h-16 bg-white')
     }}"

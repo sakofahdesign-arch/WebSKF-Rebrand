@@ -48,6 +48,194 @@
     opacity: 0.72;
 }
 
+.odometer {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+}
+
+:root {
+    --pullcord-top: 0px;
+    --pullcord-right: clamp(1.75rem, 5vw, 6.75rem);
+    --pullcord-z: 80;
+    --pullcord-ink: rgb(4 120 87 / 0.62);
+}
+
+html.dark {
+    --pullcord-ink: rgb(167 243 208 / 0.72);
+}
+
+.theme-pullcord {
+    pointer-events: auto;
+}
+
+html {
+    transition: background-color 220ms ease, color 220ms ease;
+}
+
+html.dark body {
+    background: #020807 !important;
+    color: #e5f4ef !important;
+}
+
+html.dark main {
+    background-color: #020807;
+}
+
+html.dark :is(.bg-white, .bg-gray-50, .bg-gray-100, .bg-slate-50, .bg-neutral-50) {
+    background-color: #071311 !important;
+}
+
+html.dark :is(.bg-gray-200, .bg-slate-100, .bg-neutral-100) {
+    background-color: #10201d !important;
+}
+
+html.dark :is(.text-gray-500, .text-gray-600, .text-slate-500, .text-slate-600, .text-neutral-500, .text-neutral-600) {
+    color: #9bb8ae !important;
+}
+
+html.dark :is(.text-gray-700, .text-gray-800, .text-gray-900, .text-slate-700, .text-slate-800, .text-slate-900, .text-neutral-700, .text-neutral-800, .text-neutral-900) {
+    color: #e5f4ef !important;
+}
+
+html.dark :is(.border-gray-100, .border-gray-200, .border-gray-300, .border-slate-100, .border-slate-200, .border-neutral-200) {
+    border-color: rgb(148 163 184 / 0.22) !important;
+}
+
+html.dark :is(.shadow, .shadow-sm, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl) {
+    --tw-shadow-color: rgb(0 0 0 / 0.48) !important;
+    --tw-shadow: var(--tw-shadow-colored) !important;
+}
+
+html.dark [data-theme="light"] {
+    color-scheme: dark;
+}
+
+html.dark [data-homepage-content] {
+    background-color: transparent;
+}
+
+html.dark [data-homepage-shell] {
+    background-color: #020807 !important;
+    color: #e5f4ef;
+}
+
+html.dark [data-wave-grid-homepage-background] {
+    opacity: 0.94;
+}
+
+html.dark [data-homepage-content] .homepage-heading-spotlight {
+    display: none;
+}
+
+html.dark [data-homepage-content] :is(
+    [data-section="promotion-news-showcase"],
+    [data-section="staggered-news"],
+    [data-section="service-intel"],
+    [data-section="journals-public"],
+    [data-section="branch-service-network"],
+    [data-section="partners-agencies"]
+) :is(h2, h3) {
+    color: #ffffff !important;
+}
+
+html.dark [data-homepage-content] :is(
+    [data-section="promotion-news-showcase"],
+    [data-section="staggered-news"],
+    [data-section="service-intel"],
+    [data-section="journals-public"],
+    [data-section="branch-service-network"],
+    [data-section="partners-agencies"]
+) > div:first-child {
+    background: transparent !important;
+    opacity: 0 !important;
+}
+
+html.dark [data-homepage-content] :is(
+    [data-section="promotion-news-showcase"],
+    [data-section="staggered-news"],
+    [data-section="service-intel"],
+    [data-section="journals-public"],
+    [data-section="branch-service-network"],
+    [data-section="partners-agencies"]
+) .text-gray-600 {
+    color: rgb(255 255 255 / 0.78) !important;
+}
+
+html.dark [data-section="promotion-news-showcase"] :is(.bg-white, [class*="bg-white"]) {
+    background-color: #ffffff !important;
+}
+
+html.dark [data-section="promotion-news-showcase"] :is(.text-emerald-950\/50, .text-emerald-950\/72, .text-slate-950, .text-slate-500) {
+    color: rgb(6 78 59 / 0.72) !important;
+}
+
+html.dark [data-section="organization-cylinder-hero"] a.bg-white {
+    background-color: #ffffff !important;
+    color: #022c22 !important;
+}
+
+html.dark [data-section="service-intel"] a.group {
+    background: #064e3b !important;
+    border-color: rgb(16 185 129 / 0.42) !important;
+    color: #ffffff !important;
+    box-shadow: 0 22px 58px rgb(0 0 0 / 0.28) !important;
+}
+
+html.dark [data-section="service-intel"] a.group:hover {
+    background: #065f46 !important;
+    border-color: rgb(167 243 208 / 0.52) !important;
+}
+
+html.dark [data-section="service-intel"] a.group :is(h3, p) {
+    color: #ffffff !important;
+}
+
+html.dark [data-section="service-intel"] a.group > div > div:first-child {
+    background: #ffffff !important;
+    color: #047857 !important;
+}
+
+html.dark [data-section="staggered-news"] > div:first-of-type > div {
+    background: #064e3b !important;
+    border-color: rgb(16 185 129 / 0.42) !important;
+}
+
+html.dark [data-section="staggered-news"] button[aria-pressed="true"],
+html.dark [data-section="staggered-news"] button:focus {
+    background-color: #ffffff !important;
+    color: #047857 !important;
+}
+
+html.dark [data-section="branch-service-network"] [data-branch-network-map],
+html.dark [data-branch-network-page] [data-branch-network-map] {
+    background-color: #ffffff !important;
+}
+
+html.dark [data-section="branch-service-network"] .maplibregl-marker button,
+html.dark [data-section="branch-service-network"] button.rounded-full.bg-white,
+html.dark [data-branch-network-page] .maplibregl-marker button,
+html.dark [data-branch-network-page] button.rounded-full.bg-white {
+    background-color: #ffffff !important;
+}
+
+html.dark [data-section="branch-service-network"] [data-branch-sidebar-icon],
+html.dark [data-branch-network-page] [data-branch-sidebar-icon] {
+    background-color: #ffffff !important;
+    color: #047857 !important;
+    border-color: rgb(255 255 255 / 0.7) !important;
+    --tw-ring-color: rgb(255 255 255 / 0.7) !important;
+}
+
+html.dark [data-section="partners-agencies"] a.group > div {
+    background-color: #ffffff !important;
+    border-color: rgb(229 231 235) !important;
+    box-shadow: 0 18px 44px rgb(0 0 0 / 0.18) !important;
+}
+
+html.dark [data-section="partners-agencies"] a.group > div > div:first-child {
+    background-color: rgb(236 253 245) !important;
+}
+
 .homepage-heading-spotlight {
     background:
         radial-gradient(ellipse 34rem 9rem at 50% 34%, rgb(16 185 129 / 0.15), transparent 72%),

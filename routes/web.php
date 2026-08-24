@@ -48,6 +48,7 @@ Route::get('/calender', [HomeController::class, 'calender'])->name('calender');
 Route::get('/homeList', [HomeController::class, 'homeList'])->name('homeList');
 Route::get('/vacantList', [HomeController::class, 'vacantList'])->name('vacantList');
 Route::get('/condoList', [HomeController::class, 'condoList'])->name('condoList');
+Route::view('/asset-sales-preview', 'main.asset.preview')->name('asset.preview');
 Route::get('/home/{id}', [HomeController::class, 'home'])->name('home');
 Route::get('/vacant/{id}', [HomeController::class, 'vacant'])->name('vacant');
 Route::get('/condo/{id}', [HomeController::class, 'condo'])->name('condo');
