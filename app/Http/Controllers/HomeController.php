@@ -347,39 +347,50 @@ class HomeController extends Controller
 
     public function homeList()
     {
-        $asset = DB::table('asset')->where('asset.asset_type', '1')->paginate(21);
+        $asset = $this->publishedAssetQuery('1')->paginate(21);
         return view('main.asset.homeList', compact('asset'));
     }
     public function vacantList()
     {
-        $asset = DB::table('asset')->where('asset.asset_type', '2')->paginate(10);
+        $asset = $this->publishedAssetQuery('2')->paginate(10);
         return view('main.asset.vacantList', compact('asset'));
     }
     public function condoList()
     {
-        $asset = DB::table('asset')->where('asset.asset_type', '3')->paginate(10);
+        $asset = $this->publishedAssetQuery('3')->paginate(10);
         return view('main.asset.condoList', compact('asset'));
     }
 
     public function home($id)
     {
         $image  = DB::table('asset_picture')->where('id', $id)->get();
-        $detail = DB::table('asset')->where('id', $id)->first();
+        $detail = $this->publishedAssetQuery('1')->where('id', $id)->firstOrFail();
         return view('main.asset.homeshow', compact('image', 'detail'));
     }
 
     public function vacant($id)
     {
         $image  = DB::table('asset_picture')->where('id', $id)->get();
-        $detail = DB::table('asset')->where('id', $id)->first();
+        $detail = $this->publishedAssetQuery('2')->where('id', $id)->firstOrFail();
         return view('main.asset.vacantshow', compact('image', 'detail'));
     }
 
     public function condo($id)
     {
         $image  = DB::table('asset_picture')->where('id', $id)->get();
-        $detail = DB::table('asset')->where('id', $id)->first();
+        $detail = $this->publishedAssetQuery('3')->where('id', $id)->firstOrFail();
         return view('main.asset.condoshow', compact('image', 'detail'));
+    }
+
+    private function publishedAssetQuery(string $assetType)
+    {
+        return DB::table('asset')
+            ->where('asset.asset_type', $assetType)
+            ->whereNotNull('asset.title')
+            ->whereRaw("TRIM(asset.title) <> ''")
+            ->whereNotNull('asset.picture_name')
+            ->whereRaw("TRIM(asset.picture_name) <> ''")
+            ->orderByDesc('asset.date');
     }
 
     public function document()
