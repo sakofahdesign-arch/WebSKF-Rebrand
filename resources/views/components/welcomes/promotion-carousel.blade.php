@@ -12,31 +12,7 @@
         ];
     })->values();
 
-    $latestNews = collect([
-        $information ?? collect(),
-        $welfare ?? collect(),
-        $credit ?? collect(),
-        $foundation ?? collect(),
-    ])
-        ->flatMap(fn ($items) => collect($items))
-        ->filter(fn ($item) => !empty($item->news_number))
-        ->sortByDesc(fn ($item) => strtotime($item->dateupload ?? ''))
-        ->take(8)
-        ->values();
-
-    $newsSlides = $latestNews->map(function ($item) {
-        $description = strip_tags($item->description ?? '');
-
-        return [
-            'id' => 'news_' . $item->news_number,
-            'title' => $item->title ?? 'ข่าวสารสหกรณ์',
-            'subtitle' => \Illuminate\Support\Str::limit($description, 105),
-            'image' => asset(!empty($item->picture_name) ? 'uploads/covers/' . $item->picture_name : 'images/sakofah-logo.png'),
-            'date' => !empty($item->dateupload) ? thaidate('j F Y', $item->dateupload) : null,
-            'href' => route('article', $item->news_number),
-            'type' => 'news',
-        ];
-    })->values();
+    $newsSlides = collect();
 @endphp
 
 <div
