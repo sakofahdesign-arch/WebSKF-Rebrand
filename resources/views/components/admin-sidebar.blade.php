@@ -79,6 +79,19 @@
             </div>
         </div>
 
+        <div>
+            <p class="px-2 text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-2">
+                งานขายสินทรัพย์
+            </p>
+            <div class="space-y-1">
+                <a href="{{ route('asset.index') }}"
+                    class="flex items-center px-4 py-2.5 rounded-xl transition-all duration-200 group {{ request()->routeIs('asset.*') ? 'bg-emerald-600 text-white' : 'text-emerald-100 hover:bg-emerald-800 hover:text-white' }}">
+                    <i class="fas fa-sign-hanging w-5 h-5"></i>
+                    <span class="ml-3">จัดการทรัพย์สิน</span>
+                </a>
+            </div>
+        </div>
+
         @if (session('level_code') == 'P')
             <div>
                 <p class="px-2 text-xs font-semibold text-amber-400 uppercase tracking-wider mb-2">
@@ -90,12 +103,6 @@
                         <i class="fas fa-newspaper w-5 h-5"></i>
                         <span class="ml-3">ข่าวสาร/กิจกรรม</span>
                     </a>
-                    <a href="{{ route('asset.index') }}"
-                        class="flex items-center px-4 py-2.5 rounded-xl transition-all duration-200 group {{ request()->routeIs('asset.*') ? 'bg-emerald-600 text-white' : 'text-emerald-100 hover:bg-emerald-800 hover:text-white' }}">
-                        <i class="fas fa-sign-hanging w-5 h-5"></i>
-                        <span class="ml-3">ขายทรัพย์สิน</span>
-                    </a>
-
                     <a href="{{ route('performance.add') }}"
                         class="flex items-center px-4 py-2.5 rounded-xl transition-all duration-200 group text-emerald-100 hover:bg-emerald-800 hover:text-white">
                         <i class="fas fa-chart-line w-5 h-5"></i>
