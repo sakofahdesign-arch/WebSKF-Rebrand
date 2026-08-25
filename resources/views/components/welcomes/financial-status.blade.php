@@ -31,13 +31,13 @@
                                             <div class="min-w-0 text-sm font-medium leading-tight text-emerald-700 dark:text-white/78">
                                                 <span class="block min-w-0">สมาชิกทั้งหมด</span>
                                             </div>
-                                            <span class="odometer shrink-0 whitespace-nowrap text-right text-[clamp(1.75rem,2.25vw,2.2rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="18390">18,390</span>
+                                            <span class="odometer shrink-0 whitespace-nowrap text-right text-[clamp(1.75rem,2.25vw,2.2rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="14075">14,075</span>
                                         </div>
                                         <div class="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-5">
                                             <div class="min-w-0 text-sm font-medium leading-tight text-emerald-700 dark:text-white/78">
                                                 <span class="block min-w-0">สมาชิกสมทบ</span>
                                             </div>
-                                            <span class="odometer shrink-0 whitespace-nowrap text-right text-[clamp(1.75rem,2.25vw,2.2rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="22826">22,826</span>
+                                            <span class="odometer shrink-0 whitespace-nowrap text-right text-[clamp(1.75rem,2.25vw,2.2rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="1124">1,124</span>
                                         </div>
                                     </div>
                                 </div>
@@ -58,7 +58,7 @@
                             <div class="min-w-0">
                                 <p class="text-sm font-semibold text-emerald-800 dark:text-white/86">จำนวนหุ้น</p>
                                 <div class="mt-1">
-                                    <span class="odometer whitespace-nowrap text-[clamp(1.5rem,2.2vw,2.35rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="40773788">40,773,788</span>
+                                    <span class="odometer whitespace-nowrap text-[clamp(1.5rem,2.2vw,2.35rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="28736215">2,873,621</span>
                                     <span class="ml-1 text-xs font-semibold text-emerald-700 dark:text-white/70">หุ้น</span>
                                 </div>
                             </div>
@@ -77,7 +77,7 @@
                             <div class="min-w-0">
                                 <p class="text-sm font-semibold text-emerald-800 dark:text-white/86">จำนวนเงิน</p>
                                 <div class="mt-1">
-                                    <span class="odometer whitespace-nowrap text-[clamp(1.28rem,1.9vw,1.95rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="1407737880">1,407,737,880</span>
+                                    <span class="odometer whitespace-nowrap text-[clamp(1.28rem,1.9vw,1.95rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="287362150">287,362,150</span>
                                     <span class="ml-1 text-xs font-semibold text-emerald-700 dark:text-white/70">บาท</span>
                                 </div>
                             </div>
@@ -98,7 +98,7 @@
                             <div class="min-w-0">
                                 <p class="text-sm font-semibold text-emerald-800 dark:text-white/86">สินทรัพย์</p>
                                 <div class="mt-1.5">
-                                    <span class="odometer whitespace-nowrap text-[clamp(1.8rem,2.7vw,2.85rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="3511">3,511</span>
+                                    <span class="odometer whitespace-nowrap text-[clamp(1.8rem,2.7vw,2.85rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="000">0.00</span>
                                     <span class="ml-1 text-xs font-medium text-emerald-700 dark:text-white/62">ล้าน</span>
                                 </div>
                                 <p class="mt-2.5 text-xs font-semibold text-emerald-700 dark:text-white/72"><i class="fa-solid fa-circle-arrow-up mr-1"></i> +6.2% จากปีก่อนหน้า</p>
@@ -114,7 +114,7 @@
                             <div class="min-w-0">
                                 <p class="text-sm font-semibold text-emerald-800 dark:text-white/86">เงินฝาก</p>
                                 <div class="mt-1.5">
-                                    <span class="odometer whitespace-nowrap text-[clamp(1.8rem,2.7vw,2.85rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="1846">1,846</span>
+                                    <span class="odometer whitespace-nowrap text-[clamp(1.8rem,2.7vw,2.85rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="776,2">776,2</span>
                                     <span class="ml-1 text-xs font-medium text-emerald-700 dark:text-white/62">ล้าน</span>
                                 </div>
                                 <p class="mt-2.5 text-xs font-semibold text-emerald-700 dark:text-white/72"><i class="fa-solid fa-circle-arrow-up mr-1"></i> +4.8% จากปีก่อนหน้า</p>
