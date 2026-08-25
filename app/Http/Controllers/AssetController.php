@@ -330,12 +330,12 @@ class AssetController extends Controller
 
         return [
             'id' => (string) $asset->id,
-            'title' => $asset->title,
-            'category' => $asset->asset_name ?? 'ขายทรัพย์สิน',
+            'title' => $this->cleanText($asset->title ?? ''),
+            'category' => $this->cleanText($asset->asset_name ?? 'ขายทรัพย์สิน'),
             'listingType' => in_array(($asset->listing_type ?? 'sale'), ['sale', 'rent', 'inactive'], true) ? $asset->listing_type : 'sale',
-            'description1' => $asset->description1 ?? '',
-            'description2' => $asset->description2 ?? '',
-            'contact' => $asset->contact ?? '',
+            'description1' => $this->cleanText($asset->description1 ?? ''),
+            'description2' => $this->cleanText($asset->description2 ?? ''),
+            'contact' => $this->cleanText($asset->contact ?? ''),
             'latitude' => $latitude,
             'longitude' => $longitude,
             'image' => $asset->picture_name ? asset('assets/' . $asset->picture_name) : asset('images/sakofah-logo.png'),
@@ -351,6 +351,19 @@ class AssetController extends Controller
         }
 
         return route('asset.edit', ['manage_asset' => $asset->id]);
+    }
+
+    private function cleanText(mixed $value): string
+    {
+        $text = (string) $value;
+
+        if (function_exists('mb_scrub')) {
+            return mb_scrub($text, 'UTF-8');
+        }
+
+        $clean = @iconv('UTF-8', 'UTF-8//IGNORE', $text);
+
+        return $clean === false ? '' : $clean;
     }
 
     private function storeCoverImage(Request $request, int $assetId, int $timestamp, string $uploadFolder): ?string

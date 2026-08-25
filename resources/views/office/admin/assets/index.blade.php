@@ -47,7 +47,7 @@
 
             <div
                 data-asset-sales-map
-                data-assets='@json($assetMapItems)'
+                data-assets='@json($assetMapItems, JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE)'
                 class="h-[560px] min-h-[480px] w-full"
             >
                 <div class="grid h-full place-items-center bg-slate-950 text-sm font-semibold text-white/70">
@@ -96,9 +96,12 @@
                             </thead>
                             <tbody class="text-gray-700">
                                 @forelse ($assets as $item)
+                                    @php
+                                        $assetId = $item->id ?? null;
+                                    @endphp
                                     <tr class="hover:bg-emerald-50/40 transition-colors border-b border-gray-100 last:border-none group">
                                         <td class="py-4 px-6 text-center font-mono text-gray-500">
-                                            #{{ $item->id }}
+                                            {{ $assetId ? "#{$assetId}" : '-' }}
                                         </td>
 
                                         <td class="py-4 px-6 text-center">
@@ -165,24 +168,33 @@
 
                                         <td class="py-4 px-6 text-center">
                                             <div class="flex items-center justify-center gap-2">
-                                                <a href="{{ route('asset.edit', ['manage_asset' => $item->id]) }}" 
-                                                   class="btn btn-sm btn-circle btn-ghost text-amber-500 hover:bg-amber-100 tooltip tooltip-top" 
-                                                   data-tip="แก้ไข">
-                                                    <i class="fas fa-pen"></i>
-                                                </a>
+                                                @if ($assetId)
+                                                    <a href="{{ route('asset.edit', ['manage_asset' => $assetId]) }}"
+                                                       class="btn btn-sm btn-circle btn-ghost text-amber-500 hover:bg-amber-100 tooltip tooltip-top"
+                                                       data-tip="แก้ไข">
+                                                        <i class="fas fa-pen"></i>
+                                                    </a>
 
-                                                <form id="delete-form-{{ $item->id }}" 
-                                                      action="{{ route('asset.destroy', ['manage_asset' => $item->id]) }}" 
-                                                      method="POST" class="inline-block">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="button" 
-                                                            onclick="confirmDelete('{{ $item->id }}')"
-                                                            class="btn btn-sm btn-circle btn-ghost text-rose-500 hover:bg-rose-100 tooltip tooltip-top" 
-                                                            data-tip="ลบ">
-                                                        <i class="fas fa-trash-alt"></i>
+                                                    <form id="delete-form-{{ $assetId }}"
+                                                          action="{{ route('asset.destroy', ['manage_asset' => $assetId]) }}"
+                                                          method="POST" class="inline-block">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="button"
+                                                                onclick="confirmDelete('{{ $assetId }}')"
+                                                                class="btn btn-sm btn-circle btn-ghost text-rose-500 hover:bg-rose-100 tooltip tooltip-top"
+                                                                data-tip="ลบ">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </button>
+                                                    </form>
+                                                @else
+                                                    <button type="button"
+                                                            class="btn btn-sm btn-circle btn-ghost text-gray-300 tooltip tooltip-top"
+                                                            data-tip="ไม่พบ ID"
+                                                            disabled>
+                                                        <i class="fas fa-lock"></i>
                                                     </button>
-                                                </form>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>
