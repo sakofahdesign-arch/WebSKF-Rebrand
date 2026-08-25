@@ -153,7 +153,10 @@ export function BranchNetworkMap({ branches, variant = "section" }: BranchNetwor
     const sidebarPositionClass = isFullscreen ? "top-24 md:top-24" : "top-4 md:top-5";
     const sidebarHeightClass = isFullscreen
         ? "max-h-[min(560px,calc(100dvh-8rem))]"
-        : "max-h-[min(430px,calc(100%-2rem))] md:max-h-[min(460px,calc(100%-2.5rem))]";
+        : "max-h-[min(460px,calc(100%-2.5rem))]";
+    const sidebarListHeightClass = isFullscreen
+        ? "max-h-[calc(min(560px,calc(100dvh-8rem))-76px)]"
+        : "max-h-[calc(min(460px,calc(100%-2.5rem))-76px)]";
     const markerImageClass = (branch: BranchLocation) => {
         if (branch.markerKind === "fuel") {
             return "h-7 w-7 object-contain";
@@ -235,7 +238,7 @@ export function BranchNetworkMap({ branches, variant = "section" }: BranchNetwor
 
                 <aside
                     className={[
-                        "absolute left-4 z-20 flex w-[min(280px,calc(100vw-2rem))] flex-col overflow-hidden rounded-[22px] bg-white font-sans shadow-[0_24px_60px_rgba(2,6,23,0.34)] ring-1 ring-emerald-900/8 [font-family:var(--font-sans)] md:left-5 dark:bg-[#05221c] dark:ring-emerald-300/12",
+                        "absolute left-4 z-20 flex w-[min(280px,calc(100vw-2rem))] flex-col overflow-hidden rounded-[22px] bg-white font-sans shadow-[0_24px_60px_rgba(2,6,23,0.34)] ring-1 ring-emerald-900/8 [font-family:var(--font-sans)] md:left-5 dark:bg-[#fbfefd] dark:ring-emerald-300/12",
                         sidebarPositionClass,
                         sidebarHeightClass,
                     ].join(" ")}
@@ -252,7 +255,7 @@ export function BranchNetworkMap({ branches, variant = "section" }: BranchNetwor
                             </div>
                         </div>
                     </div>
-                    <div className="min-h-0 overflow-y-auto bg-[#fbfefd] px-3 py-3 [font-family:var(--font-sans)] dark:bg-[#061c18]">
+                    <div className={["overflow-y-auto bg-[#fbfefd] px-3 py-3 [font-family:var(--font-sans)] dark:bg-[#fbfefd]", sidebarListHeightClass].join(" ")}>
                         <button
                             type="button"
                             onClick={() => fitBoundsForOverview(false)}
