@@ -134,6 +134,53 @@
 
                     </div>
 
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="rounded-xl border border-gray-100 bg-gray-50 p-5" x-data="{ coverPreview: null }">
+                            <label for="coverImage" class="block text-sm font-bold text-gray-700">
+                                รูปปก
+                            </label>
+                            <div class="mt-3 overflow-hidden rounded-xl border border-gray-200 bg-white">
+                                @if (!empty($asset->picture_name))
+                                    <img x-show="!coverPreview" src="{{ asset('assets/' . $asset->picture_name) }}" alt="{{ $asset->title }}"
+                                        class="h-52 w-full object-cover">
+                                @else
+                                    <div x-show="!coverPreview" class="grid h-52 place-items-center text-gray-300">
+                                        <i class="fas fa-image text-4xl"></i>
+                                    </div>
+                                @endif
+                                <img x-show="coverPreview" :src="coverPreview" class="h-52 w-full object-cover" style="display: none;">
+                            </div>
+                            <input id="coverImage" name="coverImage" type="file" accept="image/*"
+                                class="file-input file-input-bordered w-full mt-3 bg-white"
+                                @change="coverPreview = $event.target.files[0] ? URL.createObjectURL($event.target.files[0]) : null">
+                            <p class="mt-2 text-xs text-gray-500">เลือกไฟล์ใหม่เมื่อต้องการเปลี่ยนรูปปก</p>
+                        </div>
+
+                        <div class="rounded-xl border border-gray-100 bg-gray-50 p-5" x-data="{ galleryCount: 0 }">
+                            <label for="galleryImages" class="block text-sm font-bold text-gray-700">
+                                รูปภาพข้างใน
+                            </label>
+                            @if (($galleryImages ?? collect())->isNotEmpty())
+                                <div class="mt-3 grid grid-cols-3 gap-2">
+                                    @foreach ($galleryImages as $galleryImage)
+                                        <img src="{{ asset('assets/' . $galleryImage) }}" alt="Gallery image"
+                                            class="h-20 w-full rounded-lg border border-gray-200 bg-white object-cover">
+                                    @endforeach
+                                </div>
+                            @else
+                                <div class="mt-3 grid h-24 place-items-center rounded-lg border border-dashed border-gray-200 bg-white text-sm text-gray-400">
+                                    ยังไม่มีรูปภาพข้างใน
+                                </div>
+                            @endif
+                            <input id="galleryImages" name="Images[]" type="file" multiple accept="image/*"
+                                class="file-input file-input-bordered w-full mt-3 bg-white"
+                                @change="galleryCount = $event.target.files.length">
+                            <p class="mt-2 text-xs text-gray-500">
+                                เพิ่มได้หลายรูป <span x-show="galleryCount > 0" x-text="`เลือกแล้ว ${galleryCount} รูป`"></span>
+                            </p>
+                        </div>
+                    </div>
+
                     <div class="rounded-xl border border-emerald-100 bg-emerald-50/50 p-5">
                         <label for="deedFile" class="block text-sm font-bold text-gray-700">
                             ไฟล์โฉนดที่ดิน / เอกสารแนบ

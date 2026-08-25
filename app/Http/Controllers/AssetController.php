@@ -147,7 +147,11 @@ class AssetController extends Controller
             return redirect()->route('asset.index')->with('error', 'ไม่พบสินทรัพย์ที่ต้องการแก้ไข');
         }
 
-        return view('office.admin.assets.edit', compact('asset'));
+        $galleryImages = Schema::hasTable('asset_picture')
+            ? DB::table('asset_picture')->where('id', $id)->pluck('picture_name')
+            : collect();
+
+        return view('office.admin.assets.edit', compact('asset', 'galleryImages'));
     }
 
     public function show($id)
@@ -169,6 +173,9 @@ class AssetController extends Controller
             'description2' => 'nullable|string',
             'contact'      => 'required|string|max:255',
             'asset_type'   => 'required|integer',
+            'coverImage'   => 'nullable|image|max:10240',
+            'Images'       => 'nullable|array',
+            'Images.*'     => 'image|max:10240',
             'deedFile'     => 'nullable|file|mimes:pdf,jpg,jpeg,png,webp|max:20480',
         ];
 
@@ -185,6 +192,18 @@ class AssetController extends Controller
         }
 
         $request->validate($rules);
+
+        $uploadFolder = 'assets';
+        File::ensureDirectoryExists(public_path($uploadFolder));
+
+        $coverFileName = $asset->picture_name ?? '';
+        if ($request->hasFile('coverImage')) {
+            $coverFileName = $this->storeCoverImage($request, (int) $id, time(), $uploadFolder);
+
+            if (! empty($asset->picture_name)) {
+                File::delete(public_path($uploadFolder . '/' . $asset->picture_name));
+            }
+        }
 
         $deedFileName = $asset->deed_file ?? null;
 
@@ -205,6 +224,7 @@ class AssetController extends Controller
             'contact'      => $request->contact,
             'asset_type'   => $request->asset_type,
             ...$this->listingTypeData($request),
+            'picture_name' => $coverFileName ?? '',
         ];
 
         if ($this->hasAssetColumn('latitude')) {
@@ -220,6 +240,8 @@ class AssetController extends Controller
         }
 
         DB::table('asset')->where('id', $id)->update($assetData);
+
+        $this->storeGalleryImages($request, (int) $id, time(), $uploadFolder);
 
         return redirect()->route('asset.index')->with('success', 'แก้ไขข้อมูลขายทรัพย์สินเรียบร้อยแล้ว');
     }
