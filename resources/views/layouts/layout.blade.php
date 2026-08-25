@@ -44,11 +44,10 @@
 
     <script>
         (() => {
-            const storedTheme = localStorage.getItem('sakofah-theme');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const storedTheme = localStorage.getItem('sakofah-theme-v2');
             const theme = storedTheme === 'light' || storedTheme === 'dark'
                 ? storedTheme
-                : (prefersDark ? 'dark' : 'light');
+                : 'light';
 
             document.documentElement.classList.toggle('dark', theme === 'dark');
             document.documentElement.dataset.theme = theme;

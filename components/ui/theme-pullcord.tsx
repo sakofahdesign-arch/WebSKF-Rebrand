@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { PullCord } from "pullcord";
 import "pullcord/pullcord.css";
 
-const STORAGE_KEY = "sakofah-theme";
+const STORAGE_KEY = "sakofah-theme-v2";
 const THEME_CHANGED_EVENT = "sakofah-theme-change";
 
 type Theme = "light" | "dark";
@@ -17,7 +17,7 @@ function getPreferredTheme(): Theme {
         return storedTheme;
     }
 
-    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    return "light";
 }
 
 function applyTheme(theme: Theme) {
@@ -38,25 +38,6 @@ export function ThemePullCord() {
         window.localStorage.setItem(STORAGE_KEY, theme);
         window.dispatchEvent(new CustomEvent(THEME_CHANGED_EVENT, { detail: { theme } }));
     }, [theme]);
-
-    useEffect(() => {
-        const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-
-        const handleChange = (event: MediaQueryListEvent) => {
-            const storedTheme = window.localStorage.getItem(STORAGE_KEY);
-            if (storedTheme === "light" || storedTheme === "dark") {
-                return;
-            }
-
-            setTheme(event.matches ? "dark" : "light");
-        };
-
-        mediaQuery.addEventListener("change", handleChange);
-
-        return () => {
-            mediaQuery.removeEventListener("change", handleChange);
-        };
-    }, []);
 
     const isLightOn = theme === "light";
 
