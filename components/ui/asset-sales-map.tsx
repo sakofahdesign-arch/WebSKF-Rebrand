@@ -30,7 +30,7 @@ export type AssetSaleLocation = {
     id: string;
     title: string;
     category: string;
-    listingType?: "sale" | "rent";
+    listingType?: "sale" | "rent" | "inactive";
     price?: string;
     area?: string;
     status?: string;
@@ -50,6 +50,7 @@ type AssetSalesMapProps = {
 };
 
 type ListingFilter = "all" | "sale" | "rent";
+type ListingType = Exclude<ListingFilter, "all"> | "inactive";
 
 const listingFilterLabels: Record<ListingFilter, string> = {
     all: "ทั้งหมด",
@@ -57,12 +58,18 @@ const listingFilterLabels: Record<ListingFilter, string> = {
     rent: "เช่า",
 };
 
-function getAssetListingType(asset: AssetSaleLocation): Exclude<ListingFilter, "all"> {
+const listingTypeLabels: Record<ListingType, string> = {
+    sale: "ขาย",
+    rent: "เช่า",
+    inactive: "ไม่ขาย",
+};
+
+function getAssetListingType(asset: AssetSaleLocation): ListingType {
     return asset.listingType ?? "sale";
 }
 
 function getAssetListingLabel(asset: AssetSaleLocation): string {
-    return listingFilterLabels[getAssetListingType(asset)];
+    return listingTypeLabels[getAssetListingType(asset)];
 }
 
 function getMapCenter(assets: AssetSaleLocation[]): [number, number] {
@@ -455,7 +462,9 @@ export function AssetSalesMap({ assets, variant = "section" }: AssetSalesMapProp
                                                 "mt-1 inline-flex rounded-full px-1.5 py-0.5 text-[8px] font-black shadow-sm",
                                                 listingType === "rent"
                                                     ? "bg-yellow-300 text-emerald-950"
-                                                    : "bg-emerald-700 text-white",
+                                                    : listingType === "inactive"
+                                                        ? "bg-slate-200 text-slate-700"
+                                                        : "bg-emerald-700 text-white",
                                             ].join(" ")}>
                                                 {listingLabel}
                                             </span>

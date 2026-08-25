@@ -37,7 +37,6 @@ class AssetController extends Controller
             $mapAssets = $query
                 ->whereNotNull('asset.latitude')
                 ->whereNotNull('asset.longitude')
-                ->when(Schema::hasColumn('asset', 'listing_type'), fn ($builder) => $builder->whereIn('asset.listing_type', ['sale', 'rent']))
                 ->orderByDesc('asset.date')
                 ->get()
                 ->map(fn ($asset) => $this->mapAssetPayload($asset))
@@ -228,7 +227,7 @@ class AssetController extends Controller
             'id' => (string) $asset->id,
             'title' => $asset->title,
             'category' => $asset->asset_name ?? 'ขายทรัพย์สิน',
-            'listingType' => in_array(($asset->listing_type ?? 'sale'), ['sale', 'rent'], true) ? $asset->listing_type : 'sale',
+            'listingType' => in_array(($asset->listing_type ?? 'sale'), ['sale', 'rent', 'inactive'], true) ? $asset->listing_type : 'sale',
             'description1' => $asset->description1 ?? '',
             'description2' => $asset->description2 ?? '',
             'contact' => $asset->contact ?? '',

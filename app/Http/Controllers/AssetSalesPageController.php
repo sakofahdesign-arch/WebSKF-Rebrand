@@ -25,10 +25,6 @@ class AssetSalesPageController extends Controller
             ->whereNotNull('asset.latitude')
             ->whereNotNull('asset.longitude');
 
-        if (Schema::hasColumn('asset', 'listing_type')) {
-            $query->whereIn('asset.listing_type', ['sale', 'rent']);
-        }
-
         if (Schema::hasTable('asset_type')) {
             $query
                 ->leftJoin('asset_type', 'asset.asset_type', '=', 'asset_type.asset_type')
@@ -116,6 +112,10 @@ class AssetSalesPageController extends Controller
     private function listingType(object $asset): string
     {
         $explicitType = strtolower($this->firstFilled($asset, ['listing_type', 'listingType', 'sale_type', 'transaction_type']));
+
+        if (in_array($explicitType, ['inactive', 'off', 'hidden', 'not_sale', 'not-sale', 'ไม่ขาย'], true)) {
+            return 'inactive';
+        }
 
         if (in_array($explicitType, ['rent', 'lease', 'เช่า'], true)) {
             return 'rent';
