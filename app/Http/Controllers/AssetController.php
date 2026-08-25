@@ -27,7 +27,7 @@ class AssetController extends Controller
         if ($request->filled('search')) {
             $search = $request->string('search')->toString();
             $searchColumns = $this->assetSearchColumns();
-            $canSearchAssetType = $this->hasAssetTypeName();
+            $canSearchAssetType = $this->canJoinAssetType();
 
             if ($searchColumns !== [] || $canSearchAssetType) {
                 $query->where(function ($builder) use ($search, $searchColumns, $canSearchAssetType) {

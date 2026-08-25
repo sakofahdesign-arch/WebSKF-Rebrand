@@ -153,7 +153,7 @@
                                         </td>
 
                                         <td class="py-4 px-6 align-top text-sm text-gray-500 max-w-xs truncate">
-                                            {{ Str::limit($item->description1, 60) }}
+                                            {{ \Illuminate\Support\Str::limit($item->description1 ?? '', 60) }}
                                         </td>
 
                                         <td class="py-4 px-6 text-center whitespace-nowrap text-sm">
