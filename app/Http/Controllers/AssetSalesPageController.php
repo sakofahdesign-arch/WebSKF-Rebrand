@@ -156,10 +156,14 @@ class AssetSalesPageController extends Controller
 
     private function assetDetailUrl(object $asset): string
     {
+        if (empty($asset->id)) {
+            return route('asset.preview');
+        }
+
         return match ((string) ($asset->asset_type ?? '')) {
-            '1' => route('home', $asset->id),
-            '2' => route('vacant', $asset->id),
-            '3' => route('condo', $asset->id),
+            '1' => route('home', ['id' => $asset->id]),
+            '2' => route('vacant', ['id' => $asset->id]),
+            '3' => route('condo', ['id' => $asset->id]),
             default => route('asset.preview'),
         };
     }
