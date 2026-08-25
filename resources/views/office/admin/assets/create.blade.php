@@ -102,6 +102,20 @@
                                 </select>
                             </div>
 
+                            <div class="form-control w-full">
+                                <label for="listing_type" class="label">
+                                    <span class="label-text font-bold text-gray-700">สถานะประกาศ <span class="text-red-500">*</span></span>
+                                </label>
+                                <select id="listing_type" name="listing_type"
+                                    class="select select-bordered w-full focus:select-emerald-500 bg-gray-50 focus:bg-white transition-colors"
+                                    required>
+                                    <option value="sale" @selected(old('listing_type', 'sale') === 'sale')>ขาย</option>
+                                    <option value="rent" @selected(old('listing_type') === 'rent')>เช่า</option>
+                                    <option value="inactive" @selected(old('listing_type') === 'inactive')>ไม่ขาย / ไม่แสดงบนหน้า GPS</option>
+                                </select>
+                                <p class="mt-1 text-xs text-gray-500">รายการที่เลือก “ไม่ขาย” จะไม่แสดงบนหน้าแผนที่ขายสินทรัพย์</p>
+                            </div>
+
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div class="form-control w-full">
                                     <label for="latitude" class="label">

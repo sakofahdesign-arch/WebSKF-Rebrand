@@ -68,6 +68,19 @@
                             </select>
                         </div>
 
+                        <div class="form-control w-full">
+                            <label for="listing_type" class="label">
+                                <span class="label-text font-bold text-gray-700">สถานะประกาศ <span class="text-red-500">*</span></span>
+                            </label>
+                            <select id="listing_type" name="listing_type"
+                                class="select select-bordered w-full focus:select-emerald-500 bg-gray-50 focus:bg-white transition-colors" required>
+                                <option value="sale" @selected(old('listing_type', $asset->listing_type ?? 'sale') === 'sale')>ขาย</option>
+                                <option value="rent" @selected(old('listing_type', $asset->listing_type ?? 'sale') === 'rent')>เช่า</option>
+                                <option value="inactive" @selected(old('listing_type', $asset->listing_type ?? 'sale') === 'inactive')>ไม่ขาย / ไม่แสดงบนหน้า GPS</option>
+                            </select>
+                            <p class="mt-1 text-xs text-gray-500">รายการที่เลือก “ไม่ขาย” จะไม่แสดงบนหน้าแผนที่ขายสินทรัพย์</p>
+                        </div>
+
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:col-span-2">
                             <div class="form-control w-full">
                                 <label for="latitude" class="label">
@@ -137,14 +150,10 @@
                     </div>
 
                     <div class="flex flex-col-reverse sm:flex-row justify-between items-center gap-4 pt-8 border-t border-gray-100 mt-8">
-                        <form action="{{ route('asset.destroy', $asset->id) }}" method="POST" class="w-full sm:w-auto"
-                              onsubmit="return confirm('คุณแน่ใจหรือไม่ที่จะลบสินทรัพย์นี้? การกระทำนี้จะลบรูปภาพทั้งหมดและไม่สามารถกู้คืนได้!');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-outline btn-error w-full sm:w-auto gap-2 hover:bg-red-50">
-                                <i class="fas fa-trash-alt"></i> ลบสินทรัพย์นี้
-                            </button>
-                        </form>
+                        <button type="button" form="delete-asset-form" onclick="if (confirm('คุณแน่ใจหรือไม่ที่จะลบสินทรัพย์นี้? การกระทำนี้จะลบรูปภาพทั้งหมดและไม่สามารถกู้คืนได้!')) document.getElementById('delete-asset-form').submit();"
+                            class="btn btn-outline btn-error w-full sm:w-auto gap-2 hover:bg-red-50">
+                            <i class="fas fa-trash-alt"></i> ลบสินทรัพย์นี้
+                        </button>
 
                         <div class="flex gap-3 w-full sm:w-auto justify-end">
                             <a href="{{ route('asset.index') }}" class="btn btn-ghost text-gray-500 hover:bg-gray-100 w-full sm:w-auto">
@@ -155,6 +164,10 @@
                             </button>
                         </div>
                     </div>
+                </form>
+                <form id="delete-asset-form" action="{{ route('asset.destroy', $asset->id) }}" method="POST" class="hidden">
+                    @csrf
+                    @method('DELETE')
                 </form>
             </div>
         </div>

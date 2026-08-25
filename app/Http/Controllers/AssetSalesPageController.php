@@ -25,6 +25,10 @@ class AssetSalesPageController extends Controller
             ->whereNotNull('asset.latitude')
             ->whereNotNull('asset.longitude');
 
+        if (Schema::hasColumn('asset', 'listing_type')) {
+            $query->whereIn('asset.listing_type', ['sale', 'rent']);
+        }
+
         if (Schema::hasTable('asset_type')) {
             $query
                 ->leftJoin('asset_type', 'asset.asset_type', '=', 'asset_type.asset_type')

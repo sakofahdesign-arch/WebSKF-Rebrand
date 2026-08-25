@@ -37,6 +37,7 @@ class AssetController extends Controller
             $mapAssets = $query
                 ->whereNotNull('asset.latitude')
                 ->whereNotNull('asset.longitude')
+                ->when(Schema::hasColumn('asset', 'listing_type'), fn ($builder) => $builder->whereIn('asset.listing_type', ['sale', 'rent']))
                 ->orderByDesc('asset.date')
                 ->get()
                 ->map(fn ($asset) => $this->mapAssetPayload($asset))
@@ -61,6 +62,7 @@ class AssetController extends Controller
             'contact'      => 'required|string|max:255',
             'latitude'     => 'required|numeric|between:-90,90',
             'longitude'    => 'required|numeric|between:-180,180',
+            'listing_type' => 'required|in:sale,rent,inactive',
             'coverImage'   => 'nullable|image|max:10240',
             'Images'       => 'nullable|array',
             'Images.*'     => 'image|max:10240',
@@ -79,6 +81,7 @@ class AssetController extends Controller
             'description2' => $request->description2 ?? '',
             'contact'      => $request->contact,
             'asset_type'   => $request->asset_type,
+            ...$this->listingTypeData($request),
             'latitude'     => $request->latitude,
             'longitude'    => $request->longitude,
             'picture_name' => '',
@@ -132,6 +135,7 @@ class AssetController extends Controller
             'asset_type'   => 'required|integer',
             'latitude'     => 'required|numeric|between:-90,90',
             'longitude'    => 'required|numeric|between:-180,180',
+            'listing_type' => 'required|in:sale,rent,inactive',
             'deedFile'     => 'nullable|file|mimes:pdf,jpg,jpeg,png,webp|max:20480',
         ]);
 
@@ -153,6 +157,7 @@ class AssetController extends Controller
             'description2' => $request->description2 ?? '',
             'contact'      => $request->contact,
             'asset_type'   => $request->asset_type,
+            ...$this->listingTypeData($request),
             'latitude'     => $request->latitude,
             'longitude'    => $request->longitude,
             'deed_file'    => $deedFileName,
@@ -205,6 +210,15 @@ class AssetController extends Controller
             && Schema::hasColumn('asset', 'longitude');
     }
 
+    private function listingTypeData(Request $request): array
+    {
+        if (! Schema::hasColumn('asset', 'listing_type')) {
+            return [];
+        }
+
+        return ['listing_type' => $request->input('listing_type', 'sale')];
+    }
+
     private function mapAssetPayload(object $asset): array
     {
         $latitude = (float) $asset->latitude;
@@ -214,6 +228,7 @@ class AssetController extends Controller
             'id' => (string) $asset->id,
             'title' => $asset->title,
             'category' => $asset->asset_name ?? 'ขายทรัพย์สิน',
+            'listingType' => in_array(($asset->listing_type ?? 'sale'), ['sale', 'rent'], true) ? $asset->listing_type : 'sale',
             'description1' => $asset->description1 ?? '',
             'description2' => $asset->description2 ?? '',
             'contact' => $asset->contact ?? '',

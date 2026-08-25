@@ -122,6 +122,22 @@
                                             <span class="badge badge-sm badge-ghost bg-emerald-50 text-emerald-700 border-emerald-100">
                                                 {{ $item->asset_name ?? 'N/A' }}
                                             </span>
+                                            @php
+                                                $listingType = $item->listing_type ?? 'sale';
+                                                $listingLabel = match ($listingType) {
+                                                    'rent' => 'เช่า',
+                                                    'inactive' => 'ไม่ขาย',
+                                                    default => 'ขาย',
+                                                };
+                                                $listingClass = match ($listingType) {
+                                                    'rent' => 'bg-yellow-50 text-yellow-700 border-yellow-100',
+                                                    'inactive' => 'bg-slate-100 text-slate-500 border-slate-200',
+                                                    default => 'bg-emerald-50 text-emerald-700 border-emerald-100',
+                                                };
+                                            @endphp
+                                            <span class="badge badge-sm badge-ghost border {{ $listingClass }}">
+                                                {{ $listingLabel }}
+                                            </span>
                                             @if (!empty($item->latitude) && !empty($item->longitude))
                                                 <div class="mt-2 inline-flex items-center gap-1.5 rounded-full bg-slate-50 px-2.5 py-1 text-xs font-semibold text-slate-500">
                                                     <i class="fas fa-location-dot text-emerald-500"></i>
