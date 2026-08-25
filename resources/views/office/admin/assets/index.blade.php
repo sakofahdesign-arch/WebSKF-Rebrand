@@ -165,14 +165,14 @@
 
                                         <td class="py-4 px-6 text-center">
                                             <div class="flex items-center justify-center gap-2">
-                                                <a href="{{ route('asset.edit', $item->id) }}" 
+                                                <a href="{{ route('asset.edit', ['manage_asset' => $item->id]) }}" 
                                                    class="btn btn-sm btn-circle btn-ghost text-amber-500 hover:bg-amber-100 tooltip tooltip-top" 
                                                    data-tip="แก้ไข">
                                                     <i class="fas fa-pen"></i>
                                                 </a>
 
                                                 <form id="delete-form-{{ $item->id }}" 
-                                                      action="{{ route('asset.destroy', $item->id) }}" 
+                                                      action="{{ route('asset.destroy', ['manage_asset' => $item->id]) }}" 
                                                       method="POST" class="inline-block">
                                                     @csrf
                                                     @method('DELETE')

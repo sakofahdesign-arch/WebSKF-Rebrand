@@ -42,7 +42,7 @@
                     </div>
                 </div>
 
-                <form action="{{ route('asset.update', $asset->id) }}" method="post" enctype="multipart/form-data" class="space-y-6">
+                <form action="{{ route('asset.update', ['manage_asset' => $asset->id]) }}" method="post" enctype="multipart/form-data" class="space-y-6">
                     @csrf
                     @method('PUT')
 
@@ -165,7 +165,7 @@
                         </div>
                     </div>
                 </form>
-                <form id="delete-asset-form" action="{{ route('asset.destroy', $asset->id) }}" method="POST" class="hidden">
+                <form id="delete-asset-form" action="{{ route('asset.destroy', ['manage_asset' => $asset->id]) }}" method="POST" class="hidden">
                     @csrf
                     @method('DELETE')
                 </form>

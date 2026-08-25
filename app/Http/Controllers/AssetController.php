@@ -115,7 +115,7 @@ class AssetController extends Controller
 
     public function show($id)
     {
-        return redirect()->route('asset.edit', $id);
+        return redirect()->route('asset.edit', ['manage_asset' => $id]);
     }
 
     public function update(Request $request, $id)
