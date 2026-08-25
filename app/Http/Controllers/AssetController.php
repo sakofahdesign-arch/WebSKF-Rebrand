@@ -235,8 +235,17 @@ class AssetController extends Controller
             'longitude' => $longitude,
             'image' => $asset->picture_name ? asset('assets/' . $asset->picture_name) : asset('images/sakofah-logo.png'),
             'map_link' => "https://www.google.com/maps/search/?api=1&query={$latitude},{$longitude}",
-            'edit_url' => route('asset.edit', $asset->id),
+            'edit_url' => $this->assetEditUrl($asset),
         ];
+    }
+
+    private function assetEditUrl(object $asset): string
+    {
+        if (empty($asset->id)) {
+            return route('asset.index');
+        }
+
+        return route('asset.edit', ['manage_asset' => $asset->id]);
     }
 
     private function storeCoverImage(Request $request, int $assetId, int $timestamp, string $uploadFolder): ?string
