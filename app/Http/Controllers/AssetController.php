@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
@@ -11,33 +12,44 @@ class AssetController extends Controller
 {
     public function index(Request $request)
     {
-        $query = DB::table('asset')
-            ->leftJoin('asset_type', 'asset.asset_type', '=', 'asset_type.asset_type')
-            ->select('asset.*', 'asset_type.asset_name');
+        if (! Schema::hasTable('asset')) {
+            $assets = new LengthAwarePaginator(collect(), 0, 10, 1, [
+                'path' => $request->url(),
+                'query' => $request->query(),
+            ]);
+            $mapAssets = collect();
+
+            return view('office.admin.assets.index', compact('assets', 'mapAssets'));
+        }
+
+        $query = $this->assetIndexQuery();
 
         if ($request->filled('search')) {
             $search = $request->string('search')->toString();
+            $searchColumns = $this->assetSearchColumns();
+            $canSearchAssetType = $this->hasAssetTypeName();
 
-            $query->where(function ($builder) use ($search) {
-                $builder
-                    ->where('asset.title', 'like', "%{$search}%")
-                    ->orWhere('asset.description1', 'like', "%{$search}%")
-                    ->orWhere('asset.description2', 'like', "%{$search}%")
-                    ->orWhere('asset_type.asset_name', 'like', "%{$search}%");
-            });
+            if ($searchColumns !== [] || $canSearchAssetType) {
+                $query->where(function ($builder) use ($search, $searchColumns, $canSearchAssetType) {
+                    foreach ($searchColumns as $column) {
+                        $builder->orWhere("asset.{$column}", 'like', "%{$search}%");
+                    }
+
+                    if ($canSearchAssetType) {
+                        $builder->orWhere('asset_type.asset_name', 'like', "%{$search}%");
+                    }
+                });
+            }
         }
 
-        $assets = (clone $query)
-            ->orderByDesc('asset.date')
-            ->paginate(10);
+        $assets = $this->orderAssetQuery(clone $query)->paginate(10);
 
         $mapAssets = collect();
 
         if ($this->hasSalesMapColumns()) {
-            $mapAssets = $query
+            $mapAssets = $this->orderAssetQuery($query
                 ->whereNotNull('asset.latitude')
-                ->whereNotNull('asset.longitude')
-                ->orderByDesc('asset.date')
+                ->whereNotNull('asset.longitude'))
                 ->get()
                 ->map(fn ($asset) => $this->mapAssetPayload($asset))
                 ->values();
@@ -53,20 +65,31 @@ class AssetController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $rules = [
             'title'        => 'required|string|max:255',
             'asset_type'   => 'required|integer',
             'description1' => 'required|string',
             'description2' => 'nullable|string',
             'contact'      => 'required|string|max:255',
-            'latitude'     => 'required|numeric|between:-90,90',
-            'longitude'    => 'required|numeric|between:-180,180',
-            'listing_type' => 'required|in:sale,rent,inactive',
             'coverImage'   => 'nullable|image|max:10240',
             'Images'       => 'nullable|array',
             'Images.*'     => 'image|max:10240',
             'deedFile'     => 'nullable|file|mimes:pdf,jpg,jpeg,png,webp|max:20480',
-        ]);
+        ];
+
+        if ($this->hasAssetColumn('latitude')) {
+            $rules['latitude'] = 'required|numeric|between:-90,90';
+        }
+
+        if ($this->hasAssetColumn('longitude')) {
+            $rules['longitude'] = 'required|numeric|between:-180,180';
+        }
+
+        if ($this->hasAssetColumn('listing_type')) {
+            $rules['listing_type'] = 'required|in:sale,rent,inactive';
+        }
+
+        $request->validate($rules);
 
         $uploadFolder = 'assets';
         $deedFolder = 'assets/deeds';
@@ -74,28 +97,42 @@ class AssetController extends Controller
         File::ensureDirectoryExists(public_path($uploadFolder));
         File::ensureDirectoryExists(public_path($deedFolder));
 
-        $assetId = DB::table('asset')->insertGetId([
+        $assetData = [
             'title'        => $request->title,
             'description1' => $request->description1,
             'description2' => $request->description2 ?? '',
             'contact'      => $request->contact,
             'asset_type'   => $request->asset_type,
             ...$this->listingTypeData($request),
-            'latitude'     => $request->latitude,
-            'longitude'    => $request->longitude,
             'picture_name' => '',
-            'deed_file'    => null,
             'date'         => now(),
-        ]);
+        ];
+
+        if ($this->hasAssetColumn('latitude')) {
+            $assetData['latitude'] = $request->latitude;
+        }
+
+        if ($this->hasAssetColumn('longitude')) {
+            $assetData['longitude'] = $request->longitude;
+        }
+
+        if ($this->hasAssetColumn('deed_file')) {
+            $assetData['deed_file'] = null;
+        }
+
+        $assetId = DB::table('asset')->insertGetId($assetData);
 
         $timestamp = time();
         $coverFileName = $this->storeCoverImage($request, $assetId, $timestamp, $uploadFolder);
         $deedFileName = $this->storeDeedFile($request, $assetId, $timestamp, $deedFolder);
 
-        DB::table('asset')->where('id', $assetId)->update([
-            'picture_name' => $coverFileName ?? '',
-            'deed_file'    => $deedFileName,
-        ]);
+        $assetFiles = ['picture_name' => $coverFileName ?? ''];
+
+        if ($this->hasAssetColumn('deed_file')) {
+            $assetFiles['deed_file'] = $deedFileName;
+        }
+
+        DB::table('asset')->where('id', $assetId)->update($assetFiles);
 
         $this->storeGalleryImages($request, $assetId, $timestamp, $uploadFolder);
 
@@ -126,21 +163,32 @@ class AssetController extends Controller
             return redirect()->route('asset.index')->with('error', 'ไม่พบสินทรัพย์ที่ต้องการแก้ไข');
         }
 
-        $request->validate([
+        $rules = [
             'title'        => 'required|string|max:255',
             'description1' => 'required|string',
             'description2' => 'nullable|string',
             'contact'      => 'required|string|max:255',
             'asset_type'   => 'required|integer',
-            'latitude'     => 'required|numeric|between:-90,90',
-            'longitude'    => 'required|numeric|between:-180,180',
-            'listing_type' => 'required|in:sale,rent,inactive',
             'deedFile'     => 'nullable|file|mimes:pdf,jpg,jpeg,png,webp|max:20480',
-        ]);
+        ];
+
+        if ($this->hasAssetColumn('latitude')) {
+            $rules['latitude'] = 'required|numeric|between:-90,90';
+        }
+
+        if ($this->hasAssetColumn('longitude')) {
+            $rules['longitude'] = 'required|numeric|between:-180,180';
+        }
+
+        if ($this->hasAssetColumn('listing_type')) {
+            $rules['listing_type'] = 'required|in:sale,rent,inactive';
+        }
+
+        $request->validate($rules);
 
         $deedFileName = $asset->deed_file ?? null;
 
-        if ($request->hasFile('deedFile')) {
+        if ($this->hasAssetColumn('deed_file') && $request->hasFile('deedFile')) {
             $deedFolder = 'assets/deeds';
             File::ensureDirectoryExists(public_path($deedFolder));
             $deedFileName = $this->storeDeedFile($request, (int) $id, time(), $deedFolder);
@@ -150,17 +198,28 @@ class AssetController extends Controller
             }
         }
 
-        DB::table('asset')->where('id', $id)->update([
+        $assetData = [
             'title'        => $request->title,
             'description1' => $request->description1,
             'description2' => $request->description2 ?? '',
             'contact'      => $request->contact,
             'asset_type'   => $request->asset_type,
             ...$this->listingTypeData($request),
-            'latitude'     => $request->latitude,
-            'longitude'    => $request->longitude,
-            'deed_file'    => $deedFileName,
-        ]);
+        ];
+
+        if ($this->hasAssetColumn('latitude')) {
+            $assetData['latitude'] = $request->latitude;
+        }
+
+        if ($this->hasAssetColumn('longitude')) {
+            $assetData['longitude'] = $request->longitude;
+        }
+
+        if ($this->hasAssetColumn('deed_file')) {
+            $assetData['deed_file'] = $deedFileName;
+        }
+
+        DB::table('asset')->where('id', $id)->update($assetData);
 
         return redirect()->route('asset.index')->with('success', 'แก้ไขข้อมูลขายทรัพย์สินเรียบร้อยแล้ว');
     }
@@ -205,17 +264,63 @@ class AssetController extends Controller
 
     private function hasSalesMapColumns(): bool
     {
-        return Schema::hasColumn('asset', 'latitude')
-            && Schema::hasColumn('asset', 'longitude');
+        return $this->hasAssetColumn('latitude')
+            && $this->hasAssetColumn('longitude');
     }
 
     private function listingTypeData(Request $request): array
     {
-        if (! Schema::hasColumn('asset', 'listing_type')) {
+        if (! $this->hasAssetColumn('listing_type')) {
             return [];
         }
 
         return ['listing_type' => $request->input('listing_type', 'sale')];
+    }
+
+    private function assetIndexQuery()
+    {
+        $query = DB::table('asset');
+
+        if ($this->canJoinAssetType()) {
+            return $query
+                ->leftJoin('asset_type', 'asset.asset_type', '=', 'asset_type.asset_type')
+                ->select('asset.*', 'asset_type.asset_name');
+        }
+
+        return $query->select('asset.*', DB::raw('NULL as asset_name'));
+    }
+
+    private function assetSearchColumns(): array
+    {
+        return array_values(array_filter(
+            ['title', 'description1', 'description2'],
+            fn (string $column) => $this->hasAssetColumn($column)
+        ));
+    }
+
+    private function orderAssetQuery($query)
+    {
+        return $this->hasAssetColumn('date')
+            ? $query->orderByDesc('asset.date')
+            : $query->orderByDesc('asset.id');
+    }
+
+    private function hasAssetColumn(string $column): bool
+    {
+        return Schema::hasTable('asset') && Schema::hasColumn('asset', $column);
+    }
+
+    private function canJoinAssetType(): bool
+    {
+        return $this->hasAssetColumn('asset_type')
+            && Schema::hasTable('asset_type')
+            && Schema::hasColumn('asset_type', 'asset_type')
+            && $this->hasAssetTypeName();
+    }
+
+    private function hasAssetTypeName(): bool
+    {
+        return Schema::hasTable('asset_type') && Schema::hasColumn('asset_type', 'asset_name');
     }
 
     private function mapAssetPayload(object $asset): array

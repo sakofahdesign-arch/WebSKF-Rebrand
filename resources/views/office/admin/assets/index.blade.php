@@ -159,7 +159,7 @@
                                         <td class="py-4 px-6 text-center whitespace-nowrap text-sm">
                                             <div class="inline-flex items-center gap-2 text-gray-500">
                                                 <i class="far fa-calendar-alt text-emerald-500"></i>
-                                                {{ thaidate('j M Y', strtotime($item->date)) }}
+                                                {{ !empty($item->date) ? thaidate('j M Y', strtotime($item->date)) : '-' }}
                                             </div>
                                         </td>
 
