@@ -1,3 +1,8 @@
+@php
+    $financialStatus = config('site-content.financial_status', []);
+    $fs = fn ($path, $default = '') => data_get($financialStatus, $path, $default);
+@endphp
+
 <section data-section="financial-status" data-financial-odometer class="relative isolate overflow-hidden bg-transparent py-12 lg:py-14">
     <div class="relative z-10 mx-auto max-w-[1560px] px-4 sm:px-6 lg:px-8">
         <div class="grid items-start gap-7 xl:grid-cols-2 xl:gap-8">
@@ -11,7 +16,7 @@
                     </div>
                     <div class="inline-flex w-fit items-center gap-2.5 rounded-lg border border-emerald-900/10 bg-white/88 px-4 py-2.5 text-xs font-extrabold text-emerald-800 shadow-[0_10px_26px_rgba(4,60,50,0.10)] backdrop-blur dark:border-white/10 dark:bg-emerald-950/82 dark:text-white">
                         <i class="fa-regular fa-calendar-days text-emerald-700 dark:text-emerald-200" aria-hidden="true"></i>
-                        <span>ข้อมูล ณ วันที่ 08 สิงหาคม 2569</span>
+                        <span>{{ $fs('meta.data_date_label', 'ข้อมูล ณ วันที่ 08 สิงหาคม 2569') }}</span>
                     </div>
                 </div>
 
@@ -31,13 +36,13 @@
                                             <div class="min-w-0 text-sm font-medium leading-tight text-emerald-700 dark:text-white/78">
                                                 <span class="block min-w-0">สมาชิกทั้งหมด</span>
                                             </div>
-                                            <span class="odometer shrink-0 whitespace-nowrap text-right text-[clamp(1.75rem,2.25vw,2.2rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="14075">14,075</span>
+                                            <span class="odometer shrink-0 whitespace-nowrap text-right text-[clamp(1.75rem,2.25vw,2.2rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="{{ $fs('financial.total_members.odometer', 14075) }}">{{ $fs('financial.total_members.value', '14,075') }}</span>
                                         </div>
                                         <div class="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-5">
                                             <div class="min-w-0 text-sm font-medium leading-tight text-emerald-700 dark:text-white/78">
                                                 <span class="block min-w-0">สมาชิกสมทบ</span>
                                             </div>
-                                            <span class="odometer shrink-0 whitespace-nowrap text-right text-[clamp(1.75rem,2.25vw,2.2rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="1124">1,124</span>
+                                            <span class="odometer shrink-0 whitespace-nowrap text-right text-[clamp(1.75rem,2.25vw,2.2rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="{{ $fs('financial.associate_members.odometer', 1124) }}">{{ $fs('financial.associate_members.value', '1,124') }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -58,8 +63,8 @@
                             <div class="min-w-0">
                                 <p class="text-sm font-semibold text-emerald-800 dark:text-white/86">จำนวนหุ้น</p>
                                 <div class="mt-1">
-                                    <span class="odometer whitespace-nowrap text-[clamp(1.5rem,2.2vw,2.35rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="28736215">2,873,621</span>
-                                    <span class="ml-1 text-xs font-semibold text-emerald-700 dark:text-white/70">หุ้น</span>
+                                    <span class="odometer whitespace-nowrap text-[clamp(1.5rem,2.2vw,2.35rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="{{ $fs('financial.shares.odometer', 28736215) }}">{{ $fs('financial.shares.value', '28,736,215') }}</span>
+                                    <span class="ml-1 text-xs font-semibold text-emerald-700 dark:text-white/70">{{ $fs('financial.shares.unit', 'หุ้น') }}</span>
                                 </div>
                             </div>
                         </div>
@@ -77,8 +82,8 @@
                             <div class="min-w-0">
                                 <p class="text-sm font-semibold text-emerald-800 dark:text-white/86">จำนวนเงิน</p>
                                 <div class="mt-1">
-                                    <span class="odometer whitespace-nowrap text-[clamp(1.28rem,1.9vw,1.95rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="287362150">287,362,150</span>
-                                    <span class="ml-1 text-xs font-semibold text-emerald-700 dark:text-white/70">บาท</span>
+                                    <span class="odometer whitespace-nowrap text-[clamp(1.28rem,1.9vw,1.95rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="{{ $fs('financial.share_amount.odometer', 287362150) }}">{{ $fs('financial.share_amount.value', '287,362,150') }}</span>
+                                    <span class="ml-1 text-xs font-semibold text-emerald-700 dark:text-white/70">{{ $fs('financial.share_amount.unit', 'บาท') }}</span>
                                 </div>
                             </div>
                         </div>
@@ -98,10 +103,10 @@
                             <div class="min-w-0">
                                 <p class="text-sm font-semibold text-emerald-800 dark:text-white/86">สินทรัพย์</p>
                                 <div class="mt-1.5">
-                                    <span class="odometer whitespace-nowrap text-[clamp(1.8rem,2.7vw,2.85rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="000">0.00</span>
-                                    <span class="ml-1 text-xs font-medium text-emerald-700 dark:text-white/62">ล้าน</span>
+                                    <span class="odometer whitespace-nowrap text-[clamp(1.8rem,2.7vw,2.85rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="{{ $fs('financial.assets.odometer', 0) }}">{{ $fs('financial.assets.value', '0') }}</span>
+                                    <span class="ml-1 text-xs font-medium text-emerald-700 dark:text-white/62">{{ $fs('financial.assets.unit', 'ล้าน') }}</span>
                                 </div>
-                                <p class="mt-2.5 text-xs font-semibold text-emerald-700 dark:text-white/72"><i class="fa-solid fa-circle-arrow-up mr-1"></i> +6.2% จากปีก่อนหน้า</p>
+                                <p class="mt-2.5 text-xs font-semibold text-emerald-700 dark:text-white/72"><i class="fa-solid fa-circle-arrow-up mr-1"></i> {{ $fs('financial.assets.trend', '+6.2% จากปีก่อนหน้า') }}</p>
                             </div>
                         </div>
                     </article>
@@ -114,10 +119,10 @@
                             <div class="min-w-0">
                                 <p class="text-sm font-semibold text-emerald-800 dark:text-white/86">เงินฝาก</p>
                                 <div class="mt-1.5">
-                                    <span class="odometer whitespace-nowrap text-[clamp(1.8rem,2.7vw,2.85rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="776,2">776,2</span>
-                                    <span class="ml-1 text-xs font-medium text-emerald-700 dark:text-white/62">ล้าน</span>
+                                    <span class="odometer whitespace-nowrap text-[clamp(1.8rem,2.7vw,2.85rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="{{ $fs('financial.deposits.odometer', 7762) }}">{{ $fs('financial.deposits.value', '7,762') }}</span>
+                                    <span class="ml-1 text-xs font-medium text-emerald-700 dark:text-white/62">{{ $fs('financial.deposits.unit', 'ล้าน') }}</span>
                                 </div>
-                                <p class="mt-2.5 text-xs font-semibold text-emerald-700 dark:text-white/72"><i class="fa-solid fa-circle-arrow-up mr-1"></i> +4.8% จากปีก่อนหน้า</p>
+                                <p class="mt-2.5 text-xs font-semibold text-emerald-700 dark:text-white/72"><i class="fa-solid fa-circle-arrow-up mr-1"></i> {{ $fs('financial.deposits.trend', '+4.8% จากปีก่อนหน้า') }}</p>
                             </div>
                         </div>
                     </article>
@@ -134,7 +139,7 @@
                     </div>
                     <div class="inline-flex w-fit items-center gap-2.5 rounded-lg border border-emerald-500/30 bg-emerald-100/72 px-4 py-2.5 text-xs font-extrabold text-emerald-800 shadow-[0_10px_26px_rgba(4,60,50,0.08)] dark:border-white/10 dark:bg-white/12 dark:text-white">
                         <i class="fa-solid fa-shield-heart text-emerald-700 dark:text-emerald-200" aria-hidden="true"></i>
-                        <span>ประจำปีบัญชี 2567</span>
+                        <span>{{ $fs('meta.fiscal_year_label', 'ประจำปีบัญชี 2567') }}</span>
                     </div>
                 </div>
 
@@ -147,15 +152,15 @@
                             <div class="min-w-0">
                                 <p class="text-base font-semibold text-emerald-800 dark:text-white/86">ทุนสาธารณะ</p>
                                 <div class="mt-1.5">
-                                    <span class="odometer whitespace-nowrap text-[clamp(2.1rem,3.15vw,3.2rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="3.36">3.36</span>
-                                    <span class="ml-1 text-xs font-medium text-emerald-700 dark:text-white/62">ล้าน</span>
+                                    <span class="odometer whitespace-nowrap text-[clamp(2.1rem,3.15vw,3.2rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="{{ $fs('social_credit.public_fund.odometer', 3.36) }}">{{ $fs('social_credit.public_fund.value', '3.36') }}</span>
+                                    <span class="ml-1 text-xs font-medium text-emerald-700 dark:text-white/62">{{ $fs('social_credit.public_fund.unit', 'ล้าน') }}</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="mt-5 h-1.5 rounded-full bg-emerald-900/10 dark:bg-white/12"><div class="h-full w-[58%] rounded-full bg-emerald-500"></div></div>
+                        <div class="mt-5 h-1.5 rounded-full bg-emerald-900/10 dark:bg-white/12"><div class="h-full rounded-full bg-emerald-500" style="width: {{ $fs('social_credit.public_fund.progress', 58) }}%"></div></div>
                         <p class="mt-4 inline-flex items-center gap-2 text-xs font-medium text-emerald-800 dark:text-white/76">
                             <span class="grid h-7 w-7 place-items-center rounded-md bg-emerald-100 text-emerald-700 dark:bg-white dark:text-emerald-800"><i class="fa-solid fa-building-columns"></i></span>
-                            เพื่อประโยชน์สาธารณะของสมาชิกและชุมชน
+                            {{ $fs('social_credit.public_fund.description', 'เพื่อประโยชน์สาธารณะของสมาชิกและชุมชน') }}
                         </p>
                     </article>
 
@@ -167,16 +172,16 @@
                             <div class="min-w-0 flex-1">
                                 <p class="text-base font-semibold text-emerald-800 dark:text-white/86">ให้สินเชื่อสมาชิก</p>
                                 <div class="mt-1.5 flex min-w-0 flex-wrap items-baseline gap-x-1">
-                                    <span class="odometer max-w-full whitespace-nowrap text-[clamp(1.35rem,1.9vw,2rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="808738464">808,738,464</span>
-                                    <span class="text-xs font-semibold text-emerald-700 dark:text-white/70">บาท</span>
+                                    <span class="odometer max-w-full whitespace-nowrap text-[clamp(1.35rem,1.9vw,2rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="{{ $fs('social_credit.member_loans.odometer', 808738464) }}">{{ $fs('social_credit.member_loans.value', '808,738,464') }}</span>
+                                    <span class="text-xs font-semibold text-emerald-700 dark:text-white/70">{{ $fs('social_credit.member_loans.unit', 'บาท') }}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="mt-5 flex items-center gap-4 border-t border-emerald-900/8 pt-4 dark:border-white/12">
-                            <div class="grid h-[3.25rem] w-[3.25rem] place-items-center rounded-full bg-[conic-gradient(#059669_0_89%,#e5e7eb_89%_100%)] p-1">
-                                <div class="grid h-full w-full place-items-center rounded-full bg-white text-xs font-black text-emerald-800">89%</div>
+                            <div class="grid h-[3.25rem] w-[3.25rem] place-items-center rounded-full p-1" style="background: conic-gradient(#059669 0 {{ $fs('social_credit.member_loans.ratio', 89) }}%, #e5e7eb {{ $fs('social_credit.member_loans.ratio', 89) }}% 100%)">
+                                <div class="grid h-full w-full place-items-center rounded-full bg-white text-xs font-black text-emerald-800">{{ $fs('social_credit.member_loans.ratio', 89) }}%</div>
                             </div>
-                            <p class="text-xs font-medium text-emerald-800 dark:text-white/76">สัดส่วนต่อยอดสินเชื่อรวม</p>
+                            <p class="text-xs font-medium text-emerald-800 dark:text-white/76">{{ $fs('social_credit.member_loans.ratio_label', 'สัดส่วนต่อยอดสินเชื่อรวม') }}</p>
                             <i class="fa-solid fa-chevron-right ml-auto text-emerald-500" aria-hidden="true"></i>
                         </div>
                     </article>
@@ -189,15 +194,15 @@
                             <div class="min-w-0">
                                 <p class="text-base font-semibold text-emerald-800 dark:text-white/86">ทุนสนับสนุนและพัฒนาสังคม</p>
                                 <div class="mt-1.5">
-                                    <span class="odometer whitespace-nowrap text-[clamp(2.1rem,3.15vw,3.2rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="9.58">9.58</span>
-                                    <span class="ml-1 text-xs font-medium text-emerald-700 dark:text-white/62">ล้าน</span>
+                                    <span class="odometer whitespace-nowrap text-[clamp(2.1rem,3.15vw,3.2rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="{{ $fs('social_credit.social_development_fund.odometer', 9.58) }}">{{ $fs('social_credit.social_development_fund.value', '9.58') }}</span>
+                                    <span class="ml-1 text-xs font-medium text-emerald-700 dark:text-white/62">{{ $fs('social_credit.social_development_fund.unit', 'ล้าน') }}</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="mt-5 h-1.5 rounded-full bg-emerald-900/10 dark:bg-white/12"><div class="h-full w-[54%] rounded-full bg-emerald-500"></div></div>
+                        <div class="mt-5 h-1.5 rounded-full bg-emerald-900/10 dark:bg-white/12"><div class="h-full rounded-full bg-emerald-500" style="width: {{ $fs('social_credit.social_development_fund.progress', 54) }}%"></div></div>
                         <p class="mt-4 inline-flex items-center gap-2 text-xs font-medium text-emerald-800 dark:text-white/76">
                             <span class="grid h-7 w-7 place-items-center rounded-md bg-emerald-100 text-emerald-700 dark:bg-white dark:text-emerald-800"><i class="fa-solid fa-users"></i></span>
-                            สร้างคุณภาพชีวิตที่ดีและพัฒนาสังคมอย่างยั่งยืน
+                            {{ $fs('social_credit.social_development_fund.description', 'สร้างคุณภาพชีวิตที่ดีและพัฒนาสังคมอย่างยั่งยืน') }}
                         </p>
                     </article>
 
@@ -209,16 +214,16 @@
                             <div class="min-w-0 flex-1">
                                 <p class="text-base font-semibold text-emerald-800 dark:text-white/86">ให้สินเชื่อสหกรณ์อื่น</p>
                                 <div class="mt-1.5 flex min-w-0 flex-wrap items-baseline gap-x-1">
-                                    <span class="odometer max-w-full whitespace-nowrap text-[clamp(1.35rem,1.9vw,2rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="36000000">36,000,000</span>
-                                    <span class="text-xs font-semibold text-emerald-700 dark:text-white/70">บาท</span>
+                                    <span class="odometer max-w-full whitespace-nowrap text-[clamp(1.35rem,1.9vw,2rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="{{ $fs('social_credit.coop_loans.odometer', 36000000) }}">{{ $fs('social_credit.coop_loans.value', '36,000,000') }}</span>
+                                    <span class="text-xs font-semibold text-emerald-700 dark:text-white/70">{{ $fs('social_credit.coop_loans.unit', 'บาท') }}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="mt-5 flex items-center gap-4 border-t border-emerald-900/8 pt-4 dark:border-white/12">
-                            <div class="grid h-[3.25rem] w-[3.25rem] place-items-center rounded-full bg-[conic-gradient(#059669_0_11%,#e5e7eb_11%_100%)] p-1">
-                                <div class="grid h-full w-full place-items-center rounded-full bg-white text-xs font-black text-emerald-800">11%</div>
+                            <div class="grid h-[3.25rem] w-[3.25rem] place-items-center rounded-full p-1" style="background: conic-gradient(#059669 0 {{ $fs('social_credit.coop_loans.ratio', 11) }}%, #e5e7eb {{ $fs('social_credit.coop_loans.ratio', 11) }}% 100%)">
+                                <div class="grid h-full w-full place-items-center rounded-full bg-white text-xs font-black text-emerald-800">{{ $fs('social_credit.coop_loans.ratio', 11) }}%</div>
                             </div>
-                            <p class="text-xs font-medium text-emerald-800 dark:text-white/76">สัดส่วนต่อยอดสินเชื่อรวม</p>
+                            <p class="text-xs font-medium text-emerald-800 dark:text-white/76">{{ $fs('social_credit.coop_loans.ratio_label', 'สัดส่วนต่อยอดสินเชื่อรวม') }}</p>
                             <i class="fa-solid fa-chevron-right ml-auto text-emerald-500" aria-hidden="true"></i>
                         </div>
                     </article>

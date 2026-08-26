@@ -68,6 +68,75 @@ return [
         ],
     ],
 
+    'financial_status' => [
+        'meta' => [
+            'data_date_label' => 'ข้อมูล ณ วันที่ 08 สิงหาคม 2569',
+            'fiscal_year_label' => 'ประจำปีบัญชี 2567',
+        ],
+        'financial' => [
+            'total_members' => [
+                'value' => '14,075',
+                'odometer' => 14075,
+            ],
+            'associate_members' => [
+                'value' => '1,124',
+                'odometer' => 1124,
+            ],
+            'shares' => [
+                'value' => '28,736,215',
+                'odometer' => 28736215,
+                'unit' => 'หุ้น',
+            ],
+            'share_amount' => [
+                'value' => '287,362,150',
+                'odometer' => 287362150,
+                'unit' => 'บาท',
+            ],
+            'assets' => [
+                'value' => '0',
+                'odometer' => 0,
+                'unit' => 'ล้าน',
+                'trend' => '+6.2% จากปีก่อนหน้า',
+            ],
+            'deposits' => [
+                'value' => '7,762',
+                'odometer' => 7762,
+                'unit' => 'ล้าน',
+                'trend' => '+4.8% จากปีก่อนหน้า',
+            ],
+        ],
+        'social_credit' => [
+            'public_fund' => [
+                'value' => '3.36',
+                'odometer' => 3.36,
+                'unit' => 'ล้าน',
+                'progress' => 58,
+                'description' => 'เพื่อประโยชน์สาธารณะของสมาชิกและชุมชน',
+            ],
+            'social_development_fund' => [
+                'value' => '9.58',
+                'odometer' => 9.58,
+                'unit' => 'ล้าน',
+                'progress' => 54,
+                'description' => 'สร้างคุณภาพชีวิตที่ดีและพัฒนาสังคมอย่างยั่งยืน',
+            ],
+            'member_loans' => [
+                'value' => '808,738,464',
+                'odometer' => 808738464,
+                'unit' => 'บาท',
+                'ratio' => 89,
+                'ratio_label' => 'สัดส่วนต่อยอดสินเชื่อรวม',
+            ],
+            'coop_loans' => [
+                'value' => '36,000,000',
+                'odometer' => 36000000,
+                'unit' => 'บาท',
+                'ratio' => 11,
+                'ratio_label' => 'สัดส่วนต่อยอดสินเชื่อรวม',
+            ],
+        ],
+    ],
+
     'ebooks' => [
         [
             'id' => 'annual-report-2560',
