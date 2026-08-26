@@ -238,7 +238,7 @@ export function BranchNetworkMap({ branches, variant = "section" }: BranchNetwor
 
                 <aside
                     className={[
-                        "absolute left-4 z-20 flex w-[min(280px,calc(100vw-2rem))] flex-col overflow-hidden rounded-[22px] bg-white font-sans shadow-[0_24px_60px_rgba(2,6,23,0.34)] ring-1 ring-emerald-900/8 [font-family:var(--font-sans)] md:left-5 dark:bg-[#fbfefd] dark:ring-emerald-300/12",
+                        "absolute left-4 z-20 flex w-[min(280px,calc(100vw-2rem))] flex-col overflow-hidden rounded-[22px] bg-white font-sans shadow-[0_24px_60px_rgba(2,6,23,0.34)] ring-1 ring-emerald-900/8 [font-family:var(--font-sans)] md:left-5 dark:bg-[#05221c] dark:ring-emerald-300/12",
                         sidebarPositionClass,
                         sidebarHeightClass,
                     ].join(" ")}
@@ -255,7 +255,7 @@ export function BranchNetworkMap({ branches, variant = "section" }: BranchNetwor
                             </div>
                         </div>
                     </div>
-                    <div className={["overflow-y-auto bg-[#fbfefd] px-3 py-3 [font-family:var(--font-sans)] dark:bg-[#fbfefd]", sidebarListHeightClass].join(" ")}>
+                    <div className={["min-h-0 overflow-y-auto bg-[#fbfefd] px-3 py-3 [font-family:var(--font-sans)] dark:bg-[#061c18]", sidebarListHeightClass].join(" ")}>
                         <button
                             type="button"
                             onClick={() => fitBoundsForOverview(false)}
@@ -297,7 +297,7 @@ export function BranchNetworkMap({ branches, variant = "section" }: BranchNetwor
 function SidebarGroup({ title, children }: { title: string; children: ReactNode }) {
     return (
         <div className="mt-3 first:mt-0">
-            <p className="px-2 pb-1.5 text-[11px] font-extrabold text-black dark:text-emerald-200/58">{title}</p>
+            <p className="px-2 pb-1.5 text-[11px] font-extrabold text-black dark:text-emerald-100/72">{title}</p>
             <div className="space-y-2.5">{children}</div>
         </div>
     );
