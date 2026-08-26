@@ -208,7 +208,8 @@ export function AssetSalesMap({ assets, variant = "section" }: AssetSalesMapProp
     const visibleAssets = useMemo(
         () => assets.filter((asset) => {
             const matchesCategory = selectedCategory === "ทั้งหมด" || asset.category === selectedCategory;
-            const matchesListing = selectedListingFilter === "all" || getAssetListingType(asset) === selectedListingFilter;
+            const listingType = getAssetListingType(asset);
+            const matchesListing = selectedListingFilter === "all" || (listingType !== "inactive" && listingType === selectedListingFilter);
 
             return matchesCategory && matchesListing;
         }),
@@ -395,8 +396,8 @@ export function AssetSalesMap({ assets, variant = "section" }: AssetSalesMapProp
                                             "min-h-9 rounded-full border px-2 text-[11px] font-black transition",
                                             filter === "sale"
                                                 ? isActive
-                                                    ? "border-emerald-700 bg-emerald-700 text-white shadow-[0_8px_18px_rgba(5,150,105,0.2)]"
-                                                    : "border-emerald-700 bg-white text-emerald-900 hover:bg-emerald-50 dark:bg-transparent dark:text-emerald-100 dark:hover:bg-emerald-300/12"
+                                                    ? "border-red-600 bg-red-600 text-white shadow-[0_8px_18px_rgba(220,38,38,0.2)]"
+                                                    : "border-red-500 bg-white text-red-700 hover:bg-red-50 dark:bg-transparent dark:text-red-100 dark:hover:bg-red-300/12"
                                                 : filter === "rent"
                                                     ? isActive
                                                         ? "border-yellow-300 bg-yellow-300 text-emerald-950 shadow-[0_8px_18px_rgba(234,179,8,0.2)]"
@@ -463,8 +464,8 @@ export function AssetSalesMap({ assets, variant = "section" }: AssetSalesMapProp
                                                 listingType === "rent"
                                                     ? "bg-yellow-300 text-emerald-950"
                                                     : listingType === "inactive"
-                                                        ? "bg-slate-200 text-slate-700"
-                                                        : "bg-emerald-700 text-white",
+                                                        ? "bg-emerald-600 text-white"
+                                                        : "bg-red-600 text-white",
                                             ].join(" ")}>
                                                 {listingLabel}
                                             </span>

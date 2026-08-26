@@ -111,9 +111,9 @@
                                     required>
                                     <option value="sale" @selected(old('listing_type', 'sale') === 'sale')>ขาย</option>
                                     <option value="rent" @selected(old('listing_type') === 'rent')>เช่า</option>
-                                    <option value="inactive" @selected(old('listing_type') === 'inactive')>ไม่ขาย / ไม่แสดงบนหน้า GPS</option>
+                                    <option value="inactive" @selected(old('listing_type') === 'inactive')>ไม่ขาย</option>
                                 </select>
-                                <p class="mt-1 text-xs text-gray-500">รายการที่เลือก “ไม่ขาย” จะไม่แสดงบนหน้าแผนที่ขายสินทรัพย์</p>
+                                <p class="mt-1 text-xs text-gray-500">รายการที่เลือก “ไม่ขาย” จะแสดงเฉพาะตอนเลือกตัวกรอง “ทั้งหมด” และจะไม่แสดงเมื่อเลือก “ขาย” หรือ “เช่า”</p>
                             </div>
 
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
