@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
 
-    <link rel="icon" href="{{ url('images/sakofah-logo.png') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url('images/favicon.png') }}" type="image/png">
 
     <meta property="og:title" content="@yield('og_title', 'สหกรณ์อิสลามษะกอฟะฮ จำกัด')" />
     <meta property="og:type" content="website" />
