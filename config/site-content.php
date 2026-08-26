@@ -70,8 +70,8 @@ return [
 
     'financial_status' => [
         'meta' => [
-            'data_date_label' => 'ข้อมูล ณ วันที่ 08 สิงหาคม 2569',
-            'fiscal_year_label' => 'ประจำปีบัญชี 2567',
+            'data_date_label' => 'ข้อมูล ณ วันที่ 25 สิงหาคม 2569',
+            'fiscal_year_label' => 'ประจำปีบัญชี 2570',
         ],
         'financial' => [
             'total_members' => [
@@ -96,7 +96,7 @@ return [
                 'value' => '0',
                 'odometer' => 0,
                 'unit' => 'ล้าน',
-                'trend' => '+6.2% จากปีก่อนหน้า',
+                'trend' => '0% จากปีก่อนหน้า',
             ],
             'deposits' => [
                 'value' => '7,762',
