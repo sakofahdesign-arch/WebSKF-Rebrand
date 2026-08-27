@@ -98,7 +98,7 @@ export function PromotionNewsShowcase({ promotions, news }: PromotionNewsShowcas
                 </div>
 
                 <div
-                    className="relative mx-auto flex min-h-[250px] w-full max-w-5xl items-center justify-center overflow-visible p-0 sm:min-h-[300px] md:min-h-[360px]"
+                    className="relative mx-auto min-h-[250px] w-full max-w-6xl overflow-visible p-0 sm:min-h-[300px] md:min-h-[360px]"
                     onMouseEnter={() => setIsPaused(true)}
                     onMouseLeave={() => {
                         setIsPaused(false);
@@ -122,10 +122,10 @@ export function PromotionNewsShowcase({ promotions, news }: PromotionNewsShowcas
 
                     <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(6,78,59,0.08),transparent_72%)]" />
 
-                    <div className="relative z-10 flex w-full items-center justify-center gap-4 sm:gap-7 md:gap-10">
+                    <div className="relative z-10 w-full">
                         <button
                             type="button"
-                            className="relative flex aspect-[1920/610] w-[min(80vw,1024px)] items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-600"
+                            className="relative mx-auto flex aspect-[1920/610] w-[min(80vw,1024px)] items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-600"
                             style={{ perspective: "900px" }}
                             onClick={openActive}
                         >
@@ -195,7 +195,7 @@ export function PromotionNewsShowcase({ promotions, news }: PromotionNewsShowcas
 
                         {items.length > 1 && (
                             <div
-                                className="relative z-50 flex flex-col items-end py-2"
+                                className="absolute right-0 top-1/2 z-50 flex -translate-y-1/2 flex-col items-end py-2 max-md:right-1 max-md:translate-x-1/2"
                                 onMouseLeave={() => setHoveredIndex(null)}
                             >
                                 {timelineNodes.map((node) => {

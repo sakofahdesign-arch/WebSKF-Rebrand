@@ -98,6 +98,9 @@
         @yield('content')
     </main>
     @include('components.footer')
+    <div data-floating-music-player
+        data-audio-src="{{ asset('audio/anasheed-sakofah.m4a') }}"
+        data-title="อนาชีดษะกอฟะฮ"></div>
     <div id="cookie-consent"
         class="fixed bottom-4 left-4 right-4 md:left-8 md:right-auto md:bottom-8 max-w-sm bg-white border border-gray-200 rounded-xl shadow-lg p-4 md:p-6 z-50 hidden">
         <div class="text-sm text-gray-700">
