@@ -501,3 +501,12 @@ html.dark [data-section="partners-agencies"] a.group > div > div:first-child {
     @apply bg-transparent! dark:invert;
     }
 }
+
+@keyframes sakofah-eq {
+  0%, 100% {
+    transform: scaleY(0.34);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
