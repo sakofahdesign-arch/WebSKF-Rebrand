@@ -145,19 +145,19 @@ export function FloatingMusicPlayer({
     );
 
     return (
-        <div className="fixed bottom-5 left-1/2 z-[90] w-[min(27rem,calc(100vw-2rem))] -translate-x-1/2 sm:bottom-7">
+        <div className="fixed bottom-4 right-4 z-[90] w-[min(22rem,calc(100vw-2rem))] sm:bottom-6 sm:right-6">
             <audio ref={audioRef} src={src} preload="auto" playsInline />
 
             <div
                 className={cn(
-                    "relative mx-auto min-h-[76px] overflow-visible rounded-[10px] border border-white/15 bg-[#4a4038]/94 text-white shadow-[0_24px_70px_rgba(0,0,0,0.34)] backdrop-blur-xl transition-[width,transform,opacity] duration-500",
-                    isCollapsed ? "w-[92px]" : "w-full",
+                    "relative ml-auto min-h-[64px] overflow-visible rounded-[10px] border border-white/15 bg-[#4a4038]/94 text-white shadow-[0_18px_54px_rgba(0,0,0,0.32)] backdrop-blur-xl transition-[width,transform,opacity] duration-500",
+                    isCollapsed ? "w-[78px]" : "w-full",
                 )}
             >
                 <button
                     type="button"
                     onClick={() => setIsCollapsed((value) => !value)}
-                    className="absolute -right-3 -top-3 z-20 grid h-9 w-9 place-items-center rounded-full border border-white/15 bg-[#5b564f] text-white shadow-[0_12px_28px_rgba(0,0,0,0.35)] transition hover:bg-[#686057] active:scale-95"
+                    className="absolute -right-2.5 -top-2.5 z-20 grid h-8 w-8 place-items-center rounded-full border border-white/15 bg-[#5b564f] text-white shadow-[0_10px_24px_rgba(0,0,0,0.35)] transition hover:bg-[#686057] active:scale-95"
                     aria-label={isCollapsed ? "Expand music player" : "Collapse music player"}
                 >
                     <Minus className="h-4 w-4" />
@@ -166,7 +166,7 @@ export function FloatingMusicPlayer({
                 {artwork ? (
                     <div
                         className={cn(
-                            "absolute -left-3 -top-5 z-10 h-[88px] w-[88px] overflow-hidden rounded-xl bg-white p-1 shadow-[0_16px_34px_rgba(0,0,0,0.38)] transition duration-500",
+                            "absolute -left-2.5 -top-4 z-10 h-[72px] w-[72px] overflow-hidden rounded-xl bg-white p-1 shadow-[0_14px_30px_rgba(0,0,0,0.34)] transition duration-500",
                             isCollapsed && "left-1/2 -translate-x-1/2",
                         )}
                     >
@@ -176,14 +176,14 @@ export function FloatingMusicPlayer({
 
                 <div
                     className={cn(
-                        "grid min-h-[76px] grid-cols-[1fr_auto] items-center gap-4 px-4 py-3 transition-opacity duration-300",
-                        artwork ? "pl-[6.2rem]" : "pl-4",
+                        "grid min-h-[64px] grid-cols-[1fr_auto] items-center gap-3 px-3 py-2.5 transition-opacity duration-300",
+                        artwork ? "pl-[5rem]" : "pl-3",
                         isCollapsed && "pointer-events-none opacity-0",
                     )}
                 >
                     <div className="min-w-0">
                         <div className="flex min-w-0 items-center gap-3">
-                            <div className="flex h-8 w-5 shrink-0 items-end gap-[3px] text-orange-500" aria-hidden="true">
+                            <div className="flex h-7 w-5 shrink-0 items-end gap-[3px] text-orange-500" aria-hidden="true">
                                 {equalizerBars.map((bar) => (
                                     <span
                                         key={bar}
@@ -192,23 +192,23 @@ export function FloatingMusicPlayer({
                                             isPlaying ? "animate-[sakofah-eq_0.72s_ease-in-out_infinite]" : "h-2",
                                         )}
                                         style={{
-                                            height: isPlaying ? `${12 + bar * 4}px` : undefined,
+                                            height: isPlaying ? `${10 + bar * 3}px` : undefined,
                                             animationDelay: `${bar * 0.12}s`,
                                         }}
                                     />
                                 ))}
                             </div>
                             <div className="min-w-0">
-                                <p className="truncate text-[15px] font-black uppercase leading-tight tracking-wide">
+                                <p className="truncate text-[13px] font-black uppercase leading-tight tracking-wide">
                                     {title}
                                 </p>
-                                <p className="truncate text-[11px] font-bold uppercase tracking-[0.18em] text-white/48">
+                                <p className="truncate text-[10px] font-bold uppercase tracking-[0.18em] text-white/48">
                                     {autoPlayBlocked ? "Tap to play" : artist}
                                 </p>
                             </div>
                         </div>
 
-                        <div className="mt-3 flex items-center gap-2">
+                        <div className="mt-2 flex items-center gap-2">
                             <span className="w-8 text-[10px] font-bold tabular-nums text-white/52">{formatTime(currentTime)}</span>
                             <input
                                 type="range"
@@ -224,11 +224,11 @@ export function FloatingMusicPlayer({
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-2.5">
+                    <div className="flex items-center gap-1.5">
                         <button
                             type="button"
                             onClick={() => seekTo(0)}
-                            className="grid h-8 w-8 place-items-center rounded-full text-white/72 transition hover:bg-white/10 hover:text-white active:scale-95"
+                            className="grid h-7 w-7 place-items-center rounded-full text-white/72 transition hover:bg-white/10 hover:text-white active:scale-95"
                             aria-label="Restart"
                         >
                             <SkipBack className="h-4 w-4" fill="currentColor" />
@@ -236,7 +236,7 @@ export function FloatingMusicPlayer({
                         <button
                             type="button"
                             onClick={togglePlayback}
-                            className="grid h-10 w-10 place-items-center rounded-full bg-white text-[#4a4038] shadow-[0_10px_24px_rgba(0,0,0,0.22)] transition hover:bg-orange-50 active:scale-95"
+                            className="grid h-9 w-9 place-items-center rounded-full bg-white text-[#4a4038] shadow-[0_8px_20px_rgba(0,0,0,0.22)] transition hover:bg-orange-50 active:scale-95"
                             aria-label={isPlaying ? "Pause song" : "Play song"}
                         >
                             {isPlaying ? <Pause className="h-5 w-5" fill="currentColor" /> : <Play className="ml-0.5 h-5 w-5" fill="currentColor" />}
@@ -244,7 +244,7 @@ export function FloatingMusicPlayer({
                         <button
                             type="button"
                             onClick={() => seekTo(Math.min(progress + 12, 100))}
-                            className="grid h-8 w-8 place-items-center rounded-full text-white/72 transition hover:bg-white/10 hover:text-white active:scale-95"
+                            className="grid h-7 w-7 place-items-center rounded-full text-white/72 transition hover:bg-white/10 hover:text-white active:scale-95"
                             aria-label="Forward"
                         >
                             <SkipForward className="h-4 w-4" fill="currentColor" />
@@ -252,7 +252,7 @@ export function FloatingMusicPlayer({
                         <button
                             type="button"
                             onClick={() => setIsMuted((value) => !value)}
-                            className="grid h-8 w-8 place-items-center rounded-full text-white/72 transition hover:bg-white/10 hover:text-white active:scale-95"
+                            className="grid h-7 w-7 place-items-center rounded-full text-white/72 transition hover:bg-white/10 hover:text-white active:scale-95"
                             aria-label={isMuted ? "Unmute" : "Mute"}
                         >
                             {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
@@ -269,7 +269,7 @@ export function FloatingMusicPlayer({
                     <button
                         type="button"
                         onClick={togglePlayback}
-                        className="grid h-12 w-12 place-items-center rounded-full bg-white text-[#4a4038] shadow-[0_10px_24px_rgba(0,0,0,0.22)] transition hover:bg-orange-50 active:scale-95"
+                        className="grid h-10 w-10 place-items-center rounded-full bg-white text-[#4a4038] shadow-[0_8px_20px_rgba(0,0,0,0.22)] transition hover:bg-orange-50 active:scale-95"
                         aria-label={isPlaying ? "Pause song" : "Play song"}
                     >
                         {isPlaying ? <Pause className="h-5 w-5" fill="currentColor" /> : <Play className="ml-0.5 h-5 w-5" fill="currentColor" />}
