@@ -32,7 +32,7 @@ export function FloatingMusicPlayer({
     const [isPlaying, setIsPlaying] = useState(false);
     const [duration, setDuration] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
-    const [volume, setVolume] = useState(0.82);
+    const [volume] = useState(0.82);
     const [isMuted, setIsMuted] = useState(false);
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [autoPlayBlocked, setAutoPlayBlocked] = useState(false);
@@ -176,7 +176,7 @@ export function FloatingMusicPlayer({
 
                 <div
                     className={cn(
-                        "grid min-h-[68px] grid-cols-[1fr_auto] items-center gap-2 px-2.5 py-2 transition-opacity duration-300",
+                        "grid min-h-[68px] grid-cols-[1fr_auto] items-center gap-3 px-2.5 py-2 transition-opacity duration-300",
                         artwork ? "pl-[4.05rem]" : "pl-2.5",
                         isCollapsed && "pointer-events-none opacity-0",
                     )}
@@ -208,8 +208,8 @@ export function FloatingMusicPlayer({
                             </div>
                         </div>
 
-                        <div className="mt-1.5 grid grid-cols-[1.7rem_1fr_1.7rem] items-center gap-1.5">
-                            <span className="w-7 text-[8.5px] font-bold tabular-nums text-white/52">{formatTime(currentTime)}</span>
+                        <div className="mt-1.5 grid grid-cols-[2.25rem_1fr_2.25rem] items-center gap-1.5">
+                            <span className="w-9 text-[8.5px] font-bold tabular-nums text-white/52">{formatTime(currentTime)}</span>
                             <input
                                 type="range"
                                 min={0}
@@ -220,7 +220,7 @@ export function FloatingMusicPlayer({
                                 style={progressStyle}
                                 aria-label="Song position"
                             />
-                            <span className="w-7 text-right text-[8.5px] font-bold tabular-nums text-white/52">{formatTime(duration)}</span>
+                            <span className="w-9 text-right text-[8.5px] font-bold tabular-nums text-white/52">{formatTime(duration)}</span>
                         </div>
                     </div>
 

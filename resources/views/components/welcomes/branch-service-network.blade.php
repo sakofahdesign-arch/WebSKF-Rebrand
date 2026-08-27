@@ -40,7 +40,7 @@
         <div
             data-branch-network-map
             data-branches='@json($branches)'
-            class="min-h-[560px] overflow-hidden rounded-[1.75rem] border border-emerald-900/10 bg-white/90 p-1 shadow-[0_22px_70px_rgba(4,60,50,0.07)]"
+            class="min-h-[560px] overflow-hidden rounded-[1.75rem] border border-emerald-900/10 bg-white/90 p-px shadow-[0_22px_70px_rgba(4,60,50,0.07)]"
         >
             <div class="grid min-h-[544px] place-items-center rounded-[1.35rem] text-sm font-semibold text-emerald-950/60">
                 กำลังโหลดแผนที่สาขา

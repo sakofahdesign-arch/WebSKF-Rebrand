@@ -32,7 +32,7 @@
                     <button
                         type="button"
                         @click="activeTab = 'directors'"
-                        :class="activeTab === 'directors' ? 'bg-emerald-700 text-white shadow-[0_10px_22px_rgba(4,120,87,0.22)]' : 'bg-transparent text-slate-600 hover:bg-emerald-50 hover:text-emerald-900'"
+                        :class="activeTab === 'directors' ? 'bg-emerald-700 text-white shadow-[0_10px_22px_rgba(4,120,87,0.22)]' : 'bg-transparent text-black hover:bg-emerald-50 hover:text-black'"
                         class="min-h-10 rounded-xl px-3 py-2 text-xs font-extrabold leading-tight transition md:text-sm"
                     >
                         คณะกรรมการดำเนินการ
@@ -40,7 +40,7 @@
                     <button
                         type="button"
                         @click="activeTab = 'executives'"
-                        :class="activeTab === 'executives' ? 'bg-emerald-700 text-white shadow-[0_10px_22px_rgba(4,120,87,0.22)]' : 'bg-transparent text-slate-600 hover:bg-emerald-50 hover:text-emerald-900'"
+                        :class="activeTab === 'executives' ? 'bg-emerald-700 text-white shadow-[0_10px_22px_rgba(4,120,87,0.22)]' : 'bg-transparent text-black hover:bg-emerald-50 hover:text-emerald-900'"
                         class="min-h-10 rounded-xl px-3 py-2 text-xs font-extrabold leading-tight transition md:text-sm"
                     >
                         ผู้บริหาร
@@ -48,7 +48,7 @@
                     <button
                         type="button"
                         @click="activeTab = 'branchExecutives'"
-                        :class="activeTab === 'branchExecutives' ? 'bg-emerald-700 text-white shadow-[0_10px_22px_rgba(4,120,87,0.22)]' : 'bg-transparent text-slate-600 hover:bg-emerald-50 hover:text-emerald-900'"
+                        :class="activeTab === 'branchExecutives' ? 'bg-emerald-700 text-white shadow-[0_10px_22px_rgba(4,120,87,0.22)]' : 'bg-transparent text-black hover:bg-emerald-50 hover:text-emerald-900'"
                         class="min-h-10 rounded-xl px-3 py-2 text-xs font-extrabold leading-tight transition md:text-sm"
                     >
                         ผู้บริหารสาขา
@@ -56,7 +56,7 @@
                     <button
                         type="button"
                         @click="activeTab = 'advisors'"
-                        :class="activeTab === 'advisors' ? 'bg-emerald-700 text-white shadow-[0_10px_22px_rgba(4,120,87,0.22)]' : 'bg-transparent text-slate-600 hover:bg-emerald-50 hover:text-emerald-900'"
+                        :class="activeTab === 'advisors' ? 'bg-emerald-700 text-white shadow-[0_10px_22px_rgba(4,120,87,0.22)]' : 'bg-transparent text-black hover:bg-emerald-50 hover:text-emerald-900'"
                         class="min-h-10 rounded-xl px-3 py-2 text-xs font-extrabold leading-tight transition md:text-sm"
                     >
                         คณะที่ปรึกษา
@@ -64,7 +64,7 @@
                     <button
                         type="button"
                         @click="activeTab = 'founders'"
-                        :class="activeTab === 'founders' ? 'bg-emerald-700 text-white shadow-[0_10px_22px_rgba(4,120,87,0.22)]' : 'bg-transparent text-slate-600 hover:bg-emerald-50 hover:text-emerald-900'"
+                        :class="activeTab === 'founders' ? 'bg-emerald-700 text-white shadow-[0_10px_22px_rgba(4,120,87,0.22)]' : 'bg-transparent text-black hover:bg-emerald-50 hover:text-emerald-900'"
                         class="min-h-10 rounded-xl px-3 py-2 text-xs font-extrabold leading-tight transition md:text-sm"
                     >
                         ทำเนียบผู้ก่อตั้ง
