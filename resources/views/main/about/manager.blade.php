@@ -24,7 +24,7 @@
                 </header>
 
                 <nav
-                    class="mx-auto mb-5 grid max-w-4xl grid-cols-2 gap-1.5 rounded-xl border border-emerald-900/10 bg-white/86 p-1.5 shadow-[0_12px_34px_rgba(4,60,50,0.07)] backdrop-blur md:grid-cols-5"
+                    class="mx-auto mb-5 grid max-w-5xl grid-cols-2 gap-2 rounded-2xl border border-emerald-900/10 bg-white/85 p-2 shadow-[0_18px_46px_rgba(4,60,50,0.08)] backdrop-blur md:grid-cols-5"
                     :class="loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'"
                     style="transition-delay: 120ms"
                     aria-label="หมวดโครงสร้างการบริหารงาน"
@@ -32,40 +32,40 @@
                     <button
                         type="button"
                         @click="activeTab = 'directors'"
-                        :class="activeTab === 'directors' ? 'bg-emerald-700 text-white shadow-[0_8px_18px_rgba(4,120,87,0.18)]' : 'bg-transparent text-slate-600 hover:bg-emerald-50 hover:text-emerald-900'"
-                        class="min-h-8 rounded-lg px-2 py-1.5 text-[11px] font-extrabold leading-tight transition md:text-xs"
+                        :class="activeTab === 'directors' ? 'bg-emerald-700 text-white shadow-[0_10px_22px_rgba(4,120,87,0.22)]' : 'bg-transparent text-slate-600 hover:bg-emerald-50 hover:text-emerald-900'"
+                        class="min-h-10 rounded-xl px-3 py-2 text-xs font-extrabold leading-tight transition md:text-sm"
                     >
                         คณะกรรมการดำเนินการ
                     </button>
                     <button
                         type="button"
                         @click="activeTab = 'executives'"
-                        :class="activeTab === 'executives' ? 'bg-emerald-700 text-white shadow-[0_8px_18px_rgba(4,120,87,0.18)]' : 'bg-transparent text-slate-600 hover:bg-emerald-50 hover:text-emerald-900'"
-                        class="min-h-8 rounded-lg px-2 py-1.5 text-[11px] font-extrabold leading-tight transition md:text-xs"
+                        :class="activeTab === 'executives' ? 'bg-emerald-700 text-white shadow-[0_10px_22px_rgba(4,120,87,0.22)]' : 'bg-transparent text-slate-600 hover:bg-emerald-50 hover:text-emerald-900'"
+                        class="min-h-10 rounded-xl px-3 py-2 text-xs font-extrabold leading-tight transition md:text-sm"
                     >
                         ผู้บริหาร
                     </button>
                     <button
                         type="button"
                         @click="activeTab = 'branchExecutives'"
-                        :class="activeTab === 'branchExecutives' ? 'bg-emerald-700 text-white shadow-[0_8px_18px_rgba(4,120,87,0.18)]' : 'bg-transparent text-slate-600 hover:bg-emerald-50 hover:text-emerald-900'"
-                        class="min-h-8 rounded-lg px-2 py-1.5 text-[11px] font-extrabold leading-tight transition md:text-xs"
+                        :class="activeTab === 'branchExecutives' ? 'bg-emerald-700 text-white shadow-[0_10px_22px_rgba(4,120,87,0.22)]' : 'bg-transparent text-slate-600 hover:bg-emerald-50 hover:text-emerald-900'"
+                        class="min-h-10 rounded-xl px-3 py-2 text-xs font-extrabold leading-tight transition md:text-sm"
                     >
                         ผู้บริหารสาขา
                     </button>
                     <button
                         type="button"
                         @click="activeTab = 'advisors'"
-                        :class="activeTab === 'advisors' ? 'bg-emerald-700 text-white shadow-[0_8px_18px_rgba(4,120,87,0.18)]' : 'bg-transparent text-slate-600 hover:bg-emerald-50 hover:text-emerald-900'"
-                        class="min-h-8 rounded-lg px-2 py-1.5 text-[11px] font-extrabold leading-tight transition md:text-xs"
+                        :class="activeTab === 'advisors' ? 'bg-emerald-700 text-white shadow-[0_10px_22px_rgba(4,120,87,0.22)]' : 'bg-transparent text-slate-600 hover:bg-emerald-50 hover:text-emerald-900'"
+                        class="min-h-10 rounded-xl px-3 py-2 text-xs font-extrabold leading-tight transition md:text-sm"
                     >
                         คณะที่ปรึกษา
                     </button>
                     <button
                         type="button"
                         @click="activeTab = 'founders'"
-                        :class="activeTab === 'founders' ? 'bg-emerald-700 text-white shadow-[0_8px_18px_rgba(4,120,87,0.18)]' : 'bg-transparent text-slate-600 hover:bg-emerald-50 hover:text-emerald-900'"
-                        class="min-h-8 rounded-lg px-2 py-1.5 text-[11px] font-extrabold leading-tight transition md:text-xs"
+                        :class="activeTab === 'founders' ? 'bg-emerald-700 text-white shadow-[0_10px_22px_rgba(4,120,87,0.22)]' : 'bg-transparent text-slate-600 hover:bg-emerald-50 hover:text-emerald-900'"
+                        class="min-h-10 rounded-xl px-3 py-2 text-xs font-extrabold leading-tight transition md:text-sm"
                     >
                         ทำเนียบผู้ก่อตั้ง
                     </button>
