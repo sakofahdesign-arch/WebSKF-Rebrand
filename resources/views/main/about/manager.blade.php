@@ -2,111 +2,130 @@
 @section('title', 'คณะกรรมการและบุคลากร')
 
 @section('content')
-    <div class="bg-white min-h-screen relative overflow-hidden">
-
-        <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 opacity-30 pointer-events-none">
-            <div class="absolute top-[-10%] right-[-5%] w-96 h-96 bg-green-50 rounded-full mix-blend-multiply filter blur-3xl opacity-70"></div>
-            <div class="absolute bottom-[-10%] left-[-10%] w-96 h-96 bg-blue-50 rounded-full mix-blend-multiply filter blur-3xl opacity-70"></div>
+    <main class="relative min-h-screen overflow-hidden bg-white">
+        <div class="pointer-events-none absolute inset-0 -z-10 opacity-70">
+            <div class="absolute right-[-10rem] top-[-10rem] h-96 w-96 rounded-full bg-emerald-50 blur-3xl"></div>
+            <div class="absolute bottom-[-10rem] left-[-10rem] h-96 w-96 rounded-full bg-sky-50 blur-3xl"></div>
         </div>
 
-        <div class="container mx-auto px-4 py-16">
-            <div x-data="{ activeTab: 'directors', loaded: false }" x-init="() => { setTimeout(() => loaded = true, 100) }">
-
-                <div class="text-center mb-12 transition-all duration-700 ease-out"
-                     :class="loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'">
-                    <h1 class="text-3xl md:text-5xl font-extrabold text-green-800 tracking-tight mb-4">
+        <section class="mx-auto max-w-[1280px] px-4 py-10 sm:px-6 lg:px-8 lg:py-12">
+            <div x-data="{ activeTab: 'directors', loaded: false }" x-init="setTimeout(() => loaded = true, 100)">
+                <header
+                    class="mx-auto mb-7 max-w-3xl text-center transition-all duration-700 ease-out"
+                    :class="loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'"
+                >
+                    <h1 class="text-3xl font-extrabold tracking-tight text-emerald-900 md:text-4xl">
                         โครงสร้างการบริหารงาน
                     </h1>
-                    <div class="h-1.5 w-24 bg-green-500 mx-auto rounded-full mb-6"></div>
-                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    <div class="mx-auto mt-3 h-1 w-20 rounded-full bg-emerald-500"></div>
+                    <p class="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 md:text-base">
                         คณะกรรมการและบุคลากรผู้ทรงคุณวุฒิ ผู้อยู่เบื้องหลังความสำเร็จและการขับเคลื่อนสหกรณ์สู่ความมั่นคง
                     </p>
-                </div>
+                </header>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12 transition-all duration-700 ease-out max-w-5xl mx-auto"
-                     style="transition-delay: 200ms"
-                     :class="loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'">
-
-                    <button @click="activeTab = 'directors'"
-                        :class="activeTab === 'directors' ? 'bg-green-600 text-white shadow-lg shadow-green-200 ring-2 ring-green-600 ring-offset-2' : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-200 hover:border-green-300'"
-                        class="w-full py-4 rounded-xl font-bold text-lg transition-all duration-300 flex items-center justify-center">
-                        <span>คณะกรรมการดำเนินการ</span>
+                <nav
+                    class="mx-auto mb-7 grid max-w-5xl grid-cols-2 gap-2 rounded-2xl border border-emerald-900/10 bg-white/86 p-2 shadow-[0_16px_44px_rgba(4,60,50,0.08)] backdrop-blur md:grid-cols-5"
+                    :class="loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'"
+                    style="transition-delay: 120ms"
+                    aria-label="หมวดโครงสร้างการบริหารงาน"
+                >
+                    <button
+                        type="button"
+                        @click="activeTab = 'directors'"
+                        :class="activeTab === 'directors' ? 'bg-emerald-700 text-white shadow-[0_10px_22px_rgba(4,120,87,0.22)]' : 'bg-transparent text-slate-600 hover:bg-emerald-50 hover:text-emerald-900'"
+                        class="min-h-10 rounded-xl px-3 py-2 text-xs font-extrabold transition md:text-sm"
+                    >
+                        คณะกรรมการดำเนินการ
                     </button>
-
-                    <button @click="activeTab = 'executives'"
-                        :class="activeTab === 'executives' ? 'bg-green-600 text-white shadow-lg shadow-green-200 ring-2 ring-green-600 ring-offset-2' : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-200 hover:border-green-300'"
-                        class="w-full py-4 rounded-xl font-bold text-lg transition-all duration-300 flex items-center justify-center">
-                        <span>ผู้บริหาร</span>
+                    <button
+                        type="button"
+                        @click="activeTab = 'executives'"
+                        :class="activeTab === 'executives' ? 'bg-emerald-700 text-white shadow-[0_10px_22px_rgba(4,120,87,0.22)]' : 'bg-transparent text-slate-600 hover:bg-emerald-50 hover:text-emerald-900'"
+                        class="min-h-10 rounded-xl px-3 py-2 text-xs font-extrabold transition md:text-sm"
+                    >
+                        ผู้บริหาร
                     </button>
-
-                    <button @click="activeTab = 'advisors'"
-                        :class="activeTab === 'advisors' ? 'bg-green-600 text-white shadow-lg shadow-green-200 ring-2 ring-green-600 ring-offset-2' : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-200 hover:border-green-300'"
-                        class="w-full py-4 rounded-xl font-bold text-lg transition-all duration-300 flex items-center justify-center">
-                        <span>คณะที่ปรึกษา</span>
+                    <button
+                        type="button"
+                        @click="activeTab = 'branchExecutives'"
+                        :class="activeTab === 'branchExecutives' ? 'bg-emerald-700 text-white shadow-[0_10px_22px_rgba(4,120,87,0.22)]' : 'bg-transparent text-slate-600 hover:bg-emerald-50 hover:text-emerald-900'"
+                        class="min-h-10 rounded-xl px-3 py-2 text-xs font-extrabold transition md:text-sm"
+                    >
+                        ผู้บริหารสาขา
                     </button>
-
-                    <button @click="activeTab = 'founders'"
-                        :class="activeTab === 'founders' ? 'bg-green-600 text-white shadow-lg shadow-green-200 ring-2 ring-green-600 ring-offset-2' : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-200 hover:border-green-300'"
-                        class="w-full py-4 rounded-xl font-bold text-lg transition-all duration-300 flex items-center justify-center">
-                        <span>ทำเนียบผู้ก่อตั้ง</span>
+                    <button
+                        type="button"
+                        @click="activeTab = 'advisors'"
+                        :class="activeTab === 'advisors' ? 'bg-emerald-700 text-white shadow-[0_10px_22px_rgba(4,120,87,0.22)]' : 'bg-transparent text-slate-600 hover:bg-emerald-50 hover:text-emerald-900'"
+                        class="min-h-10 rounded-xl px-3 py-2 text-xs font-extrabold transition md:text-sm"
+                    >
+                        คณะที่ปรึกษา
                     </button>
-                </div>
+                    <button
+                        type="button"
+                        @click="activeTab = 'founders'"
+                        :class="activeTab === 'founders' ? 'bg-emerald-700 text-white shadow-[0_10px_22px_rgba(4,120,87,0.22)]' : 'bg-transparent text-slate-600 hover:bg-emerald-50 hover:text-emerald-900'"
+                        class="min-h-10 rounded-xl px-3 py-2 text-xs font-extrabold transition md:text-sm"
+                    >
+                        ทำเนียบผู้ก่อตั้ง
+                    </button>
+                </nav>
 
-                <div class="relative transition-all duration-700 ease-out min-h-[500px]"
-                     style="transition-delay: 400ms"
-                     :class="loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'">
+                <div
+                    class="mx-auto max-w-5xl transition-all duration-700 ease-out"
+                    :class="loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'"
+                    style="transition-delay: 220ms"
+                >
+                    <div class="overflow-hidden rounded-[1.65rem] border border-emerald-900/10 bg-white p-2 shadow-[0_24px_70px_rgba(4,60,50,0.10)]">
+                        <div class="rounded-[1.3rem] bg-slate-50/75 p-3 md:p-5">
+                            <figure x-show="activeTab === 'directors'" x-transition.opacity.duration.250ms>
+                                <img
+                                    src="{{ asset('images/board/committee-28-current.jpg') }}"
+                                    alt="คณะกรรมการดำเนินการ ชุดที่ 28"
+                                    class="mx-auto max-h-[72vh] w-auto max-w-full rounded-2xl object-contain shadow-sm"
+                                    loading="lazy"
+                                >
+                            </figure>
 
-                    <div class="card bg-white shadow-2xl border border-gray-100 rounded-2xl overflow-hidden max-w-6xl mx-auto">
-                        <div class="card-body p-2 md:p-6 bg-gray-50/50">
+                            <figure x-show="activeTab === 'executives'" x-transition.opacity.duration.250ms style="display: none;">
+                                <img
+                                    src="{{ asset('images/board/executives-current.jpg') }}"
+                                    alt="ผู้บริหาร"
+                                    class="mx-auto max-h-[72vh] w-auto max-w-full rounded-2xl object-contain shadow-sm"
+                                    loading="lazy"
+                                >
+                            </figure>
 
-                            <div x-show="activeTab === 'directors'"
-                                 x-transition:enter="transition ease-out duration-300"
-                                 x-transition:enter-start="opacity-0"
-                                 x-transition:enter-end="opacity-100">
-                                <img src="{{ asset('images/board/คณะกรรมการชุดที่ 28.jpg') }}"
-                                     alt="คณะกรรมการดำเนินการ ชุดที่ 28"
-                                     class="w-full h-auto rounded-xl shadow-sm"
-                                     loading="lazy">
-                            </div>
+                            <figure x-show="activeTab === 'branchExecutives'" x-transition.opacity.duration.250ms style="display: none;">
+                                <img
+                                    src="{{ asset('images/board/branch-executives-current.jpg') }}"
+                                    alt="ผู้บริหารสาขา"
+                                    class="mx-auto max-h-[72vh] w-auto max-w-full rounded-2xl object-contain shadow-sm"
+                                    loading="lazy"
+                                >
+                            </figure>
 
-                            <div x-show="activeTab === 'executives'"
-                                 x-transition:enter="transition ease-out duration-300"
-                                 x-transition:enter-start="opacity-0"
-                                 x-transition:enter-end="opacity-100"
-                                 style="display: none;">
-                                <img src="{{ asset('images/board/ผู้บริหาร68.jpg') }}"
-                                     alt="ผู้บริหาร"
-                                     class="w-full h-auto rounded-xl shadow-sm"
-                                     loading="lazy">
-                            </div>
+                            <figure x-show="activeTab === 'advisors'" x-transition.opacity.duration.250ms style="display: none;">
+                                <img
+                                    src="{{ asset('images/board/คณะที่ปรึกษา.jpg') }}"
+                                    alt="คณะที่ปรึกษา"
+                                    class="mx-auto max-h-[72vh] w-auto max-w-full rounded-2xl object-contain shadow-sm"
+                                    loading="lazy"
+                                >
+                            </figure>
 
-                            <div x-show="activeTab === 'advisors'"
-                                 x-transition:enter="transition ease-out duration-300"
-                                 x-transition:enter-start="opacity-0"
-                                 x-transition:enter-end="opacity-100"
-                                 style="display: none;">
-                                <img src="{{ asset('images/board/คณะที่ปรึกษา.jpg') }}"
-                                     alt="คณะที่ปรึกษา"
-                                     class="w-full h-auto rounded-xl shadow-sm"
-                                     loading="lazy">
-                            </div>
-
-                            <div x-show="activeTab === 'founders'"
-                                 x-transition:enter="transition ease-out duration-300"
-                                 x-transition:enter-start="opacity-0"
-                                 x-transition:enter-end="opacity-100"
-                                 style="display: none;">
-                                <img src="{{ asset('images/board/บอร์ดก่อตั้ง.jpg') }}"
-                                     alt="ทำเนียบผู้ก่อตั้ง"
-                                     class="w-full h-auto rounded-xl shadow-sm"
-                                     loading="lazy">
-                            </div>
-
+                            <figure x-show="activeTab === 'founders'" x-transition.opacity.duration.250ms style="display: none;">
+                                <img
+                                    src="{{ asset('images/board/บอร์ดก่อตั้ง.jpg') }}"
+                                    alt="ทำเนียบผู้ก่อตั้ง"
+                                    class="mx-auto max-h-[72vh] w-auto max-w-full rounded-2xl object-contain shadow-sm"
+                                    loading="lazy"
+                                >
+                            </figure>
                         </div>
                     </div>
-
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
 @endsection

@@ -175,7 +175,7 @@ export function BranchNetworkMap({ branches, variant = "section" }: BranchNetwor
                 "relative overflow-hidden bg-slate-950 font-sans [font-family:var(--font-sans)]",
                 isFullscreen
                     ? "h-[100dvh] min-h-[704px]"
-                    : "h-[min(720px,calc(100dvh-7rem))] min-h-[560px]",
+                    : "h-[min(704px,calc(100dvh-7rem))] min-h-[544px] rounded-[1.35rem]",
             ].join(" ")}
         >
             <Map
