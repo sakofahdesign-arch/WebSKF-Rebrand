@@ -31,16 +31,16 @@ export function MemberBenefitsReveal({
         <section
             id="member-benefits"
             data-section="member-benefits"
-            className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden bg-[#0b0d0c] text-white"
+            className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden bg-base-100 text-base-content"
         >
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(16,185,129,0.18),transparent_32rem)]" />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(16,185,129,0.12),transparent_32rem)]" />
             <div className="relative mx-auto max-w-[1560px] px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-                <div className="mb-16 grid min-h-[72dvh] content-between border border-white/10 bg-[#101311] p-5 sm:p-8 lg:min-h-[780px]">
+                <div className="mb-16 grid min-h-[72dvh] content-between border border-base-300 bg-base-200 p-5 sm:p-8 lg:min-h-[780px]">
                     <div className="flex items-start justify-between gap-6">
-                        <p className="text-[10px] font-black uppercase tracking-[0.42em] text-white/72">
+                        <p className="text-[10px] font-black uppercase tracking-[0.42em] text-base-content/60">
                             Member Benefits
                         </p>
-                        <p className="hidden text-[10px] font-black uppercase tracking-[0.42em] text-white/72 sm:block">
+                        <p className="hidden text-[10px] font-black uppercase tracking-[0.42em] text-base-content/60 sm:block">
                             Scroll Inside
                         </p>
                     </div>
@@ -56,23 +56,23 @@ export function MemberBenefitsReveal({
                         >
                             <h2
                                 data-gooey-reveal-item
-                                className="mx-auto max-w-5xl text-balance text-[clamp(3.25rem,9vw,9.5rem)] font-black leading-[0.9] tracking-normal"
+                                className="mx-auto max-w-4xl text-balance break-keep whitespace-normal text-[clamp(2.4rem,6vw,6.5rem)] font-black leading-[1.08] tracking-normal text-primary"
                             >
                                 {title}
                             </h2>
                         </GooeyTextReveal>
 
                         {subtitle ? (
-                            <p className="mx-auto mt-7 max-w-2xl text-base font-semibold leading-relaxed text-white/62 sm:text-lg">
+                            <p className="mx-auto mt-7 max-w-2xl text-balance break-keep text-base font-semibold leading-relaxed text-black/70 sm:text-lg">
                                 {subtitle}
                             </p>
                         ) : null}
                     </div>
 
                     <div className="mx-auto flex items-center justify-center">
-                        <a
+                        
                             href="#member-benefit-list"
-                            className="inline-flex min-h-10 items-center justify-center gap-3 border border-white/20 px-5 text-[10px] font-black uppercase tracking-[0.18em] text-white/86 transition hover:border-white/45 hover:bg-white/8"
+                            className="inline-flex min-h-10 items-center justify-center gap-3 rounded-full border border-base-300 px-5 text-[10px] font-black uppercase tracking-[0.18em] text-base-content transition hover:border-primary hover:bg-primary/10"
                         >
                             Scroll to reveal
                             <ArrowDown className="h-3.5 w-3.5" strokeWidth={2.1} />
@@ -91,7 +91,7 @@ export function MemberBenefitsReveal({
                             >
                                 <motion.div
                                     className={[
-                                        "relative overflow-hidden border border-white/10 bg-white/5",
+                                        "relative overflow-hidden rounded-2xl border border-base-300 bg-base-200",
                                         isEven ? "lg:col-span-5" : "lg:col-span-5 lg:col-start-8",
                                     ].join(" ")}
                                     initial={{ opacity: 0, y: 42, filter: "blur(10px)" }}
@@ -102,7 +102,7 @@ export function MemberBenefitsReveal({
                                     <img
                                         src={item.image}
                                         alt={item.title}
-                                        className="aspect-[4/3] w-full object-cover"
+                                        className="aspect-[4/3] w-full rounded-2xl object-cover"
                                         loading="lazy"
                                     />
                                 </motion.div>
@@ -121,18 +121,18 @@ export function MemberBenefitsReveal({
                                     >
                                         <p
                                             data-gooey-reveal-item
-                                            className="text-[clamp(2.4rem,6.2vw,6.6rem)] font-black leading-[0.9] tracking-normal text-white"
+                                            className="text-balance break-keep whitespace-normal text-[clamp(1.9rem,4.2vw,4rem)] font-black leading-[1.12] tracking-normal text-primary"
                                         >
                                             {item.title}
                                         </p>
                                     </GooeyTextReveal>
 
                                     <div className="mt-7 flex max-w-2xl items-start gap-5">
-                                        <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-white text-sm font-black text-emerald-900">
+                                        <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-primary text-sm font-black text-primary-content">
                                             {String(index + 1).padStart(2, "0")}
                                         </span>
                                         {item.description ? (
-                                            <p className="pt-2 text-base font-semibold leading-relaxed text-white/66 sm:text-lg">
+                                            <p className="pt-2 text-base font-semibold leading-relaxed text-black/70 sm:text-lg">
                                                 {item.description}
                                             </p>
                                         ) : null}
