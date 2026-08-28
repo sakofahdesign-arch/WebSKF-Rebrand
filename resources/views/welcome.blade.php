@@ -13,6 +13,7 @@
             @include('components.welcomes.promotion-carousel')
             @include('components.welcomes.news-staggered')
             @include('components.welcomes.service-intel')
+            @include('components.welcomes.member-benefits')
             @include('components.welcomes.journals-public')
             @include('components.welcomes.branch-service-network')
             @include('components.welcomes.financial-status')

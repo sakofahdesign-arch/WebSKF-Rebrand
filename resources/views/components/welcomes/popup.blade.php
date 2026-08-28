@@ -1,4 +1,4 @@
-<div id="promo-popup" class="fixed inset-0 z-[9999] hidden flex items-center justify-center bg-black/90 backdrop-blur-sm transition-opacity duration-300 opacity-0">
+<div id="promo-popup" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/90 backdrop-blur-sm transition-opacity duration-300 opacity-0">
     <div class="relative w-[95%] md:w-[90%] max-w-7xl transform scale-95 transition-transform duration-300" id="popup-content">
         
         <button onclick="closePopup()" class="absolute -top-3 -right-3 md:-top-6 md:-right-6 bg-white text-red-600 rounded-full p-2 shadow-xl hover:bg-red-50 hover:scale-110 transition-all z-50 border-2 border-white">
@@ -19,3 +19,29 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+<script>
+    (() => {
+        const popup = document.getElementById('promo-popup');
+        const content = document.getElementById('popup-content');
+
+        window.closePopup = () => {
+            if (!popup || !content) {
+                return;
+            }
+
+            popup.classList.add('opacity-0');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+
+            window.setTimeout(() => {
+                popup.classList.add('hidden');
+                popup.classList.remove('flex');
+            }, 300);
+
+            sessionStorage.setItem('hasSeenPopup', 'true');
+        };
+    })();
+</script>
+@endpush

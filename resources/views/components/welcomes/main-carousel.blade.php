@@ -38,6 +38,7 @@
     function initPopup() {
         const popup = document.getElementById('promo-popup');
         const content = document.getElementById('popup-content');
+        if (!popup || !content) return;
         
         // เช็คว่าเคยปิดไปหรือยัง (ใช้ sessionStorage = ปิดแล้วเปิดใหม่จะขึ้นอีก / localStorage = ปิดแล้วจำตลอดไป)
         // แนะนำ sessionStorage สำหรับประกาศทั่วไป
@@ -58,6 +59,7 @@
     function closePopup() {
         const popup = document.getElementById('promo-popup');
         const content = document.getElementById('popup-content');
+        if (!popup || !content) return;
         
         // Animation ออก
         popup.classList.add('opacity-0');
@@ -80,6 +82,8 @@
         // 2. เริ่มทำงาน Carousel
         const carousel = document.getElementById('hero-carousel');
         const dotsContainer = document.getElementById('carousel-dots');
+        if (!carousel || !dotsContainer) return;
+
         const slides = carousel.querySelectorAll('.carousel-item');
         const totalSlides = slides.length;
         let currentSlide = 0;

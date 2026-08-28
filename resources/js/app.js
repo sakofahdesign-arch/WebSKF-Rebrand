@@ -5,6 +5,7 @@ import './notch-navbar-mount';
 import './promotion-news-showcase-mount';
 import './perspective-services-mount';
 import './staggered-news-mount';
+import './member-benefits-mount';
 import './books-showcase-mount';
 import './branch-network-map-mount';
 import './asset-sales-map-mount';
