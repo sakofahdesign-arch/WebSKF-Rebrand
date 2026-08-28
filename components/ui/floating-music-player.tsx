@@ -174,16 +174,19 @@ export function FloatingMusicPlayer({
                     </div>
                 ) : null}
 
+                {/* ปรับเป็น Flex Column แยก 2 แถวชัดเจน */}
                 <div
                     className={cn(
-                        "grid min-h-[68px] grid-cols-[1fr_auto] items-center gap-3 px-2.5 py-2 transition-opacity duration-300",
-                        artwork ? "pl-[4.05rem]" : "pl-2.5",
+                        "flex flex-col justify-center min-h-[68px] gap-1 px-3 py-2.5 transition-opacity duration-300 w-full min-w-0",
+                        artwork ? "pl-[4.05rem]" : "pl-3",
                         isCollapsed && "pointer-events-none opacity-0",
                     )}
                 >
-                    <div className="min-w-0">
-                        <div className="flex min-w-0 items-center gap-3">
-                            <div className="flex h-6 w-4 shrink-0 items-end gap-[2px] text-orange-500" aria-hidden="true">
+                    {/* แถวที่ 1: ข้อมูลเพลง (ซ้าย) + ปุ่มควบคุม (ขวา) */}
+                    <div className="flex items-center justify-between gap-2 w-full min-w-0">
+                        {/* ข้อมูลเพลง & Equalizer */}
+                        <div className="flex min-w-0 items-center gap-2.5">
+                            <div className="flex h-5 w-3.5 shrink-0 items-end gap-[2px] text-orange-500" aria-hidden="true">
                                 {equalizerBars.map((bar) => (
                                     <span
                                         key={bar}
@@ -208,55 +211,63 @@ export function FloatingMusicPlayer({
                             </div>
                         </div>
 
-                        <div className="mt-1.5 grid grid-cols-[2.25rem_1fr_2.25rem] items-center gap-1.5">
-                            <span className="w-9 text-[8.5px] font-bold tabular-nums text-white/52">{formatTime(currentTime)}</span>
-                            <input
-                                type="range"
-                                min={0}
-                                max={100}
-                                value={progress}
-                                onChange={(event) => seekTo(Number(event.target.value))}
-                                className="h-1 flex-1 cursor-pointer appearance-none rounded-full bg-white/18 accent-orange-500 [&::-webkit-slider-thumb]:h-2.5 [&::-webkit-slider-thumb]:w-2.5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:shadow-[0_0_0_3px_rgba(249,115,22,0.25)]"
-                                style={progressStyle}
-                                aria-label="Song position"
-                            />
-                            <span className="w-9 text-right text-[8.5px] font-bold tabular-nums text-white/52">{formatTime(duration)}</span>
+                        {/* ปุ่มควบคุมเพลง */}
+                        <div className="flex shrink-0 items-center gap-1">
+                            <button
+                                type="button"
+                                onClick={() => seekTo(0)}
+                                className="grid h-5 w-5 place-items-center rounded-full text-white/72 transition hover:bg-white/10 hover:text-white active:scale-95"
+                                aria-label="Restart"
+                            >
+                                <SkipBack className="h-3 w-3" fill="currentColor" />
+                            </button>
+                            <button
+                                type="button"
+                                onClick={togglePlayback}
+                                className="grid h-7 w-7 place-items-center rounded-full bg-white text-[#4a4038] shadow-[0_7px_16px_rgba(0,0,0,0.22)] transition hover:bg-orange-50 active:scale-95"
+                                aria-label={isPlaying ? "Pause song" : "Play song"}
+                            >
+                                {isPlaying ? <Pause className="h-3.5 w-3.5" fill="currentColor" /> : <Play className="ml-0.5 h-3.5 w-3.5" fill="currentColor" />}
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => seekTo(Math.min(progress + 12, 100))}
+                                className="grid h-5 w-5 place-items-center rounded-full text-white/72 transition hover:bg-white/10 hover:text-white active:scale-95"
+                                aria-label="Forward"
+                            >
+                                <SkipForward className="h-3 w-3" fill="currentColor" />
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setIsMuted((value) => !value)}
+                                className="grid h-5 w-5 place-items-center rounded-full text-white/72 transition hover:bg-white/10 hover:text-white active:scale-95"
+                                aria-label={isMuted ? "Unmute" : "Mute"}
+                            >
+                                {isMuted ? <VolumeX className="h-3 w-3" /> : <Volume2 className="h-3 w-3" />}
+                            </button>
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-0.5">
-                        <button
-                            type="button"
-                            onClick={() => seekTo(0)}
-                            className="grid h-5 w-5 place-items-center rounded-full text-white/72 transition hover:bg-white/10 hover:text-white active:scale-95"
-                            aria-label="Restart"
-                        >
-                            <SkipBack className="h-3 w-3" fill="currentColor" />
-                        </button>
-                        <button
-                            type="button"
-                            onClick={togglePlayback}
-                            className="grid h-7 w-7 place-items-center rounded-full bg-white text-[#4a4038] shadow-[0_7px_16px_rgba(0,0,0,0.22)] transition hover:bg-orange-50 active:scale-95"
-                            aria-label={isPlaying ? "Pause song" : "Play song"}
-                        >
-                            {isPlaying ? <Pause className="h-4 w-4" fill="currentColor" /> : <Play className="ml-0.5 h-4 w-4" fill="currentColor" />}
-                        </button>
-                        <button
-                            type="button"
-                            onClick={() => seekTo(Math.min(progress + 12, 100))}
-                            className="grid h-5 w-5 place-items-center rounded-full text-white/72 transition hover:bg-white/10 hover:text-white active:scale-95"
-                            aria-label="Forward"
-                        >
-                            <SkipForward className="h-3 w-3" fill="currentColor" />
-                        </button>
-                        <button
-                            type="button"
-                            onClick={() => setIsMuted((value) => !value)}
-                            className="grid h-5 w-5 place-items-center rounded-full text-white/72 transition hover:bg-white/10 hover:text-white active:scale-95"
-                            aria-label={isMuted ? "Unmute" : "Mute"}
-                        >
-                            {isMuted ? <VolumeX className="h-3 w-3" /> : <Volume2 className="h-3 w-3" />}
-                        </button>
+                    {/* แถวที่ 2: แถบเวลาแบบเต็มความกว้าง (ตามรูปที่ 2) */}
+                    <div className="flex items-center gap-2 w-full min-w-0 mt-0.5">
+                        <span className="text-left text-[8.5px] font-bold tabular-nums text-white/52 shrink-0 min-w-[22px]">
+                            {formatTime(currentTime)}
+                        </span>
+                        
+                        <input
+                            type="range"
+                            min={0}
+                            max={100}
+                            value={progress}
+                            onChange={(event) => seekTo(Number(event.target.value))}
+                            className="h-1 flex-1 min-w-0 cursor-pointer appearance-none rounded-full bg-white/18 accent-orange-500 [&::-webkit-slider-thumb]:h-2.5 [&::-webkit-slider-thumb]:w-2.5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:shadow-[0_0_0_3px_rgba(249,115,22,0.25)]"
+                            style={progressStyle}
+                            aria-label="Song position"
+                        />
+                        
+                        <span className="text-right text-[8.5px] font-bold tabular-nums text-white/52 shrink-0 min-w-[22px]">
+                            {formatTime(duration)}
+                        </span>
                     </div>
                 </div>
 

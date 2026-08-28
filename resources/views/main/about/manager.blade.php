@@ -71,18 +71,20 @@
                     </button>
                 </nav>
 
+                <!-- ปรับขนาด max-w-2xl เพื่อให้กระชับเข้ากับรูปแนวตั้ง -->
                 <div
-                    class="mx-auto max-w-4xl transition-all duration-700 ease-out"
+                    class="mx-auto max-w-2xl transition-all duration-700 ease-out"
                     :class="loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'"
                     style="transition-delay: 220ms"
                 >
-                    <div class="overflow-hidden rounded-[1.35rem] border border-emerald-900/10 bg-white p-1.5 shadow-[0_18px_52px_rgba(4,60,50,0.09)]">
-                        <div class="rounded-[1rem] bg-slate-50/75 p-2.5 md:p-4">
+                    <!-- ปรับ padding ของกรอบขาว และตัด padding ด้านในออกเพื่อให้รูปแนบพอดี -->
+                    <div class="overflow-hidden rounded-[1.35rem] border border-emerald-900/10 bg-white p-2 shadow-[0_18px_52px_rgba(4,60,50,0.09)] sm:p-3">
+                        <div class="overflow-hidden rounded-xl">
                             <figure x-show="activeTab === 'directors'" x-transition.opacity.duration.250ms>
                                 <img
                                     src="{{ asset('images/board/committee-28-current.jpg') }}"
                                     alt="คณะกรรมการดำเนินการ ชุดที่ 28"
-                                    class="mx-auto max-h-[68vh] w-auto max-w-full rounded-xl object-contain shadow-sm"
+                                    class="h-auto w-full rounded-xl object-cover"
                                     loading="lazy"
                                 >
                             </figure>
@@ -91,7 +93,7 @@
                                 <img
                                     src="{{ asset('images/board/executives-current.jpg') }}"
                                     alt="ผู้บริหาร"
-                                    class="mx-auto max-h-[68vh] w-auto max-w-full rounded-xl object-contain shadow-sm"
+                                    class="h-auto w-full rounded-xl object-cover"
                                     loading="lazy"
                                 >
                             </figure>
@@ -100,7 +102,7 @@
                                 <img
                                     src="{{ asset('images/board/branch-executives-current.jpg') }}"
                                     alt="ผู้บริหารสาขา"
-                                    class="mx-auto max-h-[68vh] w-auto max-w-full rounded-xl object-contain shadow-sm"
+                                    class="h-auto w-full rounded-xl object-cover"
                                     loading="lazy"
                                 >
                             </figure>
@@ -109,7 +111,7 @@
                                 <img
                                     src="{{ asset('images/board/คณะที่ปรึกษา.jpg') }}"
                                     alt="คณะที่ปรึกษา"
-                                    class="mx-auto max-h-[68vh] w-auto max-w-full rounded-xl object-contain shadow-sm"
+                                    class="h-auto w-full rounded-xl object-cover"
                                     loading="lazy"
                                 >
                             </figure>
@@ -118,7 +120,7 @@
                                 <img
                                     src="{{ asset('images/board/บอร์ดก่อตั้ง.jpg') }}"
                                     alt="ทำเนียบผู้ก่อตั้ง"
-                                    class="mx-auto max-h-[68vh] w-auto max-w-full rounded-xl object-contain shadow-sm"
+                                    class="h-auto w-full rounded-xl object-cover"
                                     loading="lazy"
                                 >
                             </figure>
