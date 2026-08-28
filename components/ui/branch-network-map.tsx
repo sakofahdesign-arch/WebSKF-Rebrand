@@ -28,25 +28,6 @@ type BranchNetworkMapProps = {
     variant?: "section" | "fullscreen";
 };
 
-type BranchCalloutOffset = {
-    x: number;
-    y: number;
-    index: number;
-    total: number;
-};
-
-const OVERLAP_PROXIMITY_DEGREES = 0.002;
-const CALLOUT_OFFSETS: Array<Pick<BranchCalloutOffset, "x" | "y">> = [
-    { x: -54, y: -44 },
-    { x: 54, y: -44 },
-    { x: -62, y: 40 },
-    { x: 62, y: 40 },
-    { x: 0, y: -72 },
-    { x: -78, y: 0 },
-    { x: 78, y: 0 },
-    { x: 0, y: 72 },
-];
-
 function getMapCenter(branches: BranchLocation[]): [number, number] {
     if (!branches.length) {
         return [99.08, 8.02];
@@ -75,55 +56,6 @@ function getMapBounds(branches: BranchLocation[]): [[number, number], [number, n
         [Math.min(...longitudes), Math.min(...latitudes)],
         [Math.max(...longitudes), Math.max(...latitudes)],
     ];
-}
-
-function getCalloutOffset(index: number, total: number): Pick<BranchCalloutOffset, "x" | "y"> {
-    const fixedOffset = CALLOUT_OFFSETS[index];
-
-    if (fixedOffset) {
-        return fixedOffset;
-    }
-
-    const angle = -Math.PI / 2 + (index / Math.max(total, 1)) * Math.PI * 2;
-    const radius = 78 + Math.floor(index / CALLOUT_OFFSETS.length) * 20;
-
-    return {
-        x: Math.round(Math.cos(angle) * radius),
-        y: Math.round(Math.sin(angle) * radius),
-    };
-}
-
-function getBranchCalloutOffsets(branches: BranchLocation[]): Record<string, BranchCalloutOffset> {
-    const groups: BranchLocation[][] = [];
-
-    branches.forEach((branch) => {
-        const group = groups.find(([seed]) => (
-            Math.abs(seed.latitude - branch.latitude) <= OVERLAP_PROXIMITY_DEGREES
-            && Math.abs(seed.longitude - branch.longitude) <= OVERLAP_PROXIMITY_DEGREES
-        ));
-
-        if (group) {
-            group.push(branch);
-        } else {
-            groups.push([branch]);
-        }
-    });
-
-    return groups.reduce<Record<string, BranchCalloutOffset>>((offsets, group) => {
-        if (group.length < 2) {
-            return offsets;
-        }
-
-        group.forEach((branch, index) => {
-            offsets[branch.id] = {
-                ...getCalloutOffset(index, group.length),
-                index,
-                total: group.length,
-            };
-        });
-
-        return offsets;
-    }, {});
 }
 
 function BranchPopupCard({ branch }: { branch: BranchLocation }) {
@@ -162,107 +94,6 @@ function BranchPopupCard({ branch }: { branch: BranchLocation }) {
     );
 }
 
-function BranchLogoMarker({
-    branch,
-    isActive,
-    callout,
-    markerImageClass,
-    onClick,
-}: {
-    branch: BranchLocation;
-    isActive: boolean;
-    callout?: BranchCalloutOffset;
-    markerImageClass: string;
-    onClick: () => void;
-}) {
-    const translateX = callout?.x ?? 0;
-    const translateY = callout?.y ?? 0;
-    const lineInset = 1;
-    const lineLeft = Math.min(0, translateX) - lineInset;
-    const lineTop = Math.min(0, translateY) - lineInset;
-    const lineWidth = Math.abs(translateX) + lineInset * 2;
-    const lineHeight = Math.abs(translateY) + lineInset * 2;
-    const anchorX = -lineLeft;
-    const anchorY = -lineTop;
-    const logoX = translateX - lineLeft;
-    const logoY = translateY - lineTop;
-
-    return (
-        <div className="relative h-0 w-0 [--branch-callout-dot:#111827] [--branch-callout-halo:rgba(255,255,255,0.92)] [--branch-callout-line:#111827] dark:[--branch-callout-dot:#ffffff] dark:[--branch-callout-halo:rgba(3,7,18,0.72)] dark:[--branch-callout-line:#ffffff]">
-            {callout ? (
-                <svg
-                    aria-hidden="true"
-                    className="pointer-events-none absolute overflow-visible"
-                    style={{
-                        left: lineLeft,
-                        top: lineTop,
-                        width: lineWidth,
-                        height: lineHeight,
-                    }}
-                    viewBox={`0 0 ${lineWidth} ${lineHeight}`}
-                >
-                    <line
-                        x1={anchorX}
-                        y1={anchorY}
-                        x2={logoX}
-                        y2={logoY}
-                        stroke="var(--branch-callout-halo)"
-                        strokeLinecap="round"
-                        strokeWidth="6"
-                    />
-                    <line
-                        x1={anchorX}
-                        y1={anchorY}
-                        x2={logoX}
-                        y2={logoY}
-                        stroke="var(--branch-callout-line)"
-                        strokeDasharray="2 5"
-                        strokeLinecap="round"
-                        strokeWidth="2.5"
-                    />
-                    <circle
-                        cx={anchorX}
-                        cy={anchorY}
-                        fill="var(--branch-callout-dot)"
-                        r="4.25"
-                        stroke="var(--branch-callout-halo)"
-                        strokeWidth="2"
-                    />
-                </svg>
-            ) : null}
-            <div
-                className="absolute left-0 top-0"
-                style={{
-                    transform: `translate(calc(-50% + ${translateX}px), calc(-50% + ${translateY}px))`,
-                    zIndex: callout ? 10 + callout.index : 1,
-                }}
-            >
-                <button
-                    type="button"
-                    onClick={(event) => {
-                        event.stopPropagation();
-                        onClick();
-                    }}
-                    className={[
-                        "grid h-11 w-11 place-items-center rounded-full bg-white p-1 text-emerald-700 transition duration-300 dark:bg-white",
-                        isActive
-                            ? "scale-110 shadow-[0_0_0_11px_rgba(16,185,129,0.24),0_14px_30px_rgba(0,0,0,0.36)]"
-                            : "shadow-[0_8px_18px_rgba(0,0,0,0.3)] hover:scale-105",
-                    ].join(" ")}
-                    aria-label={branch.name}
-                >
-                    <img
-                        src={branch.markerLogo}
-                        alt={`${branch.name} marker`}
-                        className={markerImageClass}
-                        loading="lazy"
-                    />
-                </button>
-            </div>
-        </div>
-    );
-}
-
 export function BranchNetworkMap({ branches, variant = "section" }: BranchNetworkMapProps) {
     const mapRef = useRef<MapRef | null>(null);
     const [activeId, setActiveId] = useState(branches[0]?.id || "");
@@ -273,7 +104,6 @@ export function BranchNetworkMap({ branches, variant = "section" }: BranchNetwor
     const businessLocations = useMemo(() => branches.filter((branch) => branch.group === "business"), [branches]);
     const center = useMemo(() => getMapCenter(branches), [branches]);
     const bounds = useMemo(() => getMapBounds(branches), [branches]);
-    const calloutOffsets = useMemo(() => getBranchCalloutOffsets(branches), [branches]);
 
     const fitBoundsForOverview = useCallback(() => {
         setPopupBranchId(null);
@@ -367,14 +197,27 @@ export function BranchNetworkMap({ branches, variant = "section" }: BranchNetwor
                             latitude={branch.latitude}
                             onClick={() => focusBranch(branch, true)}
                         >
-                            <MarkerContent className="h-0 w-0">
-                                <BranchLogoMarker
-                                    branch={branch}
-                                    isActive={isActive}
-                                    callout={calloutOffsets[branch.id]}
-                                    markerImageClass={markerImageClass(branch)}
-                                    onClick={() => focusBranch(branch, true)}
-                                />
+                            <MarkerContent>
+                                <button
+                                    type="button"
+                                    onClick={(event) => {
+                                        event.stopPropagation();
+                                        focusBranch(branch, true);
+                                    }}
+                                    className={[
+                                        "grid h-11 w-11 place-items-center rounded-full bg-white p-1 text-emerald-700 transition duration-300 dark:bg-white",
+                                        isActive
+                                            ? "scale-110 shadow-[0_0_0_11px_rgba(16,185,129,0.24),0_14px_30px_rgba(0,0,0,0.36)]"
+                                            : "shadow-[0_8px_18px_rgba(0,0,0,0.3)] hover:scale-105",
+                                    ].join(" ")}
+                                >
+                                    <img
+                                        src={branch.markerLogo}
+                                        alt={`${branch.name} marker`}
+                                        className={markerImageClass(branch)}
+                                        loading="lazy"
+                                    />
+                                </button>
                             </MarkerContent>
                         </MapMarker>
                     );
