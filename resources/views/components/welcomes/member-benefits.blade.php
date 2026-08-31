@@ -18,9 +18,9 @@
         data-subtitle="{{ $memberBenefits['subtitle'] ?? '' }}"
         data-items='@json($benefitItems)'
     >
-        <section class="relative isolate overflow-hidden bg-base-100 py-16 lg:py-20">
+        <section class="relative isolate overflow-hidden bg-transparent py-16 lg:py-20">
             <div class="mx-auto max-w-[1560px] px-4 text-center sm:px-6 lg:px-8">
-                <p class="text-4xl font-black leading-snug text-primary text-balance break-keep">
+                <p class="text-4xl font-black leading-snug text-emerald-900 text-balance break-keep">
                     สิทธิประโยชน์ เมื่อเป็นสมาชิกเรา
                 </p>
                 <p class="mt-4 leading-relaxed text-black/70 text-balance break-keep">

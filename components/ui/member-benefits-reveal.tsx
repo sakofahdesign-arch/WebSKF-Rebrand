@@ -31,21 +31,20 @@ export function MemberBenefitsReveal({
         <section
             id="member-benefits"
             data-section="member-benefits"
-            className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden bg-base-100 text-base-content"
+            className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden bg-transparent text-emerald-950"
         >
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(16,185,129,0.12),transparent_32rem)]" />
-            <div className="relative mx-auto max-w-[1560px] px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-                <div className="mb-16 grid min-h-[72dvh] content-between border border-base-300 bg-base-200 p-5 sm:p-8 lg:min-h-[780px]">
+            <div className="relative mx-auto max-w-[1280px] px-4 py-14 sm:px-6 lg:px-8 lg:py-18">
+                <div className="mb-14 grid min-h-[420px] content-between bg-transparent p-0 sm:min-h-[460px]">
                     <div className="flex items-start justify-between gap-6">
-                        <p className="text-[10px] font-black uppercase tracking-[0.42em] text-base-content/60">
+                        <p className="text-[10px] font-black uppercase tracking-[0.42em] text-emerald-950/60">
                             Member Benefits
                         </p>
-                        <p className="hidden text-[10px] font-black uppercase tracking-[0.42em] text-base-content/60 sm:block">
+                        <p className="hidden text-[10px] font-black uppercase tracking-[0.42em] text-emerald-950/60 sm:block">
                             Scroll Inside
                         </p>
                     </div>
 
-                    <div className="mx-auto w-full max-w-6xl text-center">
+                    <div className="mx-auto w-full max-w-4xl text-center">
                         <GooeyTextReveal
                             mode="scroll"
                             duration={1.45}
@@ -56,23 +55,23 @@ export function MemberBenefitsReveal({
                         >
                             <h2
                                 data-gooey-reveal-item
-                                className="mx-auto max-w-4xl text-balance break-keep whitespace-normal text-[clamp(2.4rem,6vw,6.5rem)] font-black leading-[1.08] tracking-normal text-primary"
+                                className="mx-auto max-w-3xl text-balance break-keep whitespace-normal text-3xl font-black leading-snug tracking-normal text-emerald-900 sm:text-4xl lg:text-5xl"
                             >
                                 {title}
                             </h2>
                         </GooeyTextReveal>
 
                         {subtitle ? (
-                            <p className="mx-auto mt-7 max-w-2xl text-balance break-keep text-base font-semibold leading-relaxed text-black/70 sm:text-lg">
+                            <p className="mx-auto mt-5 max-w-2xl text-balance break-keep text-sm font-semibold leading-relaxed text-black sm:text-base">
                                 {subtitle}
                             </p>
                         ) : null}
                     </div>
 
                     <div className="mx-auto flex items-center justify-center">
-                        
+                        <a
                             href="#member-benefit-list"
-                            className="inline-flex min-h-10 items-center justify-center gap-3 rounded-full border border-base-300 px-5 text-[10px] font-black uppercase tracking-[0.18em] text-base-content transition hover:border-primary hover:bg-primary/10"
+                            className="inline-flex min-h-10 items-center justify-center gap-3 rounded-full border border-emerald-900/20 px-5 text-[10px] font-black uppercase tracking-[0.18em] text-emerald-950 transition hover:border-emerald-700 hover:bg-emerald-50/80"
                         >
                             Scroll to reveal
                             <ArrowDown className="h-3.5 w-3.5" strokeWidth={2.1} />
@@ -80,7 +79,7 @@ export function MemberBenefitsReveal({
                     </div>
                 </div>
 
-                <div id="member-benefit-list" className="space-y-24 lg:space-y-32">
+                <div id="member-benefit-list" className="space-y-16 lg:space-y-20">
                     {safeItems.map((item, index) => {
                         const isEven = index % 2 === 0;
 
@@ -91,7 +90,7 @@ export function MemberBenefitsReveal({
                             >
                                 <motion.div
                                     className={[
-                                        "relative overflow-hidden rounded-2xl border border-base-300 bg-base-200",
+                                        "relative overflow-hidden rounded-2xl bg-white/70 shadow-[0_18px_48px_rgba(6,78,59,0.10)] ring-1 ring-emerald-900/10 backdrop-blur-sm",
                                         isEven ? "lg:col-span-5" : "lg:col-span-5 lg:col-start-8",
                                     ].join(" ")}
                                     initial={{ opacity: 0, y: 42, filter: "blur(10px)" }}
@@ -121,18 +120,18 @@ export function MemberBenefitsReveal({
                                     >
                                         <p
                                             data-gooey-reveal-item
-                                            className="text-balance break-keep whitespace-normal text-[clamp(1.9rem,4.2vw,4rem)] font-black leading-[1.12] tracking-normal text-primary"
+                                            className="text-balance break-keep whitespace-normal text-2xl font-black leading-snug tracking-normal text-emerald-900 sm:text-3xl lg:text-4xl"
                                         >
                                             {item.title}
                                         </p>
                                     </GooeyTextReveal>
 
-                                    <div className="mt-7 flex max-w-2xl items-start gap-5">
-                                        <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-primary text-sm font-black text-primary-content">
+                                    <div className="mt-5 flex max-w-2xl items-start gap-4">
+                                        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-emerald-800 text-xs font-black text-white">
                                             {String(index + 1).padStart(2, "0")}
                                         </span>
                                         {item.description ? (
-                                            <p className="pt-2 text-base font-semibold leading-relaxed text-black/70 sm:text-lg">
+                                            <p className="pt-1.5 text-sm font-semibold leading-relaxed text-black sm:text-base">
                                                 {item.description}
                                             </p>
                                         ) : null}
