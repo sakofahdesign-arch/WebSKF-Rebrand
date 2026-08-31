@@ -61,7 +61,7 @@
                             <div class="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-emerald-50 text-emerald-700 shadow-[0_10px_24px_rgba(4,60,50,0.09)] dark:bg-white dark:text-emerald-800">
                                 <i class="fa-solid fa-chart-column text-2xl" aria-hidden="true"></i>
                             </div>
-                            <div class="min-w-0">
+                            <div class="min-w-0 flex-1">
                                 <p class="text-sm font-semibold text-emerald-800 dark:text-white/86">จำนวนหุ้น</p>
                                 <div class="mt-1">
                                     <span class="odometer whitespace-nowrap text-[clamp(1.4rem,1.9vw,2.1rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="{{ $fs('financial.shares.odometer', 28736215) }}">{{ $fs('financial.shares.value', '28,736,215') }}</span>
@@ -104,7 +104,7 @@
                             <div class="min-w-0">
                                 <p class="text-sm font-semibold text-emerald-800 dark:text-white/86">สินทรัพย์</p>
                                 <div class="mt-1.5 flex min-w-0 flex-wrap items-baseline gap-x-1">
-                                    <span class="odometer max-w-full whitespace-nowrap text-[clamp(0.95rem,1.12vw,1.16rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="{{ $fs('financial.assets.odometer', 0) }}">{{ $fs('financial.assets.value', '0') }}</span>
+                                    <span class="odometer max-w-full whitespace-nowrap text-[clamp(0.82rem,0.98vw,1.02rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="{{ $fs('financial.assets.odometer', 0) }}">{{ $fs('financial.assets.value', '0') }}</span>
                                     <span class="text-xs font-medium text-emerald-700 dark:text-white/62">{{ $fs('financial.assets.unit', 'ล้าน') }}</span>
                                 </div>
                                 <p class="mt-2.5 text-xs font-semibold text-emerald-700 dark:text-white/72"><i class="fa-solid fa-circle-arrow-up mr-1"></i> {{ $fs('financial.assets.trend', '+3.2% จากปีก่อนหน้า') }}</p>

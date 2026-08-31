@@ -42,10 +42,7 @@ export function MemberBenefitsReveal({
                     viewport={{ once: true, amount: 0.22 }}
                     transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                 >
-                    <svg className="pointer-events-none absolute left-0 top-20 hidden h-[520px] w-[520px] text-emerald-900/5 dark:text-white/5 sm:block" viewBox="0 0 100 100" aria-hidden="true">
-                        <polygon fill="currentColor" points="50,3 61,37 97,37 68,58 79,92 50,71 21,92 32,58 3,37 39,37" />
-                    </svg>
-                    <svg className="pointer-events-none absolute left-0 top-10 hidden h-[640px] w-[640px] sm:block" viewBox="0 0 640 640" fill="none" aria-hidden="true">
+                    <svg className="pointer-events-none absolute -left-4 top-10 hidden h-[640px] w-[640px] sm:block" viewBox="0 0 640 640" fill="none" aria-hidden="true">
                         <path d="M24 350 A286 286 0 0 1 224 62" stroke="url(#member-benefit-arc)" strokeWidth="16" strokeLinecap="round" />
                         <path d="M180 42 C520 100 580 448 244 594" stroke="currentColor" strokeOpacity="0.58" strokeWidth="2.1" fill="none" className="text-emerald-950 dark:text-emerald-200" />
                         <path d="M330 30 C618 118 626 420 350 582" stroke="currentColor" strokeOpacity="0.24" strokeWidth="1.4" fill="none" className="text-emerald-700 dark:text-emerald-300" />
@@ -59,8 +56,8 @@ export function MemberBenefitsReveal({
 
                     <div className="relative z-10 grid w-full gap-10 lg:grid-cols-[minmax(420px,0.9fr)_minmax(720px,1.35fr)] lg:items-center xl:gap-16">
                         <div className="relative min-h-[360px] sm:min-h-[520px] lg:min-h-[620px]">
-                            <div className="absolute left-0 top-24 hidden h-[430px] w-[430px] rounded-full border border-emerald-800/10 bg-white/18 shadow-[inset_0_0_80px_rgba(16,185,129,0.10)] dark:border-emerald-200/12 dark:bg-emerald-50/8 dark:shadow-[inset_0_0_90px_rgba(167,243,208,0.07)] sm:block" />
-                            <div className="relative z-10 max-w-md pt-16 sm:pl-12 sm:pt-52 lg:pl-20">
+                            <div className="absolute -left-4 top-24 hidden h-[430px] w-[430px] rounded-full border border-emerald-800/10 bg-white/18 shadow-[inset_0_0_80px_rgba(16,185,129,0.10)] dark:border-emerald-200/12 dark:bg-emerald-50/8 dark:shadow-[inset_0_0_90px_rgba(167,243,208,0.07)] sm:block" />
+                            <div className="relative z-10 max-w-md pt-16 sm:pl-4 sm:pt-52 lg:pl-8">
                                 <GooeyTextReveal
                                     mode="scroll"
                                     duration={1.45}
