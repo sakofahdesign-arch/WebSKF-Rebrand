@@ -1,5 +1,13 @@
 @php
-    $ebooks = collect(config('site-content.ebooks'))->map(function ($book) {
+    $ebookSource = collect(config('site-content.ebooks'))->sortByDesc(function ($book) {
+        return (int) ($book['year'] ?? 0);
+    })->values();
+
+    $initialLatestBooks = $ebookSource->take(3)->sortBy(function ($book) {
+        return (int) ($book['year'] ?? 0);
+    })->values();
+
+    $ebooks = $initialLatestBooks->concat($ebookSource->slice(3))->map(function ($book) {
         $cover = asset($book['cover']);
 
         return array_merge($book, [

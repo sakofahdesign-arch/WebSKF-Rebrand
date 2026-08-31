@@ -39,7 +39,6 @@
 </head>
 
 <body class="font-sans antialiased bg-gray-50 text-gray-900">
-    <div data-theme-pullcord></div>
     <div x-data="{ sidebarOpen: false }" class="flex h-screen overflow-hidden bg-gray-100">
 
         @include('components.admin-sidebar')

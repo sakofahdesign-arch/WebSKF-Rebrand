@@ -154,13 +154,13 @@ function MobileTrigger({ item, icon: Icon }: { item: NotchNavItem; icon?: Lucide
         <button
             type="button"
             className={cn(
-                "flex w-full items-center gap-3 px-4 py-3 text-left text-sm font-semibold text-emerald-950",
-                item.highlight && "text-amber-700",
+                "flex w-full items-center gap-3 px-4 py-3 text-left text-sm font-semibold text-emerald-950 transition-colors dark:text-emerald-50",
+                item.highlight && "text-amber-700 dark:text-amber-200",
             )}
         >
-            {Icon && <Icon className="h-[18px] w-[18px]" strokeWidth={1.9} />}
+            {Icon && <Icon className="h-[18px] w-[18px] text-emerald-800 dark:text-emerald-200" strokeWidth={1.9} />}
             <span className="min-w-0 flex-1">{item.label}</span>
-            <ChevronDown className="h-4 w-4 text-emerald-800/60" />
+            <ChevronDown className="h-4 w-4 text-emerald-800/60 dark:text-emerald-100/70" />
         </button>
     );
 }
@@ -170,30 +170,30 @@ function MobileItem({ item, onNavigate }: { item: NotchNavItem; onNavigate: () =
     const hasChildren = Boolean(item.children?.length);
 
     return (
-        <div className="rounded-lg border border-emerald-900/10 bg-white">
+        <div className="rounded-lg border border-emerald-900/10 bg-white shadow-[0_10px_30px_rgba(4,60,50,0.06)] dark:border-emerald-300/16 dark:bg-[#08231d]/96 dark:shadow-none dark:ring-1 dark:ring-white/5">
             {hasChildren ? (
                 <MobileTrigger item={item} icon={Icon} />
             ) : (
                 <Anchor
                     href={item.href}
                     className={cn(
-                        "flex items-center gap-3 px-4 py-3 text-sm font-semibold text-emerald-950",
-                        item.highlight && "text-amber-700",
+                        "flex items-center gap-3 px-4 py-3 text-sm font-semibold text-emerald-950 transition-colors hover:bg-emerald-50 dark:text-emerald-50 dark:hover:bg-white/8",
+                        item.highlight && "text-amber-700 dark:text-amber-200",
                     )}
                     onClick={onNavigate}
                 >
-                    {Icon && <Icon className="h-[18px] w-[18px]" strokeWidth={1.9} />}
+                    {Icon && <Icon className="h-[18px] w-[18px] text-emerald-800 dark:text-emerald-200" strokeWidth={1.9} />}
                     <span>{item.label}</span>
                 </Anchor>
             )}
             {item.children?.length ? (
-                <div className="border-t border-emerald-900/8 px-4 py-2">
+                <div className="border-t border-emerald-900/8 bg-emerald-50/35 px-4 py-2 dark:border-emerald-300/12 dark:bg-[#061a15]/72">
                     {item.children.map((child) => (
                         <Anchor
                             key={`${item.label}-${child.label}`}
                             href={child.href}
                             external={child.external}
-                            className="block rounded-md py-2 pl-7 text-sm text-emerald-950/72"
+                            className="block rounded-md py-2 pl-7 text-sm font-medium text-emerald-950/72 transition-colors hover:bg-white/70 hover:text-emerald-950 dark:text-emerald-50/74 dark:hover:bg-white/8 dark:hover:text-white"
                             onClick={onNavigate}
                         >
                             {child.label}
@@ -348,7 +348,7 @@ export function NotchNavbar({
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -12 }}
                         transition={{ duration: 0.18 }}
-                        className="fixed inset-x-3 top-[5.5rem] z-40 max-h-[calc(100dvh-6.5rem)] overflow-auto rounded-xl border border-emerald-950/10 bg-emerald-50/96 p-3 shadow-2xl shadow-emerald-950/18 backdrop-blur xl:hidden"
+                        className="fixed inset-x-3 top-[5.5rem] z-40 max-h-[calc(100dvh-6.5rem)] overflow-auto rounded-xl border border-emerald-950/10 bg-emerald-50/96 p-3 shadow-2xl shadow-emerald-950/18 backdrop-blur xl:hidden dark:border-emerald-200/18 dark:bg-[#dff7ec]/92 dark:shadow-black/32"
                     >
                         <nav className="grid gap-2">
                             {allItems.map((item) => (

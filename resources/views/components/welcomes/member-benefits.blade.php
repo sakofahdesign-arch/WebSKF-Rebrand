@@ -18,12 +18,13 @@
         data-subtitle="{{ $memberBenefits['subtitle'] ?? '' }}"
         data-items='@json($benefitItems)'
     >
-        <section class="relative isolate overflow-hidden bg-transparent py-16 lg:py-20">
-            <div class="mx-auto max-w-[1560px] px-4 text-center sm:px-6 lg:px-8">
-                <p class="text-4xl font-black leading-snug text-emerald-900 text-balance break-keep">
+        <section class="relative isolate overflow-hidden bg-transparent py-14 lg:py-18">
+            <div class="mx-auto w-full max-w-[1560px] px-4 text-center sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-extrabold leading-snug text-emerald-800 text-balance break-keep dark:text-emerald-100 md:text-4xl">
                     สิทธิประโยชน์ เมื่อเป็นสมาชิกเรา
-                </p>
-                <p class="mt-4 leading-relaxed text-black/70 text-balance break-keep">
+                </h2>
+                <div class="mx-auto mt-3 h-1 w-20 rounded-full bg-emerald-500 dark:bg-emerald-300"></div>
+                <p class="mt-4 leading-relaxed text-black/70 text-balance break-keep dark:text-emerald-50/78">
                     กำลังโหลดสิทธิประโยชน์สมาชิก
                 </p>
             </div>

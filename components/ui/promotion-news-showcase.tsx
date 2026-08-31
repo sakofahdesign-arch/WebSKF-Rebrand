@@ -161,10 +161,7 @@ export function PromotionNewsShowcase({ promotions, news }: PromotionNewsShowcas
                                             <img
                                                 src={item.image}
                                                 alt={item.title}
-                                                className={cn(
-                                                    "h-full w-full",
-                                                    item.type === "promotion" ? "object-contain" : "object-cover",
-                                                )}
+                                                className="h-full w-full object-cover"
                                                 loading={index === 0 ? "eager" : "lazy"}
                                             />
                                             {item.type === "news" && (

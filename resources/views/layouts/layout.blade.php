@@ -92,7 +92,6 @@
 </head>
 
 <body class="bg-gray-50 flex flex-col min-h-screen antialiased">
-    <div data-theme-pullcord></div>
     @include('components.header')
     <main class="flex-grow">
         @yield('content')
