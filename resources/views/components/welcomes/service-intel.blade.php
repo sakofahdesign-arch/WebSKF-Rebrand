@@ -101,10 +101,10 @@
             class="
                 mx-auto
                 grid
-                max-w-[760px]
+                max-w-[920px]
                 grid-cols-1
                 items-stretch
-                gap-4
+                gap-5
                 sm:grid-cols-2
                 xl:grid-cols-4
             "
@@ -131,7 +131,7 @@
                         ease-out
                     "
                     style="
-                        aspect-ratio: 1 / 1.16;
+                        aspect-ratio: 1 / 1.34;
                         border-radius: 18px;
                         border: 1.5px solid {{ $color['border'] }};
                         box-shadow:
@@ -155,7 +155,7 @@
                             group-hover:scale-[1.015]
                         "
                         style="
-                            height: 54%;
+                            height: 50%;
                             margin: 8px 8px 0 8px;
                             border-radius: 13px;
                             background-color: {{ $color['frame'] }};
@@ -481,7 +481,7 @@
         background-color: #ffffff !important;
         justify-self: center;
         width: 100%;
-        max-width: 190px;
+        max-width: 220px;
 
         box-shadow:
             0 8px 20px rgba(15, 23, 42, 0.07),
@@ -567,11 +567,11 @@
 
         [data-section="service-intel"] .service-card {
             aspect-ratio: auto !important;
-            min-height: 255px;
+            min-height: 300px;
         }
 
         [data-section="service-intel"] .service-frame {
-            height: 138px !important;
+            height: 150px !important;
         }
 
     }
@@ -579,7 +579,7 @@
     @media (max-width: 639px) {
 
         [data-section="service-intel"] .service-card {
-            max-width: 210px;
+            max-width: 230px;
         }
 
     }
