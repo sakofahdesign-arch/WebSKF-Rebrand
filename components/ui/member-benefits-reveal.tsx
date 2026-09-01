@@ -37,17 +37,7 @@ export function MemberBenefitsReveal({
         >
             <div className="relative mx-auto w-full max-w-[1560px] px-4 py-14 sm:px-6 lg:px-8 lg:py-18">
                 <motion.div
-                    className="relative mx-auto flex min-h-[680px] w-full items-center overflow-hidden px-4 py-6 sm:min-h-[680px] sm:px-6 lg:min-h-[680px] lg:px-8"
-                    style={{
-                        background: "rgba(255, 255, 255, 0.5)",
-                        boxShadow: "0 0 1rem 0 rgba(0, 0, 0, 0.05)",
-                        borderRadius: "1rem",
-                        backdropFilter: "blur(1rem)",
-                        WebkitBackdropFilter: "blur(1rem)",
-                        border: "1px solid rgba(255, 255, 255, 0.25)",
-                        borderTop: "1px solid rgba(255, 255, 255, 0.5)",
-                        borderLeft: "1px solid rgba(255, 255, 255, 0.5)",
-                    }}
+                    className="prismal-liquid-glass relative mx-auto flex min-h-[680px] w-full items-center overflow-hidden px-4 py-6 sm:min-h-[680px] sm:px-6 lg:min-h-[680px] lg:px-8"
                     initial={{ opacity: 0, y: 28 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.22 }}
