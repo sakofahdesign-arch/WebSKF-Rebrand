@@ -104,7 +104,7 @@
                             <div class="min-w-0">
                                 <p class="text-sm font-semibold text-emerald-800 dark:text-white/86">สินทรัพย์</p>
                                 <div class="mt-1.5 flex min-w-0 flex-wrap items-baseline gap-x-1">
-                                    <span class="odometer max-w-full whitespace-nowrap text-[clamp(0.82rem,0.98vw,1.02rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="{{ $fs('financial.assets.odometer', 0) }}">{{ $fs('financial.assets.value', '0') }}</span>
+                                    <span class="odometer max-w-full whitespace-nowrap text-[clamp(1.46rem,1.9vw,2.05rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="{{ $fs('financial.assets.odometer', 0) }}">{{ $fs('financial.assets.value', '0') }}</span>
                                     <span class="text-xs font-medium text-emerald-700 dark:text-white/62">{{ $fs('financial.assets.unit', 'ล้าน') }}</span>
                                 </div>
                                 <p class="mt-2.5 text-xs font-semibold text-emerald-700 dark:text-white/72"><i class="fa-solid fa-circle-arrow-up mr-1"></i> {{ $fs('financial.assets.trend', '+3.2% จากปีก่อนหน้า') }}</p>

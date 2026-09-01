@@ -71,7 +71,7 @@ return [
     'financial_status' => [
         'meta' => [
             'data_date_label' => 'ข้อมูล ณ วันที่ 25 สิงหาคม 2569',
-            'fiscal_year_label' => 'ประจำปีบัญชี 2570',
+            'fiscal_year_label' => 'ประจำปีบัญชี 2569',
         ],
         'financial' => [
             'total_members' => [

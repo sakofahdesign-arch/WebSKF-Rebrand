@@ -10,6 +10,7 @@ import './books-showcase-mount';
 import './branch-network-map-mount';
 import './asset-sales-map-mount';
 import './homepage-wave-grid-background-mount';
+import './theme-pullcord-mount';
 import './floating-music-player-mount';
 import './financial-odometer';
 import './footer-login-button-mount';

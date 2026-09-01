@@ -23,6 +23,7 @@ export function MemberBenefitsReveal({
 }: MemberBenefitsRevealProps) {
     const safeItems = items.filter((item) => item.title && item.image);
     const icons = [Percent, Gift, HandHeart, Landmark, ShieldCheck];
+    const subtitleParts = subtitle?.split(" การเงินฮาลาล ");
 
     if (!safeItems.length) {
         return null;
@@ -36,13 +37,23 @@ export function MemberBenefitsReveal({
         >
             <div className="relative mx-auto w-full max-w-[1560px] px-4 py-14 sm:px-6 lg:px-8 lg:py-18">
                 <motion.div
-                    className="relative mx-auto min-h-[680px] w-full overflow-hidden bg-transparent py-6 sm:min-h-[760px] lg:min-h-[720px]"
+                    className="relative mx-auto flex min-h-[680px] w-full items-center overflow-hidden px-4 py-6 sm:min-h-[680px] sm:px-6 lg:min-h-[680px] lg:px-8"
+                    style={{
+                        background: "rgba(255, 255, 255, 0.5)",
+                        boxShadow: "0 0 1rem 0 rgba(0, 0, 0, 0.05)",
+                        borderRadius: "1rem",
+                        backdropFilter: "blur(1rem)",
+                        WebkitBackdropFilter: "blur(1rem)",
+                        border: "1px solid rgba(255, 255, 255, 0.25)",
+                        borderTop: "1px solid rgba(255, 255, 255, 0.5)",
+                        borderLeft: "1px solid rgba(255, 255, 255, 0.5)",
+                    }}
                     initial={{ opacity: 0, y: 28 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.22 }}
                     transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                 >
-                    <svg className="pointer-events-none absolute -left-4 top-10 hidden h-[640px] w-[640px] sm:block" viewBox="0 0 640 640" fill="none" aria-hidden="true">
+                    <svg className="pointer-events-none absolute left-[max(0px,calc(50%_-_620px))] top-10 hidden h-[640px] w-[640px] sm:block" viewBox="0 0 640 640" fill="none" aria-hidden="true">
                         <path d="M24 350 A286 286 0 0 1 224 62" stroke="url(#member-benefit-arc)" strokeWidth="16" strokeLinecap="round" />
                         <path d="M180 42 C520 100 580 448 244 594" stroke="currentColor" strokeOpacity="0.58" strokeWidth="2.1" fill="none" className="text-emerald-950 dark:text-emerald-200" />
                         <path d="M330 30 C618 118 626 420 350 582" stroke="currentColor" strokeOpacity="0.24" strokeWidth="1.4" fill="none" className="text-emerald-700 dark:text-emerald-300" />
@@ -54,10 +65,10 @@ export function MemberBenefitsReveal({
                         </defs>
                     </svg>
 
-                    <div className="relative z-10 grid w-full gap-10 lg:grid-cols-[minmax(420px,0.9fr)_minmax(720px,1.35fr)] lg:items-center xl:gap-16">
+                    <div className="relative z-10 mx-auto grid w-full max-w-[1260px] gap-10 lg:grid-cols-[minmax(420px,0.95fr)_minmax(620px,1.05fr)] lg:items-center xl:gap-12">
                         <div className="relative min-h-[360px] sm:min-h-[520px] lg:min-h-[620px]">
-                            <div className="absolute -left-4 top-24 hidden h-[430px] w-[430px] rounded-full border border-emerald-800/10 bg-white/18 shadow-[inset_0_0_80px_rgba(16,185,129,0.10)] dark:border-emerald-200/12 dark:bg-emerald-50/8 dark:shadow-[inset_0_0_90px_rgba(167,243,208,0.07)] sm:block" />
-                            <div className="relative z-10 max-w-md pt-16 sm:pl-4 sm:pt-52 lg:pl-8">
+                            <div className="absolute left-0 top-24 hidden h-[430px] w-[430px] rounded-full border border-emerald-800/10 bg-white/18 shadow-[inset_0_0_80px_rgba(16,185,129,0.10)] dark:border-emerald-200/12 dark:bg-emerald-50/8 dark:shadow-[inset_0_0_90px_rgba(167,243,208,0.07)] sm:block" />
+                            <div className="relative z-10 max-w-md pt-16 sm:pl-8 sm:pt-52 lg:pl-12">
                                 <GooeyTextReveal
                                     mode="scroll"
                                     duration={1.45}
@@ -75,7 +86,15 @@ export function MemberBenefitsReveal({
                                 <div className="mt-5 h-1 w-20 rounded-full bg-emerald-500 dark:bg-emerald-300" />
                                 {subtitle ? (
                                     <p className="mt-6 max-w-xs text-balance break-keep text-base font-semibold leading-relaxed text-black/70 dark:text-emerald-50/78">
-                                        {subtitle}
+                                        {subtitleParts && subtitleParts.length === 2 ? (
+                                            <>
+                                                {subtitleParts[0]}
+                                                <br />
+                                                การเงินฮาลาล {subtitleParts[1]}
+                                            </>
+                                        ) : (
+                                            subtitle
+                                        )}
                                     </p>
                                 ) : null}
                             </div>
@@ -114,7 +133,7 @@ export function MemberBenefitsReveal({
                                             viewport={{ once: true, amount: 0.45 }}
                                             transition={{ duration: 0.55, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
                                         >
-                                            <span className="relative z-10 grid h-[64px] w-[64px] place-items-center rounded-full bg-[radial-gradient(circle_at_32%_25%,#ffffff,#ecfdf5_58%,#d1fae5)] text-xl font-black text-emerald-700 shadow-[0_12px_24px_rgba(15,23,42,0.16),inset_0_1px_2px_rgba(255,255,255,0.95),inset_0_-5px_10px_rgba(6,78,59,0.08)] ring-1 ring-white/80 dark:text-emerald-800 dark:shadow-[0_14px_30px_rgba(0,0,0,0.36),inset_0_1px_2px_rgba(255,255,255,0.95)] sm:h-[72px] sm:w-[72px] sm:text-2xl">
+                                            <span className="relative z-10 grid h-[64px] w-[64px] place-items-center rounded-full bg-emerald-700 text-xl font-black text-white shadow-[0_12px_24px_rgba(4,120,87,0.22),inset_0_1px_2px_rgba(255,255,255,0.28),inset_0_-5px_10px_rgba(2,44,34,0.18)] ring-1 ring-emerald-200/60 dark:bg-emerald-500 dark:text-white dark:shadow-[0_14px_30px_rgba(0,0,0,0.36),inset_0_1px_2px_rgba(255,255,255,0.22)] dark:ring-emerald-100/40 sm:h-[72px] sm:w-[72px] sm:text-2xl">
                                                 {String(index + 1).padStart(2, "0")}
                                             </span>
                                             <span className="h-0.5 w-5 rounded-full bg-emerald-600 dark:bg-emerald-300" />
