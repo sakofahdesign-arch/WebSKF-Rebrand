@@ -172,11 +172,6 @@ html.dark {
     pointer-events: auto;
 }
 
-.theme-pullcord svg circle {
-    display: none;
-    opacity: 0;
-}
-
 .theme-pullcord .pullcord-knob:focus-visible {
     outline: none;
 }

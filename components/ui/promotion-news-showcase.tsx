@@ -119,8 +119,8 @@ export function PromotionNewsShowcase({ promotions, news }: PromotionNewsShowcas
                                                 x: `calc(-50% + ${offset * 64}%)`,
                                                 y: "-50%",
                                                 scale: isActive ? 1 : 0.78,
-                                                opacity: isVisible ? (isActive ? 1 : 0.86) : 0,
-                                                filter: "blur(0px)",
+                                                opacity: isVisible ? (isActive ? 1 : 0.42) : 0,
+                                                filter: isActive ? "blur(0px)" : "blur(5px)",
                                             }}
                                             transition={{
                                                 type: "spring",
