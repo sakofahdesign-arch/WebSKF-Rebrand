@@ -81,7 +81,7 @@
                                 <i class="fa-solid fa-sack-dollar text-2xl" aria-hidden="true"></i>
                             </div>
                             <div class="min-w-0">
-                                <p class="text-sm font-semibold text-emerald-800 dark:text-white/86">จำนวนเงิน</p>
+                                <p class="text-sm font-semibold text-emerald-800 dark:text-white/86">จำนวนเงินหุ้น</p>
                                 <div class="mt-1">
                                     <span class="odometer whitespace-nowrap text-[clamp(1.25rem,1.7vw,1.75rem)] font-black leading-none text-emerald-950 dark:text-white" data-odometer-value="{{ $fs('financial.share_amount.odometer', 287362150) }}">{{ $fs('financial.share_amount.value', '287,362,150') }}</span>
                                     <span class="ml-1 text-xs font-semibold text-emerald-700 dark:text-white/70">{{ $fs('financial.share_amount.unit', 'บาท') }}</span>

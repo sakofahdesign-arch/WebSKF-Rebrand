@@ -109,7 +109,7 @@
 
                             <figure x-show="activeTab === 'advisors'" x-transition.opacity.duration.250ms style="display: none;">
                                 <img
-                                    src="{{ asset('images/board/คณะที่ปรึกษา.jpg') }}"
+                                    src="{{ asset('images/board/advisors-current.jpg') }}"
                                     alt="คณะที่ปรึกษา"
                                     class="h-auto w-full rounded-xl object-cover"
                                     loading="lazy"
