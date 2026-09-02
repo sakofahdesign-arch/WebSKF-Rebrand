@@ -43,10 +43,10 @@ export function MemberBenefitsReveal({
                     viewport={{ once: true, amount: 0.22 }}
                     transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                 >
-                    <div className="relative z-10 grid w-full gap-10 lg:grid-cols-[minmax(420px,0.9fr)_minmax(720px,1.35fr)] lg:items-center xl:gap-16">
-                        <div className="relative min-h-[360px] sm:min-h-[520px] lg:min-h-[620px] lg:-translate-x-12 xl:-translate-x-16">
-                            <div className="absolute -left-14 top-24 hidden h-[430px] w-[430px] rounded-full border border-emerald-800/10 bg-white/18 shadow-[inset_0_0_80px_rgba(16,185,129,0.10)] dark:border-emerald-200/12 dark:bg-emerald-50/8 dark:shadow-[inset_0_0_90px_rgba(167,243,208,0.07)] sm:block" />
-                            <div className="relative z-10 max-w-md pt-16 sm:pl-0 sm:pt-52 lg:pl-2">
+                    <div className="relative z-10 mx-auto grid w-full max-w-[1260px] gap-10 lg:grid-cols-[minmax(420px,0.95fr)_minmax(620px,1.05fr)] lg:items-center xl:gap-12">
+                        <div className="relative min-h-[360px] sm:min-h-[520px] lg:min-h-[620px]">
+                            <div className="absolute left-8 top-24 hidden h-[430px] w-[430px] rounded-full border border-emerald-800/10 bg-white/18 shadow-[inset_0_0_80px_rgba(16,185,129,0.10)] dark:border-emerald-200/12 dark:bg-emerald-50/8 dark:shadow-[inset_0_0_90px_rgba(167,243,208,0.07)] sm:block" />
+                            <div className="relative z-10 max-w-md pt-16 sm:pl-16 sm:pt-52 lg:pl-24">
                                 <GooeyTextReveal
                                     mode="scroll"
                                     duration={1.45}
